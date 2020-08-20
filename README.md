@@ -1,2 +1,2 @@
-# Group 6 Group
+# Group 10 Group
 Mallory Duke, Nathan Cheshire, repo for email client
