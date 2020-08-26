@@ -1,2 +1,3 @@
-# Group 10 Group
-Mallory Duke, Nathan Cheshire, repo for email client
+# Group 10
+Mallory Duke(@malloryDuke), Nathan Cheshire (@NathanCheshire)
+Description: repo for email client
