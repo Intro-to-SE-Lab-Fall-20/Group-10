@@ -30,7 +30,7 @@ public class JavaFXTest extends Application {
         Label usernameLabel = new Label("username: ");
         Label passwordLabel = new Label("password: ");
         TextField usernameText = new TextField();
-        TextField passwordText = new TextField();
+        PasswordField passwordText = new PasswordField();
         Button login = new Button("login");
         login.setOnAction(e-> verifyPassword(passwordText.getText()));
         login.getStyleClass().add("button-blue");
