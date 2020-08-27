@@ -7,12 +7,15 @@
 .button{
     -fx-background-color: #AB4642;
     -fx-text-fill: #FFFFFF;
-    -fx-background-radius: 4;
+    -fx-background-radius: 8;
 }
 .button-blue{
-    -fx-background-color: #7cafc2;
+    -fx-background-color: #3c78d8;
     -fx-text-fill: #FFFFFF;
-    -fx-background-radius: 4;
+    -fx-background-radius: 8;
+    -fx-font-family: 'Tahoma', Arial, sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
 }
 #bold-label{
     -fx-font-weight: bold;
