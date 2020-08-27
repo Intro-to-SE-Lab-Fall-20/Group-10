@@ -26,6 +26,7 @@ public class Main {
         sf.getContentPane().add(desc);
 
         sf.setVisible(true);
+        sf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sf.setLocationRelativeTo(null);
 
         new Thread(() -> {
