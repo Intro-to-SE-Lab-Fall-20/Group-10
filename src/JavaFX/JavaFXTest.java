@@ -4,10 +4,13 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+
 
 public class JavaFXTest extends Application {
     //todo change css to style wanted
@@ -34,18 +37,28 @@ public class JavaFXTest extends Application {
         Button login = new Button("login");
         login.setOnAction(e-> verifyPassword(passwordText.getText()));
         login.getStyleClass().add("button-blue");
+        ProgressBar pb = new ProgressBar();
+        pb.setPrefSize(200,30);
 
         GridPane.setConstraints(usernameLabel, 0,0);
         GridPane.setConstraints(passwordLabel, 0,1);
         GridPane.setConstraints(usernameText, 1, 0);
         GridPane.setConstraints(passwordText, 1, 1);
-        GridPane.setConstraints(login, 1, 2); // column, row
+        GridPane.setConstraints(login, 1, 2);
+        GridPane.setConstraints(pb, 1,4);
 
-        gridPane.getChildren().addAll(usernameLabel,  passwordLabel, usernameText, passwordText, login);
+        gridPane.getChildren().addAll(usernameLabel,  passwordLabel, usernameText, passwordText, login, pb);
 
         Scene scene = new Scene(gridPane, 400,400);
         scene.getStylesheets().add("JavaFX/style.css");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+
+        //how to set scene icon
+        //todo change the shit logo Nathan made
+        primaryStage.getIcons().add(new Image(
+                        JavaFXTest.class.getResourceAsStream( "StraightIcon.png")));
+
         primaryStage.show();
     }
 

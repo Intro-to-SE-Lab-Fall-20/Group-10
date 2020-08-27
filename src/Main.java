@@ -2,6 +2,8 @@ import com.ui.StraightFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Main {
     public static void main(String[] ignored) {
@@ -24,6 +26,13 @@ public class Main {
         desc.setFont(new Font("Segoe UI Black", Font.BOLD, 30));
         desc.setBounds(20,60, 800 - 60 - 60, 400);
         sf.getContentPane().add(desc);
+
+        desc.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //todo test emailing
+            }
+        });
 
         sf.setVisible(true);
         sf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
