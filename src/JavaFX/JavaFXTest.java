@@ -5,17 +5,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-
-import java.awt.*;
 
 
 public class JavaFXTest extends Application {
@@ -78,7 +71,7 @@ public class JavaFXTest extends Application {
         //how to set scene icon
         //todo change the shit logo Nathan made
         primaryStage.getIcons().add(new Image(
-                        JavaFXTest.class.getResourceAsStream( "StraightIcon.png")));
+                        JavaFXTest.class.getResourceAsStream( "Logo.png")));
 
         primaryStage.show();
     }
