@@ -28,8 +28,8 @@ public class JavaFXTest extends Application {
         gridPane.setVgap(8);
         gridPane.setHgap(10);
 
-        Label usernameLabel = new Label("username: ");
-        Label passwordLabel = new Label("password: ");
+        Label usernameLabel = new Label("Username: ");
+        Label passwordLabel = new Label("Password: ");
         TextField usernameText = new TextField();
         passwordText = new PasswordField();
         Button login = new Button("login");
@@ -69,7 +69,6 @@ public class JavaFXTest extends Application {
         primaryStage.setResizable(true);
 
         //how to set scene icon
-        //todo change the shit logo Nathan made
         primaryStage.getIcons().add(new Image(
                         JavaFXTest.class.getResourceAsStream( "Logo.png")));
 
