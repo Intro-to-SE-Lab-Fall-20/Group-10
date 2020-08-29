@@ -1,6 +1,6 @@
 .root{
-    -fx-background-color: linear-gradient(to bottom, #eecda3, #ef629f);
-    background-color: linear-gradient(to bottom, #eecda3, #ef629f);
+    -fx-background-color: linear-gradient(to bottom, #4568dc , #b06ab3);
+    background-color: linear-gradient(to bottom, #4568dc , #b06ab3);
 }
 /*.root{
     -fx-background-image: url("LoginBackground.png");
@@ -32,14 +32,13 @@
     font-size: 1.2em;
 }
 
-
-.scroll-label {
+.welcome-label {
     -fx-text-fill: rgb(255, 255, 255);
     
     -fx-background-radius: 8;
 
-    -fx-font-family: 'Tahoma', Arial, sans-serif;
-    font-family: 'Tahoma', Arial, sans-serif;
+    -fx-font-family: 'Arial Black';
+    font-family:  'Arial Black';
 
     -fx-font-weight: bold;
     font-weight: bold;
@@ -53,10 +52,13 @@
     background-color: #CB423C;
 
     -fx-text-fill: #FFFFFF;
-    -fx-background-radius: 8;
+    -fx-background-radius: 4;
 
     -fx-font-family: 'Tahoma', Arial, sans-serif;
     font-family: 'Tahoma', Arial, sans-serif;
+
+    -fx-font-weight: bold;
+    font-weight: bold;
 
     -fx-font-size: 0.9em;
     font-size: 0.9em;
@@ -66,7 +68,10 @@
     background-color: #004ECC;
 
     -fx-text-fill: #FFFFFF;
-    -fx-background-radius: 8;
+    -fx-background-radius: 4;
+
+    -fx-font-weight: bold;
+    font-weight: bold;
 
     -fx-font-family: 'Tahoma', Arial, sans-serif;
     font-family: 'Tahoma', Arial, sans-serif;

@@ -17,7 +17,7 @@ public class JavaFXTest extends Application {
     private PasswordField passwordText;
     private TextField usernameText;
     public Label welcomeLabel;
-    private String welcomeString = "An email client designed by\nMallory Duke and Nathan Cheshire";
+    private String welcomeString = "An email client designed\nby Mallory Duke and Nathan Cheshire";
 
     public static void main(String[] args) {
         launch(args);
@@ -71,7 +71,7 @@ public class JavaFXTest extends Application {
 
         welcomeLabel = new Label(welcomeString);
         welcomeLabel.setAlignment(Pos.CENTER);
-        welcomeLabel.getStyleClass().add("scroll-label");
+        welcomeLabel.getStyleClass().add("welcome-label");
 
 //        Platform.runLater(() -> {
 //            while (true) {
