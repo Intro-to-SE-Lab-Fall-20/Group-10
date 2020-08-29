@@ -1,8 +1,6 @@
 package JavaFX;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,14 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.text.SimpleDateFormat;
-
 public class JavaFXTest extends Application {
     //todo change css to style wanted
     private PasswordField passwordText;
     private TextField usernameText;
     public Label welcomeLabel;
-    private String welcomeString = "An email client designed by Mallory Duke and Nathan Cheshire";
+    private String welcomeString = "An email client designed by\nMallory Duke and Nathan Cheshire";
 
     public static void main(String[] args) {
         launch(args);

@@ -49,33 +49,27 @@
 }
 
 .button{
-    -fx-background-color: #b63b37;
-    background-color: #b63b37;
+    -fx-background-color: #CB423C;
+    background-color: #CB423C;
 
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 8;
 
     -fx-font-family: 'Tahoma', Arial, sans-serif;
     font-family: 'Tahoma', Arial, sans-serif;
-
-    -fx-font-weight: bold;
-    font-weight: bold;
 
     -fx-font-size: 0.9em;
     font-size: 0.9em;
 }
 .button-blue{
-    -fx-background-color: #3c78d8;
-    background-color: #3c78d8;
+    -fx-background-color: #004ECC;
+    background-color: #004ECC;
 
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 8;
 
     -fx-font-family: 'Tahoma', Arial, sans-serif;
     font-family: 'Tahoma', Arial, sans-serif;
-
-    -fx-font-weight: bold;
-    font-weight: bold;
 
     -fx-font-size: 0.9em;
     font-size: 0.9em;
