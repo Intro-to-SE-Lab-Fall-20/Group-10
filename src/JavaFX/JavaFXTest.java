@@ -1,6 +1,8 @@
 package JavaFX;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,12 +11,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.text.SimpleDateFormat;
 
 public class JavaFXTest extends Application {
     //todo change css to style wanted
     private PasswordField passwordText;
     private TextField usernameText;
+    public Label welcomeLabel;
+    private String welcomeString = "An email client designed by Mallory Duke and Nathan Cheshire";
 
     public static void main(String[] args) {
         launch(args);
@@ -39,22 +46,19 @@ public class JavaFXTest extends Application {
         login.setTooltip(new Tooltip("Login"));
 
         Button switchAccount = new Button("Switch Accounts");
+        //todo change buttons to nicer looking with tooltips and popups
 
         HBox buttonHbox = new HBox(5);
         buttonHbox.getChildren().addAll(login, switchAccount);
 
         GridPane gridpane = new GridPane();
-        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"));
-
-        //new ImageView(image)
+        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),100,100,true,true);
 
         GridPane.setConstraints(usernameLabel, 0,1);
         GridPane.setConstraints(passwordLabel, 0,3);
         GridPane.setConstraints(usernameText, 0, 2);
         GridPane.setConstraints(passwordText, 0, 4);
-        //GridPane.setConstraints(login, 0, 5);
         GridPane.setConstraints(buttonHbox, 0, 5);
-        //GridPane.setConstraints(pb, 1,4);
 
         ChoiceBox<String> switchChoice = new ChoiceBox<>();
         switchChoice.getItems().add("Switch");
@@ -62,18 +66,41 @@ public class JavaFXTest extends Application {
 
         gridPane.getChildren().addAll(usernameLabel,  passwordLabel, usernameText, passwordText, buttonHbox);
         gridPane.setAlignment(Pos.CENTER);
-        gridPane.setPrefSize(500.0,500.0);
+        //gridPane.setPrefSize(500.0,500.0);
 
-        HBox mainCol = new HBox();
+        VBox mainCol = new VBox();
         mainCol.setPadding(new Insets(10));
         mainCol.setSpacing(8);
-        mainCol.getChildren().add(new Label("An email client designed by Mallory Duke and Nathan Cheshire"));
+        mainCol.setAlignment(Pos.CENTER);
 
-        //add scrolling text label
-        //add picture
-        //add gridPane
-        //free cell
-        //free cell
+        welcomeLabel = new Label(welcomeString);
+        welcomeLabel.setAlignment(Pos.CENTER);
+        welcomeLabel.getStyleClass().add("scroll-label");
+
+//        Platform.runLater(() -> {
+//            while (true) {
+//                Platform.runLater(() -> {
+//                    try {
+//                        welcomeLabel.setText("hi");
+//                        System.out.println("test");
+//                        Thread.sleep(1000);
+//                    }
+//
+//                    catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+//            }
+//        });
+        //todo trying to do a scrolling label but it's being a bitch :(
+
+        ImageView logo = new ImageView(image);
+        HBox imBox = new HBox();
+        imBox.setAlignment(Pos.CENTER);
+        imBox.getChildren().add(logo);
+        //todo image border
+
+        mainCol.getChildren().addAll(welcomeLabel, imBox, gridPane, new VBox(), new VBox());
 
         Scene scene = new Scene(mainCol, 400,400);
         scene.getStylesheets().add("JavaFX/style.css");
