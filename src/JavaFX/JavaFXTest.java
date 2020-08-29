@@ -6,14 +6,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-
 public class JavaFXTest extends Application {
     //todo change css to style wanted
     private PasswordField passwordText;
+    private TextField usernameText;
 
     public static void main(String[] args) {
         launch(args);
@@ -28,21 +29,24 @@ public class JavaFXTest extends Application {
         gridPane.setVgap(8);
         gridPane.setHgap(10);
 
-        Label usernameLabel = new Label("Username: ");
+        Label usernameLabel = new Label("Email: ");
         Label passwordLabel = new Label("Password: ");
-        TextField usernameText = new TextField();
+        usernameText = new TextField();
         passwordText = new PasswordField();
-        Button login = new Button("login");
+        Button login = new Button("Login");
         login.setOnAction(e-> verifyPassword());
         login.getStyleClass().add("button-blue");
-        login.setTooltip(new Tooltip("press to login"));
+        login.setTooltip(new Tooltip("Login"));
 
-        Button switchAccount = new Button("switch/logout");
+        Button switchAccount = new Button("Switch Accounts");
 
         HBox buttonHbox = new HBox(5);
         buttonHbox.getChildren().addAll(login, switchAccount);
-        //ProgressBar pb = new ProgressBar();
-        //pb.setPrefSize(200,30);
+
+        GridPane gridpane = new GridPane();
+        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"));
+
+        //new ImageView(image)
 
         GridPane.setConstraints(usernameLabel, 0,1);
         GridPane.setConstraints(passwordLabel, 0,3);
@@ -56,14 +60,22 @@ public class JavaFXTest extends Application {
         switchChoice.getItems().add("Switch");
         switchChoice.getItems().add("Logout");
 
-        // todo put in switch account/logout button
-
         gridPane.getChildren().addAll(usernameLabel,  passwordLabel, usernameText, passwordText, buttonHbox);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPrefSize(500.0,500.0);
 
+        HBox mainCol = new HBox();
+        mainCol.setPadding(new Insets(10));
+        mainCol.setSpacing(8);
+        mainCol.getChildren().add(new Label("An email client designed by Mallory Duke and Nathan Cheshire"));
 
-        Scene scene = new Scene(gridPane, 400,400);
+        //add scrolling text label
+        //add picture
+        //add gridPane
+        //free cell
+        //free cell
+
+        Scene scene = new Scene(mainCol, 400,400);
         scene.getStylesheets().add("JavaFX/style.css");
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
@@ -76,7 +88,6 @@ public class JavaFXTest extends Application {
     }
 
     private void verifyPassword(){
-        // todo use this method to validate the password
-        System.out.println("kajhflakdjf");
+        System.out.println(usernameText.getText() + "," + passwordText.getText());
     }
 }

@@ -1,35 +1,106 @@
 .root{
-    -fx-background-color: linear-gradient(to bottom, #00ffff, #6a5acd);
+    -fx-background-color: linear-gradient(to bottom, #eecda3, #ef629f);
+    background-color: linear-gradient(to bottom, #eecda3, #ef629f);
 }
-.root{
+/*.root{
     -fx-background-image: url("LoginBackground.png");
+    background-image: url("LoginBackground.png");
+
     -fx-background-repeat: stretch;
+    background-repeat: stretch;
+
     -fx-background-size: 1350 900;
+    background-size: 1350 900;
+
     -fx-background-position: center center;
+    background-position: center center;
+
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
-}
+}*/
 .label{
-    -fx-text-fill: #000000;
+    -fx-text-fill: rgb(255, 255, 255);
+    
+    -fx-background-radius: 8;
+
+    -fx-font-family: 'Tahoma', Arial, sans-serif;
+    font-family: 'Tahoma', Arial, sans-serif;
+
+    -fx-font-weight: bold;
+    font-weight: bold;
+
+    -fx-font-size: 1.2em;
+    font-size: 1.2em;
 }
+
 .button{
-    -fx-background-color: #AB4642;
+    -fx-background-color: #b63b37;
+    background-color: #b63b37;
+
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 8;
+
+    -fx-font-family: 'Tahoma', Arial, sans-serif;
+    font-family: 'Tahoma', Arial, sans-serif;
+
+    -fx-font-weight: bold;
+    font-weight: bold;
+
+    -fx-font-size: 0.9em;
+    font-size: 0.9em;
 }
 .button-blue{
     -fx-background-color: #3c78d8;
+    background-color: #3c78d8;
+
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 8;
+
     -fx-font-family: 'Tahoma', Arial, sans-serif;
+    font-family: 'Tahoma', Arial, sans-serif;
+
     -fx-font-weight: bold;
-    -fx-font-size: 1.2em;
+    font-weight: bold;
+
+    -fx-font-size: 0.9em;
+    font-size: 0.9em;
 }
 #bold-label{
     -fx-font-weight: bold;
+    font-weight: bold;
 }
+
+.text-field {
+    -fx-background-color: #ffffff;
+    background-color: #ffffff;
+
+    -fx-font-family: 'Tahoma', Arial, sans-serif;
+    font-family: 'Tahoma', Arial, sans-serif;
+
+    -fx-font-weight: bold;
+    font-weight: bold;
+
+    -fx-font-size: 0,8em;
+    font-size: 0,8em;
+}
+
+.text-field:focused {
+    -fx-background-color: rgb(120,100,256);
+    background-color: #59a7e7;
+    -fx-background-color: #59a7e7;
+}
+
 
 .progress-bar > .bar {
     -fx-background-color: linear-gradient(
+        from 0px .75em to .75em 0px,
+        repeat,
+        -fx-accent 0%,
+        -fx-accent 49%,
+        derive(-fx-accent, 30%) 50%,
+        derive(-fx-accent, 30%) 99%
+    );
+
+    background-color: linear-gradient(
         from 0px .75em to .75em 0px,
         repeat,
         -fx-accent 0%,
