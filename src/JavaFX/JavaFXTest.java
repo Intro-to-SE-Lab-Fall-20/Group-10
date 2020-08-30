@@ -37,10 +37,12 @@ public class JavaFXTest extends Application {
         login.getStyleClass().add("button-blue");
         login.setTooltip(new Tooltip("press to login"));
 
-        Button switchAccount = new Button("switch/logout");
-
-        HBox buttonHbox = new HBox(5);
-        buttonHbox.getChildren().addAll(login, switchAccount);
+        HBox hbox = new HBox(5);
+        ChoiceBox<String> switchChoice = new ChoiceBox<>();
+        switchChoice.getItems().add("switch account");
+        switchChoice.getItems().add("logout");
+        switchChoice.setValue("logout");
+        hbox.getChildren().addAll(login, switchChoice);
         //ProgressBar pb = new ProgressBar();
         //pb.setPrefSize(200,30);
 
@@ -49,16 +51,13 @@ public class JavaFXTest extends Application {
         GridPane.setConstraints(usernameText, 0, 2);
         GridPane.setConstraints(passwordText, 0, 4);
         //GridPane.setConstraints(login, 0, 5);
-        GridPane.setConstraints(buttonHbox, 0, 5);
+        GridPane.setConstraints(hbox, 0, 5);
         //GridPane.setConstraints(pb, 1,4);
 
-        ChoiceBox<String> switchChoice = new ChoiceBox<>();
-        switchChoice.getItems().add("Switch");
-        switchChoice.getItems().add("Logout");
-
+        GridPane.setConstraints(switchChoice, 0, 6);
         // todo put in switch account/logout button
 
-        gridPane.getChildren().addAll(usernameLabel,  passwordLabel, usernameText, passwordText, buttonHbox);
+        gridPane.getChildren().addAll(usernameLabel,  passwordLabel, usernameText, passwordText, hbox);
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPrefSize(500.0,500.0);
 
