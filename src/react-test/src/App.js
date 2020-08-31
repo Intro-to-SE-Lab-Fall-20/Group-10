@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Email from './Email';
 
 function App() {
 
-  const hello = () => {
-    console.log("Hello");
-  };
-
-const counter = 15;
-
   return(
-    <div>
-      <h1>Hello React</h1>
-  <button onClick={hello()}>{counter}</button>
+    
+
+    <div className = "app">
+      <h1>StraightShot</h1>
+      <Email from = "Nathan Cheshire" content = "I woke up in" attachements = "Chris_Brown.png"/>
+      <Email from = "Mallory Duke" content = "I woke up in" attachements = "Chris_Brown.png"/>
+      <Email from = "Sam Boggs" content = "I woke up in" attachements = "Chris_Brown.png"/>
+      <Email from = "Chadwick Boseman" content = "I woke up in" attachements = "Chris_Brown.png"/>
     </div>
   );
 }
