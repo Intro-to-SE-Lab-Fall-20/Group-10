@@ -50,6 +50,7 @@ public class JavaFXTest extends Application {
         GridPane gridpane = new GridPane();
         Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),100,100,true,true);
 
+        //
         GridPane.setConstraints(usernameLabel, 0,1);
         GridPane.setConstraints(passwordLabel, 0,3);
         GridPane.setConstraints(usernameText, 0, 2);
