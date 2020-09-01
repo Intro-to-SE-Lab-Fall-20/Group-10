@@ -108,6 +108,9 @@ public class JavaFXTest extends Application {
                         JavaFXTest.class.getResourceAsStream( "Logo.png")));
 
         primaryStage.show();
+
+        //todo create checkboxes that switch between different css files to give the user a theme option
+        //todo use all the info from the interface to store in a JSON file
     }
 
     private void verifyPassword(){
