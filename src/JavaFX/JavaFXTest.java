@@ -49,7 +49,7 @@ public class JavaFXTest extends Application {
         buttonHbox.getChildren().addAll(login, switchAccount);
 
         GridPane gridpane = new GridPane();
-        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),120,120,true,false);
+        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),140,140,false,true);
 
         GridPane.setConstraints(usernameLabel, 0,1);
         GridPane.setConstraints(passwordLabel, 0,3);
@@ -83,9 +83,22 @@ public class JavaFXTest extends Application {
         imBox.setAlignment(Pos.CENTER);
         imBox.getChildren().add(logo);
 
-        mainCol.getChildren().addAll(welcomeLabel, creatorNamesLabel, imBox, gridPane);
+        Label cLabel = new Label("Dark Mode");
+        cLabel.getStyleClass().add("dark-label");
+        HBox darkBox = new HBox();
+        darkBox.setPadding(new Insets(10));
+        darkBox.setSpacing(8);
+        darkBox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(mainCol, 400,400);
+        CheckBox darkMode = new CheckBox();
+        darkMode.setSelected(false);
+        darkMode.getStyleClass().add("css-checkbox");
+
+        darkBox.getChildren().addAll(darkMode,cLabel);
+
+        mainCol.getChildren().addAll(welcomeLabel, creatorNamesLabel, imBox, gridPane,darkBox);
+
+        Scene scene = new Scene(mainCol, 400,450);
         scene.getStylesheets().add("JavaFX/style.css");
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
@@ -94,9 +107,6 @@ public class JavaFXTest extends Application {
                         JavaFXTest.class.getResourceAsStream( "Logo.png")));
 
         primaryStage.show();
-
-        //todo create checkboxes for light mode vs dark mode in corner: nathan
-
 
         //todo use all the info from the interface to store in a JSON file: mallory
     }

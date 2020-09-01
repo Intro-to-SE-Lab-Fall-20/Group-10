@@ -10,6 +10,14 @@
     -fx-font-size: 1em;
 }
 
+.dark-label{
+    -fx-text-fill: black;
+    -fx-background-radius: 8;
+    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 0.8em;
+}
+
 .welcome-label {
     -fx-text-fill: rgb(0, 0, 0);
     -fx-background-radius: 8;
@@ -75,23 +83,18 @@
         #ffffff;;
 }
 
-
-.progress-bar > .bar {
-    -fx-background-color: linear-gradient(
-        from 0px .75em to .75em 0px,
-        repeat,
-        -fx-accent 0%,
-        -fx-accent 49%,
-        derive(-fx-accent, 30%) 50%,
-        derive(-fx-accent, 30%) 99%
-    );
-
-    background-color: linear-gradient(
-        from 0px .75em to .75em 0px,
-        repeat,
-        -fx-accent 0%,
-        -fx-accent 49%,
-        derive(-fx-accent, 30%) 50%,
-        derive(-fx-accent, 30%) 99%
-    );
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-radius:3px; 
+    -fx-font-family: sans-serif;
+}
+    
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+    
+.check-box:selected .box {
+    -fx-background-color: black;
+    color: white;
 }
