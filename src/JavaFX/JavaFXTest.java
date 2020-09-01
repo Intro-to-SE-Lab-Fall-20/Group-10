@@ -13,11 +13,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class JavaFXTest extends Application {
-    //todo change css to style wanted
     private PasswordField passwordText;
     private TextField usernameText;
     public Label welcomeLabel;
-    private String welcomeString = "An email client designed\nby Mallory Duke and Nathan Cheshire";
+    public Label creatorNamesLabel;
 
     public static void main(String[] args) {
         launch(args);
@@ -42,13 +41,15 @@ public class JavaFXTest extends Application {
         login.setTooltip(new Tooltip("Login"));
 
         Button switchAccount = new Button("Switch Accounts");
-        //todo change buttons to nicer looking with tooltips and popups
+        switchAccount.getStyleClass().add("button-red");
+
+        //todo add nice looking tooltips like cyder for all components: nathan
 
         HBox buttonHbox = new HBox(5);
         buttonHbox.getChildren().addAll(login, switchAccount);
 
         GridPane gridpane = new GridPane();
-        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),100,100,true,true);
+        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),120,120,true,false);
 
         GridPane.setConstraints(usernameLabel, 0,1);
         GridPane.setConstraints(passwordLabel, 0,3);
@@ -69,48 +70,35 @@ public class JavaFXTest extends Application {
         mainCol.setSpacing(8);
         mainCol.setAlignment(Pos.CENTER);
 
-        welcomeLabel = new Label(welcomeString);
+        welcomeLabel = new Label("An email client designed");
         welcomeLabel.setAlignment(Pos.CENTER);
         welcomeLabel.getStyleClass().add("welcome-label");
 
-//        Platform.runLater(() -> {
-//            while (true) {
-//                Platform.runLater(() -> {
-//                    try {
-//                        welcomeLabel.setText("hi");
-//                        System.out.println("test");
-//                        Thread.sleep(1000);
-//                    }
-//
-//                    catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                });
-//            }
-//        });
-        //todo trying to do a scrolling label but it's being a bitch :(
+        creatorNamesLabel = new Label("by Mallory Duke and Nathan Cheshire");
+        creatorNamesLabel.setAlignment(Pos.CENTER);
+        creatorNamesLabel.getStyleClass().add("welcome-label");
 
         ImageView logo = new ImageView(image);
         HBox imBox = new HBox();
         imBox.setAlignment(Pos.CENTER);
         imBox.getChildren().add(logo);
-        //todo image border
 
-        mainCol.getChildren().addAll(welcomeLabel, imBox, gridPane, new VBox(), new VBox());
+        mainCol.getChildren().addAll(welcomeLabel, creatorNamesLabel, imBox, gridPane);
 
         Scene scene = new Scene(mainCol, 400,400);
         scene.getStylesheets().add("JavaFX/style.css");
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
 
-        //how to set scene icon
         primaryStage.getIcons().add(new Image(
                         JavaFXTest.class.getResourceAsStream( "Logo.png")));
 
         primaryStage.show();
 
-        //todo create checkboxes that switch between different css files to give the user a theme option
-        //todo use all the info from the interface to store in a JSON file
+        //todo create checkboxes for light mode vs dark mode in corner: nathan
+
+
+        //todo use all the info from the interface to store in a JSON file: mallory
     }
 
     private void verifyPassword(){

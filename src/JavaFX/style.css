@@ -1,84 +1,52 @@
 .root{
-    -fx-background-color: linear-gradient(to bottom, #4568dc , #b06ab3);
-    background-color: linear-gradient(to bottom, #4568dc , #b06ab3);
+    -fx-background-color: linear-gradient(to bottom, white , c8d1d2);
+     background-color: linear-gradient(to bottom, white , c8d1d2);
 }
-/*.root{
-    -fx-background-image: url("LoginBackground.png");
-    background-image: url("LoginBackground.png");
-
-    -fx-background-repeat: stretch;
-    background-repeat: stretch;
-
-    -fx-background-size: 1350 900;
-    background-size: 1350 900;
-
-    -fx-background-position: center center;
-    background-position: center center;
-
-    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
-}*/
 .label{
-    -fx-text-fill: rgb(255, 255, 255);
-    
+    -fx-text-fill: black;
     -fx-background-radius: 8;
-
-    -fx-font-family: 'Tahoma', Arial, sans-serif;
-    font-family: 'Tahoma', Arial, sans-serif;
-
+    -fx-font-family: 'Tahoma';
     -fx-font-weight: bold;
-    font-weight: bold;
-
-    -fx-font-size: 1.2em;
-    font-size: 1.2em;
+    -fx-font-size: 1em;
 }
 
 .welcome-label {
-    -fx-text-fill: rgb(255, 255, 255);
-    
+    -fx-text-fill: rgb(0, 0, 0);
     -fx-background-radius: 8;
-
-    -fx-font-family: 'Arial Black';
-    font-family:  'Arial Black';
-
+    text-align: center;
+    -fx-font-family: 'Tahoma';
     -fx-font-weight: bold;
-    font-weight: bold;
-
     -fx-font-size: 1.2em;
-    font-size: 1.2em;
 }
 
-.button{
-    -fx-background-color: #CB423C;
-    background-color: #CB423C;
-
-    -fx-text-fill: #FFFFFF;
+.button-red{
+    -fx-background-color: #e2174d;
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
     -fx-background-radius: 4;
-
-    -fx-font-family: 'Tahoma', Arial, sans-serif;
-    font-family: 'Tahoma', Arial, sans-serif;
-
     -fx-font-weight: bold;
-    font-weight: bold;
-
-    -fx-font-size: 0.9em;
-    font-size: 0.9em;
+    -fx-font-size: 13;
 }
+
+.button-red:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #e2174d;
+}
+
 .button-blue{
-    -fx-background-color: #004ECC;
-    background-color: #004ECC;
-
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
     -fx-background-radius: 4;
-
     -fx-font-weight: bold;
-    font-weight: bold;
-
-    -fx-font-family: 'Tahoma', Arial, sans-serif;
-    font-family: 'Tahoma', Arial, sans-serif;
-
-    -fx-font-size: 0.9em;
-    font-size: 0.9em;
+    -fx-font-size: 13;
 }
+
+.button-blue:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #2196f3;
+}
+
 #bold-label{
     -fx-font-weight: bold;
     font-weight: bold;
@@ -88,8 +56,8 @@
     -fx-background-color: #ffffff;
     background-color: #ffffff;
 
-    -fx-font-family: 'Tahoma', Arial, sans-serif;
-    font-family: 'Tahoma', Arial, sans-serif;
+    -fx-font-family: sans-serif;
+    font-family:  sans-serif;
 
     -fx-font-weight: bold;
     font-weight: bold;
@@ -99,9 +67,12 @@
 }
 
 .text-field:focused {
-    -fx-background-color: rgb(120,100,256);
-    background-color: #59a7e7;
-    -fx-background-color: #59a7e7;
+    -fx-background-color:
+        #2196f3,
+        #ffffff;
+    background-color: 
+        #2196f3,
+        #ffffff;;
 }
 
 
