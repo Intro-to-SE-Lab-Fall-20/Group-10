@@ -5,12 +5,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 
 public class JavaFXTest extends Application {
     private PasswordField passwordText;
@@ -33,17 +37,29 @@ public class JavaFXTest extends Application {
 
         Label usernameLabel = new Label("Email: ");
         Label passwordLabel = new Label("Password: ");
+
         usernameText = new TextField();
+        Tooltip loginFieldTip = new Tooltip("Complete email (ex: Nathan@Domain.com)");
+        loginFieldTip.getStyleClass().add("tooltip");
+        usernameText.setTooltip(loginFieldTip);
+
         passwordText = new PasswordField();
+        Tooltip passwordTip = new Tooltip("Password");
+        passwordTip.getStyleClass().add("tooltip");
+        passwordText.setTooltip(passwordTip);
+
         Button login = new Button("Login");
         login.setOnAction(e-> verifyPassword());
         login.getStyleClass().add("button-blue");
-        login.setTooltip(new Tooltip("Login"));
+        Tooltip loginTip = new Tooltip("Login");
+        loginTip.getStyleClass().add("tooltip");
+        login.setTooltip(loginTip);
 
         Button switchAccount = new Button("Switch Accounts");
         switchAccount.getStyleClass().add("button-red");
-
-        //todo add nice looking tooltips like cyder for all components: nathan
+        Tooltip switchTooltip = new Tooltip("Switch between other accounts");
+        switchTooltip.getStyleClass().add("tooltip");
+        switchAccount.setTooltip(switchTooltip);
 
         HBox buttonHbox = new HBox(5);
         buttonHbox.getChildren().addAll(login, switchAccount);
@@ -57,13 +73,8 @@ public class JavaFXTest extends Application {
         GridPane.setConstraints(passwordText, 0, 4);
         GridPane.setConstraints(buttonHbox, 0, 5);
 
-        ChoiceBox<String> switchChoice = new ChoiceBox<>();
-        switchChoice.getItems().add("Switch");
-        switchChoice.getItems().add("Logout");
-
         gridPane.getChildren().addAll(usernameLabel,  passwordLabel, usernameText, passwordText, buttonHbox);
         gridPane.setAlignment(Pos.CENTER);
-        //gridPane.setPrefSize(500.0,500.0);
 
         VBox mainCol = new VBox();
         mainCol.setPadding(new Insets(10));
@@ -93,6 +104,9 @@ public class JavaFXTest extends Application {
         CheckBox darkMode = new CheckBox();
         darkMode.setSelected(false);
         darkMode.getStyleClass().add("css-checkbox");
+        Tooltip darkTooltip = new Tooltip("Enable Dark Mode");
+        darkTooltip.getStyleClass().add("tooltip");
+        darkMode.setTooltip(darkTooltip);
 
         darkBox.getChildren().addAll(darkMode,cLabel);
 

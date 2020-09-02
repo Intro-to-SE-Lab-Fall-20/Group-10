@@ -98,3 +98,11 @@
     -fx-background-color: black;
     color: white;
 }
+
+.tooltip {
+    -fx-background-color: rgb(39, 40, 34); 
+    -fx-text-fill: rgb(85,85,255); 
+    -fx-font-family: tahoma;
+     -fx-font-weight: bold;
+     -fx-border-radius: 6px; 
+}
