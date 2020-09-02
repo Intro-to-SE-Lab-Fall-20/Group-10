@@ -1,8 +1,6 @@
 package JavaFX;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,13 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.json.simple.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class JavaFXTest extends Application {
@@ -33,7 +26,7 @@ public class JavaFXTest extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage)  {
         primaryStage.setTitle("StraightShot");
 
         GridPane gridPane = new GridPane();
@@ -71,14 +64,14 @@ public class JavaFXTest extends Application {
         loginTip.getStyleClass().add("tooltip");
         login.setTooltip(loginTip);
 
-        Button switchAccount = new Button("Switch Accounts");
-        switchAccount.getStyleClass().add("button-red");
-        Tooltip switchTooltip = new Tooltip("Switch between other accounts");
+        Button switchCSS = new Button("Switch style");
+        switchCSS.getStyleClass().add("button-red");
+        Tooltip switchTooltip = new Tooltip("Switch between css styles");
         switchTooltip.getStyleClass().add("tooltip");
-        switchAccount.setTooltip(switchTooltip);
+        switchCSS.setTooltip(switchTooltip);
 
         HBox buttonHbox = new HBox(5);
-        buttonHbox.getChildren().addAll(login, switchAccount);
+        buttonHbox.getChildren().addAll(login, switchCSS);
 
         GridPane gridpane = new GridPane();
         Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),140,140,false,true);
@@ -110,39 +103,10 @@ public class JavaFXTest extends Application {
         imBox.setAlignment(Pos.CENTER);
         imBox.getChildren().add(logo);
 
-        ColorPicker cp = new ColorPicker(Color.BLACK);
-        cp.getStyleClass().add("color-picker");
-        Tooltip colorTooltip = new Tooltip("Choose a theme color");
-        colorTooltip.getStyleClass().add("tooltip");
-        cp.setTooltip(colorTooltip);
-        // todo suggestion - how about you just give the user previews of the themes by creating multiple css
-        // todo themes and then keeping the value stored in a var then change the stylesheet below
-
-        EventHandler<ActionEvent> event = e -> {
-            //todo on actions switch label colors and background gradient to black, switch checkbox to white
-            //todo add conditions for the above ones when starting up
-            System.out.println(cp.getValue());
-            //todo if not null
-            if (true) {
-                try {
-                    BufferedWriter darkReader = new BufferedWriter(new FileWriter("UserHex.txt",false));
-                    darkReader.write(""); //todo write color
-                    darkReader.flush();
-                    darkReader.close();
-                    //todo inform a restart needs to occur to take affect
-                }
-
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        };
-        cp.setOnAction(event);
-
-        mainCol.getChildren().addAll(this.welcomeLabel, this.creatorNamesLabel, imBox, gridPane, cp);
+        mainCol.getChildren().addAll(this.welcomeLabel, this.creatorNamesLabel, imBox, gridPane);
 
         Scene scene = new Scene(mainCol, 400,450);
-        scene.getStylesheets().add("JavaFX/style.css");
+        scene.getStylesheets().add("JavaFX/styles/style.css");
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
