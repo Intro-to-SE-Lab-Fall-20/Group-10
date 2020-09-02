@@ -154,6 +154,7 @@ public class JavaFXTest extends Application {
     @Override
     public void stop() throws IOException {
         user.deleteUser();
+        // confusion
     }
 
     private void verifyPassword(){
