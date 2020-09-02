@@ -1,27 +1,22 @@
 package JavaFX;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
-
 
 public class JavaFXTest extends Application {
     private PasswordField passwordText;
@@ -101,64 +96,40 @@ public class JavaFXTest extends Application {
         imBox.setAlignment(Pos.CENTER);
         imBox.getChildren().add(logo);
 
-        Label cLabel = new Label("Dark Mode");
-        cLabel.getStyleClass().add("dark-label");
-        HBox darkBox = new HBox();
-        darkBox.setPadding(new Insets(10));
-        darkBox.setSpacing(8);
-        darkBox.setAlignment(Pos.CENTER);
+        ColorPicker cp = new ColorPicker(Color.BLACK);
+        cp.getStyleClass().add("color-picker");
+        Tooltip colorTooltip = new Tooltip("Choose a theme color");
+        colorTooltip.getStyleClass().add("tooltip");
+        cp.setTooltip(colorTooltip);
 
-        CheckBox darkMode = new CheckBox();
-        darkMode.setSelected(false);
-        darkMode.getStyleClass().add("check-box");
-
-        darkMode.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        EventHandler<ActionEvent> event = e -> {
             //todo on actions switch label colors and background gradient to black, switch checkbox to white
             //todo add conditions for the above ones when starting up
-
-            if (newValue) {
+            System.out.println(cp.getValue());
+            //todo if not null
+            if (true) {
                 try {
-                    BufferedWriter darkReader = new BufferedWriter(new FileWriter("DarkMode.txt",false));
-                    darkReader.write("1");
+                    BufferedWriter darkReader = new BufferedWriter(new FileWriter("UserHex.txt",false));
+                    darkReader.write(""); //todo write color
                     darkReader.flush();
                     darkReader.close();
                     //todo inform a restart needs to occur to take affect
                 }
 
-                catch (Exception e) {
-                    e.printStackTrace();
+                catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
+        };
+        cp.setOnAction(event);
 
-            else {
-                try {
-                    BufferedWriter darkReader = new BufferedWriter(new FileWriter("DarkMode.txt",false));
-                    darkReader.write("0");
-                    darkReader.flush();
-                    darkReader.close();
-                    //todo inform a restart needs to occur to take affect
-                }
-
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
-        Tooltip darkTooltip = new Tooltip("Enable Dark Mode");
-        darkTooltip.getStyleClass().add("tooltip");
-        darkMode.setTooltip(darkTooltip);
-
-        darkBox.getChildren().addAll(darkMode,cLabel);
-
-        mainCol.getChildren().addAll(welcomeLabel, creatorNamesLabel, imBox, gridPane,darkBox);
+        mainCol.getChildren().addAll(welcomeLabel, creatorNamesLabel, imBox, gridPane, cp);
 
         Scene scene = new Scene(mainCol, 400,450);
         scene.getStylesheets().add("JavaFX/style.css");
+
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
-
         primaryStage.getIcons().add(new Image(
                         JavaFXTest.class.getResourceAsStream( "Logo.png")));
         primaryStage.show();

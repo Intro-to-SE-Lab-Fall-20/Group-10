@@ -18,6 +18,14 @@
     -fx-font-size: 0.8em;
 }
 
+.light-label{
+    -fx-text-fill: black;
+    -fx-background-radius: 8;
+    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 0.8em;
+}
+
 .welcome-label {
     -fx-text-fill: rgb(0, 0, 0);
     -fx-background-radius: 8;
@@ -83,20 +91,14 @@
         #ffffff;;
 }
 
-.check-box .box {
+.color-picker {
     -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-border-radius:3px; 
+    -fx-text-fill: white;
     -fx-font-family: sans-serif;
-}
-    
-.check-box:selected .mark {
-    -fx-background-color: white;
-}
-    
-.check-box:selected .box {
-    -fx-background-color: black;
-    color: white;
+    -fx-border-color: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+    -fx-border-width: 1.5;
 }
 
 .tooltip {
