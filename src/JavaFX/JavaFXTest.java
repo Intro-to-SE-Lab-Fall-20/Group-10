@@ -115,6 +115,8 @@ public class JavaFXTest extends Application {
         Tooltip colorTooltip = new Tooltip("Choose a theme color");
         colorTooltip.getStyleClass().add("tooltip");
         cp.setTooltip(colorTooltip);
+        // todo suggestion - how about you just give the user previews of the themes by creating multiple css
+        // todo themes and then keeping the value stored in a var then change the stylesheet below
 
         EventHandler<ActionEvent> event = e -> {
             //todo on actions switch label colors and background gradient to black, switch checkbox to white
