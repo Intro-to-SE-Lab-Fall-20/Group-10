@@ -35,17 +35,22 @@ public class JavaFXTest extends Application {
         gridPane.setHgap(10);
 
         Label usernameLabel = new Label("Email: ");
+        usernameLabel.getStyleClass().add("description-label");
         Label passwordLabel = new Label("Password: ");
+        passwordLabel.getStyleClass().add("description-label");
 
         this.usernameText = new TextField();
-        Tooltip loginFieldTip = new Tooltip("Complete email (ex: Nathan@Domain.com)");
+        Tooltip loginFieldTip = new Tooltip("Complete email (ex: Straight@Shot.com)");
         loginFieldTip.getStyleClass().add("tooltip");
         this.usernameText.setTooltip(loginFieldTip);
+        usernameText.getStyleClass().add("input-field");
 
         this.passwordText = new PasswordField();
         Tooltip passwordTip = new Tooltip("Password");
         passwordTip.getStyleClass().add("tooltip");
+        passwordTip.getStyleClass().add("tooltip");
         this.passwordText.setTooltip(passwordTip);
+        passwordText.getStyleClass().add("input-field");
 
         Button login = new Button("Login");
         login.setOnAction(e-> {
@@ -59,13 +64,13 @@ public class JavaFXTest extends Application {
             }
 
         });
-        login.getStyleClass().add("button-blue");
+        login.getStyleClass().add("button-login");
         Tooltip loginTip = new Tooltip("Login");
         loginTip.getStyleClass().add("tooltip");
         login.setTooltip(loginTip);
 
         Button switchCSS = new Button("Switch style");
-        switchCSS.getStyleClass().add("button-red");
+        switchCSS.getStyleClass().add("button-switch");
         Tooltip switchTooltip = new Tooltip("Switch between css styles");
         switchTooltip.getStyleClass().add("tooltip");
         switchCSS.setTooltip(switchTooltip);

@@ -2,28 +2,13 @@
     -fx-background-color: linear-gradient(to bottom, white , c8d1d2);
      background-color: linear-gradient(to bottom, white , c8d1d2);
 }
-.label{
+
+.description-label{
     -fx-text-fill: black;
     -fx-background-radius: 8;
     -fx-font-family: 'Tahoma';
     -fx-font-weight: bold;
     -fx-font-size: 1em;
-}
-
-.dark-label{
-    -fx-text-fill: black;
-    -fx-background-radius: 8;
-    -fx-font-family: sans-serif;
-    -fx-font-weight: bold;
-    -fx-font-size: 0.8em;
-}
-
-.light-label{
-    -fx-text-fill: black;
-    -fx-background-radius: 8;
-    -fx-font-family: sans-serif;
-    -fx-font-weight: bold;
-    -fx-font-size: 0.8em;
 }
 
 .welcome-label {
@@ -35,7 +20,7 @@
     -fx-font-size: 1.2em;
 }
 
-.button-red{
+.button-switch{
     -fx-background-color: #e2174d;
     -fx-text-fill: white;
     -fx-font-family: sans-serif;
@@ -44,12 +29,12 @@
     -fx-font-size: 13;
 }
 
-.button-red:hover {
+.button-switch:hover {
     -fx-background-color: white;
     -fx-text-fill: #e2174d;
 }
 
-.button-blue{
+.button-login{
     -fx-background-color: #2196f3;
     -fx-text-fill: white;
     -fx-font-family: sans-serif;
@@ -58,17 +43,12 @@
     -fx-font-size: 13;
 }
 
-.button-blue:hover {
+.button-login:hover {
     -fx-background-color: white;
     -fx-text-fill: #2196f3;
 }
 
-#bold-label{
-    -fx-font-weight: bold;
-    font-weight: bold;
-}
-
-.text-field {
+.input-field {
     -fx-background-color: #ffffff;
     background-color: #ffffff;
 
@@ -82,23 +62,13 @@
     font-size: 0,8em;
 }
 
-.text-field:focused {
+.input-field:focused {
     -fx-background-color:
         #2196f3,
         #ffffff;
     background-color: 
         #2196f3,
         #ffffff;;
-}
-
-.color-picker {
-    -fx-background-color: white;
-    -fx-text-fill: white;
-    -fx-font-family: sans-serif;
-    -fx-border-color: black;
-    -fx-font-weight: bold;
-    -fx-font-size: 13;
-    -fx-border-width: 1.5;
 }
 
 .tooltip {
