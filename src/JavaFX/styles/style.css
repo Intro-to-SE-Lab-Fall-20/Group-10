@@ -20,19 +20,35 @@
     -fx-font-size: 1.2em;
 }
 
-.button-switch{
+.choice-box {
     -fx-background-color: #e2174d;
-    -fx-text-fill: white;
-    -fx-font-family: sans-serif;
-    -fx-background-radius: 4;
+   -fx-mark-color: white; 
+   -fx-font-family: sans-serif;
     -fx-font-weight: bold;
-    -fx-font-size: 13;
 }
 
-.button-switch:hover {
-    -fx-background-color: white;
-    -fx-text-fill: #e2174d;
+.choice-box > .label { 
+    -fx-text-fill: white; 
+    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
 }
+
+.choice-box .context-menu { 
+    -fx-background-color: #e2174d;
+}
+
+.choice-box .menu-item:focused { 
+    -fx-background-color: #bb123f; 
+}
+
+.choice-box .menu-item > .label {
+     -fx-text-fill: white; 
+    }
+
+.choice-box .menu-item:focused > .label {
+    -fx-background-color: #bb123f;
+}
+
 
 .button-login{
     -fx-background-color: #2196f3;

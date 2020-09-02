@@ -1,6 +1,8 @@
 package JavaFX;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,7 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class JavaFXTest extends Application {
     private PasswordField passwordText;
@@ -69,8 +73,18 @@ public class JavaFXTest extends Application {
         loginTip.getStyleClass().add("tooltip");
         login.setTooltip(loginTip);
 
-        Button switchCSS = new Button("Switch style");
-        switchCSS.getStyleClass().add("button-switch");
+        ChoiceBox switchCSS = new ChoiceBox();
+
+        try {
+            switchCSS.getItems().addAll(getCSSFiles());
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        switchCSS.setValue("style");
+        switchCSS.getStyleClass().add("choice-box");
         Tooltip switchTooltip = new Tooltip("Switch between css styles");
         switchTooltip.getStyleClass().add("tooltip");
         switchCSS.setTooltip(switchTooltip);
@@ -112,6 +126,7 @@ public class JavaFXTest extends Application {
 
         Scene scene = new Scene(mainCol, 400,450);
         scene.getStylesheets().add("JavaFX/styles/style.css");
+        //todo add a way to utilize css file here depending on what user selected (will need data from user object)
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
@@ -123,10 +138,24 @@ public class JavaFXTest extends Application {
     @Override
     public void stop() throws IOException {
         user.deleteUser();
-        // confusion
     }
 
     private void verifyPassword(){
         System.out.println(this.usernameText.getText() + "," + this.passwordText.getText());
+    }
+
+    private ArrayList getCSSFiles() throws Exception{
+        File[] files = new File("src\\JavaFX\\styles").listFiles();
+        ArrayList<String> cssFiles = new ArrayList<>();
+
+        for (File f: files) {
+            if (f.getName().endsWith(".css")) {
+                cssFiles.add(f.getName().replace(".css",""));
+            }
+        }
+
+        if (cssFiles.isEmpty()) throw new Exception("No CSS file was found");
+
+        return cssFiles;
     }
 }
