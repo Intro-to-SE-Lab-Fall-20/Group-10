@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 
+// doing this for pull request
 public class User {
     private String username;
     private String password;
