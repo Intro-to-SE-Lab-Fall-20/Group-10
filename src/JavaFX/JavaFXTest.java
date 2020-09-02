@@ -151,6 +151,11 @@ public class JavaFXTest extends Application {
         primaryStage.show();
     }
 
+    @Override
+    public void stop() throws IOException {
+        user.deleteUser();
+    }
+
     private void verifyPassword(){
         System.out.println(this.usernameText.getText() + "," + this.passwordText.getText());
     }

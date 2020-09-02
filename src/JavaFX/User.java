@@ -38,6 +38,12 @@ public class User {
         }
     }
 
+    public void deleteUser() throws IOException {
+        FileWriter file = new FileWriter("user.txt");
+        file.write("");
+        file.close();
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
