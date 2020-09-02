@@ -104,5 +104,5 @@
     -fx-text-fill: rgb(85,85,255); 
     -fx-font-family: tahoma;
      -fx-font-weight: bold;
-     -fx-border-radius: 6px; 
+     -fx-border-radius:1px 1px 1px 1px; 
 }

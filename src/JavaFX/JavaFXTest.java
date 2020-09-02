@@ -1,6 +1,8 @@
 package JavaFX;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,6 +16,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 
 public class JavaFXTest extends Application {
@@ -103,7 +110,42 @@ public class JavaFXTest extends Application {
 
         CheckBox darkMode = new CheckBox();
         darkMode.setSelected(false);
-        darkMode.getStyleClass().add("css-checkbox");
+        darkMode.getStyleClass().add("check-box");
+
+        darkMode.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            //todo on actions switch label colors and background gradient to black, switch checkbox to white
+            //todo add conditions for the above ones when starting up
+
+            if (newValue) {
+                try {
+                    BufferedWriter darkReader = new BufferedWriter(new FileWriter("DarkMode.txt",false));
+                    darkReader.write("1");
+                    darkReader.flush();
+                    darkReader.close();
+                    //todo inform a restart needs to occur to take affect
+                }
+
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            else {
+                try {
+                    BufferedWriter darkReader = new BufferedWriter(new FileWriter("DarkMode.txt",false));
+                    darkReader.write("0");
+                    darkReader.flush();
+                    darkReader.close();
+                    //todo inform a restart needs to occur to take affect
+                }
+
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         Tooltip darkTooltip = new Tooltip("Enable Dark Mode");
         darkTooltip.getStyleClass().add("tooltip");
         darkMode.setTooltip(darkTooltip);
@@ -119,7 +161,6 @@ public class JavaFXTest extends Application {
 
         primaryStage.getIcons().add(new Image(
                         JavaFXTest.class.getResourceAsStream( "Logo.png")));
-
         primaryStage.show();
 
         //todo use all the info from the interface to store in a JSON file: mallory
