@@ -1,8 +1,7 @@
 package JavaFX;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,11 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class JavaFXTest extends Application {
+    private VBox mainCol;
     private PasswordField passwordText;
     private TextField usernameText;
     public Label welcomeLabel;
@@ -58,7 +59,7 @@ public class JavaFXTest extends Application {
 
         Button login = new Button("Login");
         login.setOnAction(e-> {
-            verifyPassword();
+            verifyPassword(e);
             this.user.setUsername(this.usernameText.getText());
             this.user.setPassword(this.passwordText.getText());
             try {
@@ -104,7 +105,7 @@ public class JavaFXTest extends Application {
         gridPane.getChildren().addAll(usernameLabel,  passwordLabel, this.usernameText, this.passwordText, buttonHbox);
         gridPane.setAlignment(Pos.CENTER);
 
-        VBox mainCol = new VBox();
+        mainCol = new VBox();
         mainCol.setPadding(new Insets(10));
         mainCol.setSpacing(8);
         mainCol.setAlignment(Pos.CENTER);
@@ -140,8 +141,9 @@ public class JavaFXTest extends Application {
         user.deleteUser();
     }
 
-    private void verifyPassword(){
+    private void verifyPassword(ActionEvent e){
         System.out.println(this.usernameText.getText() + "," + this.passwordText.getText());
+        openEmailGUI(e);
     }
 
     private ArrayList getCSSFiles() throws Exception{
@@ -157,5 +159,9 @@ public class JavaFXTest extends Application {
         if (cssFiles.isEmpty()) throw new Exception("No CSS file was found");
 
         return cssFiles;
+    }
+
+    private void openEmailGUI(ActionEvent event) {
+        JOptionPane.showMessageDialog(null,"Make a cool transition here to the email screen");
     }
 }
