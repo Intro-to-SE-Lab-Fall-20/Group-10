@@ -13,10 +13,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class JavaFXTest extends Application {
     private VBox mainCol;
@@ -142,8 +149,8 @@ public class JavaFXTest extends Application {
     }
 
     private void verifyPassword(ActionEvent e){
-        System.out.println(this.usernameText.getText() + "," + this.passwordText.getText());
-        openEmailGUI(e);
+        emailTest();
+        //todo remove me soon
     }
 
     private ArrayList getCSSFiles() throws Exception{
@@ -163,5 +170,35 @@ public class JavaFXTest extends Application {
 
     private void openEmailGUI(ActionEvent event) {
         JOptionPane.showMessageDialog(null,"Make a cool transition here to the email screen");
+    }
+
+    private void emailTest() {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.host", "gator3166.hostgator.com"); //todo change these props for specific email service
+        props.put("mail.smtp.port", 587); //I believe 587 is std
+
+        Session ses = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(usernameText.getText(), passwordText.getText());
+            }
+        });
+
+        MimeMessage message = new MimeMessage(ses);
+
+        try {
+            message.setFrom(new InternetAddress("straightshot@dqnorthshore.com"));
+
+            //here we can have TO, BCC, and CC even though they're not required
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress("nathan.vincent.2.718@gmail.com"));
+            message.setSubject("StraightShot first Email test");
+            message.setText("Email body here. Throw the dead body away as soon as possible.");
+            Transport.send(message);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
