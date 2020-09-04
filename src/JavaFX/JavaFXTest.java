@@ -179,7 +179,7 @@ public class JavaFXTest extends Application {
         props.put("mail.smtp.host", "gator3166.hostgator.com"); //todo this changes based on email domain
         props.put("mail.smtp.port", 587); //I believe 587 is std
 
-        //todo error here for some reason
+        //todo error here for session
         Session ses = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(usernameText.getText(), passwordText.getText());
