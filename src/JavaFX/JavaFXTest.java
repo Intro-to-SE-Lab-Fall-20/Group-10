@@ -13,16 +13,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
 public class JavaFXTest extends Application {
@@ -149,7 +147,7 @@ public class JavaFXTest extends Application {
     }
 
     private void verifyPassword(ActionEvent e){
-        emailTest();
+        test();
         //todo remove me soon
     }
 
@@ -172,35 +170,43 @@ public class JavaFXTest extends Application {
         JOptionPane.showMessageDialog(null,"Make a cool transition here to the email screen");
     }
 
-    private void emailTest() {
+    private void test() {
         Properties props = new Properties();
+
         props.put("mail.smtp.auth", true);
         props.put("mail.smtp.starttls.enable", true);
-        props.put("mail.smtp.host", "gator3166.hostgator.com"); //todo this changes based on email domain
+        props.put("mail.smtp.host", "mail.dqnorthshore.com"); //todo this changes based on email domain
         props.put("mail.smtp.port", 587); //I believe 587 is std
 
-        //todo error here for session
-        Session ses = Session.getInstance(props, new javax.mail.Authenticator() {
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(usernameText.getText(), passwordText.getText());
             }
         });
 
-        MimeMessage message = new MimeMessage(ses);
+        Message message = prepareMessage(session,usernameText.getText(), "nathan.vincent.2.718@gmail.com");
 
         try {
-            message.setFrom(new InternetAddress("straightshot@dqnorthshore.com"));
-
-            //todo switch statement for TO, BCC, and CC even though they're not required
-            //we use .addRecipients I believe
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("nathan.vincent.2.718@gmail.com"));
-            message.setSubject("StraightShot first Email test");
-            message.setText("Email body here. Throw the dead body away as soon as possible.");
             Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Message prepareMessage(Session session, String account, String recip) {
+        try {
+            Message mes = new MimeMessage(session);
+            mes.setFrom(new InternetAddress(account));
+            mes.setRecipient(Message.RecipientType.TO, new InternetAddress(recip));
+            mes.setSubject("Subject about java mail for straightshot");
+            mes.setText("Hide the body as soon as you can!");
         }
 
         catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 }
