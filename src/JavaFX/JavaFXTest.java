@@ -20,8 +20,12 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.UUID;
 
 public class JavaFXTest extends Application {
     private VBox mainCol;
@@ -154,10 +158,57 @@ public class JavaFXTest extends Application {
     }
 
     private void encryptPassword(ActionEvent e) {
+        String encryptedPassword = toHexString(getSHA(passwordText.getText().toCharArray()));
+        System.out.println("Encrypted Password: " + encryptedPassword);
         test();
-        //todo encrypt user password here
     }
 
+    //Secure Hashing Algorithm 256 bit std encryption
+    public byte[] getSHA(char[] input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            return md.digest(new String(input).getBytes(StandardCharsets.UTF_8));
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    //returns hex representation of bit string
+    public String toHexString(byte[] hash) {
+        BigInteger number = new BigInteger(1, hash);
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        while (hexString.length() < 32) {
+            hexString.insert(0, '0');
+        }
+
+        return hexString.toString();
+    }
+
+    //todo might not need this method but here incase we need a UUID generator
+    public String generateUUID() {
+        try {
+            MessageDigest salt =MessageDigest.getInstance("SHA-256");
+            salt.update(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
+            return UUID.nameUUIDFromBytes(salt.digest()).toString();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    //for mallory: https://www.youtube.com/watch?v=T3NlWMzPyXM&ab_channel=GenuineCoder
+    //how to install the scene builder I use
+
+    //todo to allow more robust solution to this problem can't you just reuse the method I did below
+    //todo and then get the name from that?
     private String grabStyleFileName(String theme) {
         switch (theme) {
             case "blueStyle":
@@ -220,6 +271,15 @@ public class JavaFXTest extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    //todo make slide animation for mallory's email scene: nathan
+    //todo make undecored scene with drag stuff: nathan
+    //todo remove background gradient and allow customization of overall background in css:nathan
+    //todo make bluecss: nathan
+    private Scene getTestScene() {
+
         return null;
     }
 }
