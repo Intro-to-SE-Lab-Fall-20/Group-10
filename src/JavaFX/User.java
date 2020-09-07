@@ -14,7 +14,7 @@ public class User {
     public User() {
         this.username = "";
         this.password = "";
-        this.theme = "";
+        this.theme = "style";
     }
     public void writeUser() throws IOException {
         //todo use all the info from the interface to store in a JSON file: mallory
@@ -55,5 +55,17 @@ public class User {
 
     public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getTheme() {
+        return theme;
     }
 }

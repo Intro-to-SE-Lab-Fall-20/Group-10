@@ -1,6 +1,7 @@
 package JavaFX;
 
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +21,6 @@ import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Properties;
 
 public class JavaFXTest extends Application {
@@ -36,11 +36,12 @@ public class JavaFXTest extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage)  {
+    public void start(Stage primaryStage) {
+        // todo change order of choice box and login button so that everything is defined that is needed before login
         primaryStage.setTitle("StraightShot");
 
         GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10,10,10,10));
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(8);
         gridPane.setHgap(10);
 
@@ -63,8 +64,8 @@ public class JavaFXTest extends Application {
         passwordText.getStyleClass().add("input-field");
 
         Button login = new Button("Login");
-        login.setOnAction(e-> {
-            verifyPassword(e);
+        login.setOnAction(e -> {
+            encryptPassword(e);
             this.user.setUsername(this.usernameText.getText());
             this.user.setPassword(this.passwordText.getText());
             try {
@@ -72,8 +73,8 @@ public class JavaFXTest extends Application {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
         });
+
         login.getStyleClass().add("button-login");
         Tooltip loginTip = new Tooltip("Login");
         loginTip.getStyleClass().add("tooltip");
@@ -83,9 +84,7 @@ public class JavaFXTest extends Application {
 
         try {
             switchCSS.getItems().addAll(getCSSFiles());
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -95,19 +94,25 @@ public class JavaFXTest extends Application {
         switchTooltip.getStyleClass().add("tooltip");
         switchCSS.setTooltip(switchTooltip);
 
+        try {
+            switchCSS.getSelectionModel().selectedItemProperty()
+                    .addListener((ObservableValue observable, Object oldValue, Object newValue) -> user.setTheme(newValue.toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         HBox buttonHbox = new HBox(5);
         buttonHbox.getChildren().addAll(login, switchCSS);
 
-        GridPane gridpane = new GridPane();
-        Image image = new Image(JavaFXTest.class.getResourceAsStream( "Logo.png"),140,140,false,true);
+        Image image = new Image(JavaFXTest.class.getResourceAsStream("Logo.png"), 140, 140, false, true);
 
-        GridPane.setConstraints(usernameLabel, 0,1);
-        GridPane.setConstraints(passwordLabel, 0,3);
+        GridPane.setConstraints(usernameLabel, 0, 1);
+        GridPane.setConstraints(passwordLabel, 0, 3);
         GridPane.setConstraints(this.usernameText, 0, 2);
         GridPane.setConstraints(this.passwordText, 0, 4);
         GridPane.setConstraints(buttonHbox, 0, 5);
 
-        gridPane.getChildren().addAll(usernameLabel,  passwordLabel, this.usernameText, this.passwordText, buttonHbox);
+        gridPane.getChildren().addAll(usernameLabel, passwordLabel, this.usernameText, this.passwordText, buttonHbox);
         gridPane.setAlignment(Pos.CENTER);
 
         mainCol = new VBox();
@@ -130,14 +135,16 @@ public class JavaFXTest extends Application {
 
         mainCol.getChildren().addAll(this.welcomeLabel, this.creatorNamesLabel, imBox, gridPane);
 
-        Scene scene = new Scene(mainCol, 400,450);
-        scene.getStylesheets().add("JavaFX/styles/style.css");
+        Scene scene = new Scene(mainCol, 400, 450);
+
+        String styleFile = grabStyleFileName(user.getTheme());
+        scene.getStylesheets().add(styleFile); // this changes the style to what the user last chose as their theme
         //todo add a way to utilize css file here depending on what user selected (will need data from user object)
 
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
         primaryStage.getIcons().add(new Image(
-                        JavaFXTest.class.getResourceAsStream( "Logo.png")));
+                JavaFXTest.class.getResourceAsStream("Logo.png")));
         primaryStage.show();
     }
 
@@ -146,18 +153,27 @@ public class JavaFXTest extends Application {
         user.deleteUser();
     }
 
-    private void verifyPassword(ActionEvent e){
+    private void encryptPassword(ActionEvent e) {
         test();
-        //todo remove me soon
+        //todo encrypt user password here
     }
 
-    private ArrayList getCSSFiles() throws Exception{
+    private String grabStyleFileName(String theme) {
+        switch (theme) {
+            case "blueStyle":
+                return "JavaFX/styles/blueStyle.css";
+            default:
+                return "JavaFX/styles/style.css";
+        }
+    }
+
+    private ArrayList getCSSFiles() throws Exception {
         File[] files = new File("src\\JavaFX\\styles").listFiles();
         ArrayList<String> cssFiles = new ArrayList<>();
 
-        for (File f: files) {
+        for (File f : files) {
             if (f.getName().endsWith(".css")) {
-                cssFiles.add(f.getName().replace(".css",""));
+                cssFiles.add(f.getName().replace(".css", ""));
             }
         }
 
@@ -167,7 +183,7 @@ public class JavaFXTest extends Application {
     }
 
     private void openEmailGUI(ActionEvent event) {
-        JOptionPane.showMessageDialog(null,"Make a cool transition here to the email screen");
+        JOptionPane.showMessageDialog(null, "Make a cool transition here to the email screen");
     }
 
     private void test() {
@@ -185,7 +201,7 @@ public class JavaFXTest extends Application {
             }
         });
 
-        Message message = prepareMessage(session,usernameText.getText(), "nathan.vincent.2.718@gmail.com");
+        Message message = prepareMessage(session, usernameText.getText(), "nathan.vincent.2.718@gmail.com");
 
         try {
             Transport.send(message);
@@ -201,12 +217,9 @@ public class JavaFXTest extends Application {
             mes.setRecipient(Message.RecipientType.TO, new InternetAddress(recip));
             mes.setSubject("Subject about java mail for straightshot");
             mes.setText("Hide the body as soon as you can!");
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }
