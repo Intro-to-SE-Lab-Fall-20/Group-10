@@ -1,6 +1,5 @@
 .root{
-    -fx-background-color: linear-gradient(to bottom, white , c8d1d2);
-     background-color: linear-gradient(to bottom, white , c8d1d2);
+    -fx-background-color: linear-gradient(to bottom, #fdfcfb  , #e2d1c3);
 }
 
 .description-label{

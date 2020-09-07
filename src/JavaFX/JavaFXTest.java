@@ -1,8 +1,7 @@
 package JavaFX;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,11 +13,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
 
 public class JavaFXTest extends Application {
+    private VBox mainCol;
     private PasswordField passwordText;
     private TextField usernameText;
     public Label welcomeLabel;
@@ -58,7 +64,7 @@ public class JavaFXTest extends Application {
 
         Button login = new Button("Login");
         login.setOnAction(e-> {
-            verifyPassword();
+            verifyPassword(e);
             this.user.setUsername(this.usernameText.getText());
             this.user.setPassword(this.passwordText.getText());
             try {
@@ -104,7 +110,7 @@ public class JavaFXTest extends Application {
         gridPane.getChildren().addAll(usernameLabel,  passwordLabel, this.usernameText, this.passwordText, buttonHbox);
         gridPane.setAlignment(Pos.CENTER);
 
-        VBox mainCol = new VBox();
+        mainCol = new VBox();
         mainCol.setPadding(new Insets(10));
         mainCol.setSpacing(8);
         mainCol.setAlignment(Pos.CENTER);
@@ -140,8 +146,9 @@ public class JavaFXTest extends Application {
         user.deleteUser();
     }
 
-    private void verifyPassword(){
-        System.out.println(this.usernameText.getText() + "," + this.passwordText.getText());
+    private void verifyPassword(ActionEvent e){
+        test();
+        //todo remove me soon
     }
 
     private ArrayList getCSSFiles() throws Exception{
@@ -157,5 +164,49 @@ public class JavaFXTest extends Application {
         if (cssFiles.isEmpty()) throw new Exception("No CSS file was found");
 
         return cssFiles;
+    }
+
+    private void openEmailGUI(ActionEvent event) {
+        JOptionPane.showMessageDialog(null,"Make a cool transition here to the email screen");
+    }
+
+    private void test() {
+        Properties props = new Properties();
+
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.host", "mail.dqnorthshore.com"); //todo this changes based on email domain
+        props.put("mail.smtp.port", 587); //I believe 587 is std
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(usernameText.getText(), passwordText.getText());
+            }
+        });
+
+        Message message = prepareMessage(session,usernameText.getText(), "nathan.vincent.2.718@gmail.com");
+
+        try {
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Message prepareMessage(Session session, String account, String recip) {
+        try {
+            Message mes = new MimeMessage(session);
+            mes.setFrom(new InternetAddress(account));
+            mes.setRecipient(Message.RecipientType.TO, new InternetAddress(recip));
+            mes.setSubject("Subject about java mail for straightshot");
+            mes.setText("Hide the body as soon as you can!");
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
