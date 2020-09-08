@@ -89,11 +89,11 @@ public class Main extends Application {
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(Controller.emailField.getText(), Controller.passwordField.getText());
+                return new PasswordAuthentication(Controller.usernameField.getText(), Controller.passField.getText());
             }
         });
 
-        Message message = prepareMessage(session, Controller.emailField.getText(), "nathan.vincent.2.718@gmail.com");
+        Message message = prepareMessage(session, Controller.usernameField.getText(), "nathan.vincent.2.718@gmail.com");
 
         try {
             Transport.send(message);
@@ -108,7 +108,7 @@ public class Main extends Application {
     }
 
     private void encryptPassword(ActionEvent e) {
-        String encryptedPassword = toHexString(getSHA(Controller.passwordField.getText().toCharArray()));
+        String encryptedPassword = toHexString(getSHA(Controller.passField.getText().toCharArray()));
         System.out.println("Encrypted Password: " + encryptedPassword);
         test();
     }
