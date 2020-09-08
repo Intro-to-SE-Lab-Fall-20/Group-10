@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <children>
         <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
             <children>
@@ -32,13 +32,13 @@
             </image>
         </ImageView>
         <Label layoutX="182.0" layoutY="255.0" styleClass="description-label" text="Email:" />
-        <TextField fx:id="usernameField" layoutX="127.0" layoutY="277.0" styleClass="input-field">
+        <TextField fx:id="emailField" layoutX="127.0" layoutY="277.0" styleClass="input-field">
             <tooltip>
                 <Tooltip text="Complete email (ex: Straight@Shot.com)" />
             </tooltip>
         </TextField>
         <Label layoutX="171.0" layoutY="310.0" styleClass="description-label" text="Password:" />
-        <Button layoutX="129.0" layoutY="367.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="63.0" styleClass="button-login" text="Login">
+        <Button fx:id="login" layoutX="129.0" layoutY="367.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="63.0" styleClass="button-login" text="Login">
             <tooltip>
                 <Tooltip text="Login" />
             </tooltip>
