@@ -15,12 +15,19 @@ public class User {
         this.password = "";
         this.theme = "style";
     }
+    public User(String username, String password, String theme){
+        this.username = username;
+        this.password = password;
+        this.theme = theme;
+    }
+
     public void writeUser() throws IOException {
         //todo use all the info from the interface to store in a JSON file: mallory
         FileWriter file = new FileWriter("user.txt");
         JSONObject user = new JSONObject();
         user.put("username", this.username);
         user.put("password", this.password); // get secured password
+        user.put("theme", this.theme);
         try {
             file = new FileWriter("user.txt");
             file.write(user.toJSONString());

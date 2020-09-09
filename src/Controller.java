@@ -20,6 +20,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -28,6 +29,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class Controller {
+    User user;
 
     @FXML
     public void initialize() {
@@ -79,6 +81,13 @@ public class Controller {
     private void login(ActionEvent e) {
         System.out.println(emailField.getText() + "," + passField.getText());
         System.out.println("SHA256 hashed password: " + toHexString(getSHA(passField.getText().toCharArray())));
+        this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
+
+        try {
+            this.user.writeUser();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         loadCompose(e);
         //call loadEmail() to load the email frame you'll design which then will call loadCompose if user presses compose button: mallory
     }

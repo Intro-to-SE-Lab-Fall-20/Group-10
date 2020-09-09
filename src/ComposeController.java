@@ -3,6 +3,9 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class ComposeController {
 
     @FXML
@@ -56,6 +59,15 @@ public class ComposeController {
     @FXML
     private void close_app(MouseEvent e) {
         //here you can save user stuff like theme and what not: mallory
+        FileWriter file;
+        try {
+            file = new FileWriter("user.txt");
+            file.write("");
+            file.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
         System.exit(0);
     }
 }
