@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import javax.mail.*;
@@ -52,6 +53,7 @@ public class Controller {
     //you then need to make sure th fx:id is the same as below for you to use it in the code
     //see how I got the username and password for a better explanation
 
+    @FXML public StackPane masterStack;
     @FXML public AnchorPane parent;
     @FXML public TextField emailField;
     @FXML public PasswordField passField;
@@ -170,23 +172,19 @@ public class Controller {
         return null;
     }
 
-    public static void rollBack() {
-
-    }
-
     @FXML
     private void loadCompose(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("compose.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
             Scene currentScene = emailField.getScene();
-            root.translateYProperty().set(currentScene.getHeight());
-            //getWidth, translateXProperty in both places for sliding to the main email scene that mallory will design
-            parent.getChildren().add(root);
+            root.translateXProperty().set(currentScene.getWidth());
+            masterStack.getChildren().add(root);
 
             Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(root.translateYProperty(), 0 , Interpolator.EASE_IN);
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0 , Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
             tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> masterStack.getChildren().remove(parent));
             tim.play();
         }
 

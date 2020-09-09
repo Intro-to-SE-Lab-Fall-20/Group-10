@@ -8,24 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
-public class ComposeController {
-
-    private List<File> attachements;
-
-    @FXML
-    public Button attachButton;
+public class EmailController {
 
     @FXML
     public void initialize() {
@@ -34,13 +25,17 @@ public class ComposeController {
 
     @FXML
     public static AnchorPane parent;
+    @FXML
+    public Button composeButton;
+    @FXML
+    public Button logoutButton;
 
     @FXML
-    private void goBack(ActionEvent event) {
+    private void gotoCompose(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
-            Scene currentScene = attachButton.getScene();
-            root.translateYProperty().set(-currentScene.getHeight());
+            Parent root = FXMLLoader.load(getClass().getResource("compose.fxml"));
+            Scene currentScene = logoutButton.getScene();
+            root.translateYProperty().set(currentScene.getHeight());
 
             StackPane pc = (StackPane) currentScene.getRoot();
             pc.getChildren().add(root);
@@ -59,43 +54,25 @@ public class ComposeController {
     }
 
     @FXML
-    private void sendEmail(ActionEvent e) {
+    private void goBack(ActionEvent event) {
         try {
-            System.out.println("Grab information from fields and form email based on it and send.\n" +
-                    "Inform user of successful send");
+            Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+            Scene currentScene = logoutButton.getScene();
+            root.translateXProperty().set(-currentScene.getWidth());
+
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
+
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0 , Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+            tim.play();
         }
 
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void addFiles(ActionEvent e) {
-        try {
-            FileChooser fc = new FileChooser();
-            fc.setTitle("Add Attachements");
-            attachements = fc.showOpenMultipleDialog(null);
-
-            if (attachements != null) {
-                StringBuilder build = new StringBuilder();
-
-                for (File attachement : attachements) {
-                    build.append(attachement.getName()).append(" ").append((int) Math.ceil(attachement.length() / 1024.0)).append("KB").append("\n");
-                }
-
-                //todo change this to a list view where the user can delete individual files
-                //attachements list will stay because that's what we'll use when sending emails
-                attachButton.setTooltip(new Tooltip(build.toString()));
-            }
-
-            else {
-                System.out.println("Invalid file");
-            }
-        }
-
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
