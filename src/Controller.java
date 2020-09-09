@@ -48,9 +48,9 @@ public class Controller {
         System.exit(0);
     }
 
-    //copy anotation like this if you add a component using scene builder
+    //copy annotation like this if you add a component using scene builder
     //you then need to make sure th fx:id is the same as below for you to use it in the code
-    //see how I got the username and password for a better explenation
+    //see how I got the username and password for a better explanation
 
     @FXML public AnchorPane parent;
     @FXML public TextField emailField;
@@ -121,7 +121,7 @@ public class Controller {
             Message mes = new MimeMessage(session);
             mes.setFrom(new InternetAddress(account));
             mes.setRecipient(Message.RecipientType.TO, new InternetAddress(recip));
-            mes.setSubject("Subject about java mail for straightshot");
+            mes.setSubject("Subject about java mail for StaightShot");
             mes.setText("Hide the body as soon as you can!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,7 +155,7 @@ public class Controller {
         return hexString.toString();
     }
 
-    //not need this method but here incase we need a UUID generator
+    //not need this method but here in case we need a UUID generator
     public String generateUUID() {
         try {
             MessageDigest salt =MessageDigest.getInstance("SHA-256");
