@@ -72,19 +72,15 @@ public class Controller {
 
         list.addAll(cssFiles);
         switchCSS.getItems().addAll(list);
+        switchCSS.getSelectionModel().select(0);
     }
 
     @FXML
     private void login(ActionEvent e) {
         System.out.println(emailField.getText() + "," + passField.getText());
+        System.out.println("SHA256 hashed password: " + toHexString(getSHA(passField.getText().toCharArray())));
         loadCompose(e);
-        //todo this will call loadEmail() to load the email frame you'll design: mallory
-        //todo then when they press the compose button you have it'll load the email screen I made
-    }
-
-    private void encryptPassword(ActionEvent e) {
-        String encryptedPassword = toHexString(getSHA(passField.getText().toCharArray()));
-        System.out.println("Encrypted Password: " + encryptedPassword);
+        //call loadEmail() to load the email frame you'll design which then will call loadCompose if user presses compose button: mallory
     }
 
     private void testSendEmail() {
@@ -165,6 +161,10 @@ public class Controller {
         return null;
     }
 
+    public static void rollBack() {
+
+    }
+
     @FXML
     private void loadCompose(ActionEvent event) {
         try {
@@ -178,9 +178,6 @@ public class Controller {
             KeyValue kv = new KeyValue(root.translateYProperty(), 0 , Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
             tim.getKeyFrames().add(kf);
-            tim.setOnFinished(evt -> {
-                //todo remove old scene
-            });
             tim.play();
         }
 
