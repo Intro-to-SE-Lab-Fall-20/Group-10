@@ -8,19 +8,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import javax.tools.Tool;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class EmailController {
 
     @FXML
+    public Label inboxLabel;
+
+
+    @FXML
     public void initialize() {
-        //stuff you need on startup of compose page
+        //stuff you need on startup of email page
+        inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
+    }
+
+    private String getEmailAddress() {
+        return Controller.emailAddress;
     }
 
     @FXML
