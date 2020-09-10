@@ -25,8 +25,14 @@
          <tooltip>
             <Tooltip text="Email Subject" />
          </tooltip></TextField>
-      <TextField fx:id="carboncopy" layoutX="49.0" layoutY="102.0" prefHeight="25.0" prefWidth="117.0" promptText="Carbon Copy" styleClass="input-field" />
-      <TextField fx:id="blindcc" layoutX="216.0" layoutY="102.0" prefHeight="25.0" prefWidth="168.0" promptText="Blind Carbon Copy" styleClass="input-field" />
+      <TextField fx:id="carboncopy" layoutX="49.0" layoutY="102.0" prefHeight="25.0" prefWidth="117.0" promptText="Carbon Copy" styleClass="input-field">
+         <tooltip>
+            <Tooltip text="Separate receipients with comma" />
+         </tooltip></TextField>
+      <TextField fx:id="blindcc" layoutX="216.0" layoutY="102.0" prefHeight="25.0" prefWidth="168.0" promptText="Blind Carbon Copy" styleClass="input-field">
+         <tooltip>
+            <Tooltip text="Separate receipients with comma" />
+         </tooltip></TextField>
       <TextArea fx:id="emailContent" layoutX="35.0" layoutY="161.0" prefHeight="238.0" prefWidth="329.0" styleClass="input-field">
          <tooltip>
             <Tooltip text="HTML supported" />
@@ -39,7 +45,7 @@
          <tooltip>
             <Tooltip text="Discard Draft and leave compose screen" />
          </tooltip></Button>
-      <Button fx:id="sendButton" layoutX="243.0" layoutY="405.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" styleClass="button-login" text="Send">
+      <Button fx:id="sendButton" layoutX="243.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="26.0" prefWidth="109.0" styleClass="button-login" text="Send">
          <tooltip>
             <Tooltip onCloseRequest="#sendEmail" text="Send Email (Unreversable action)" />
          </tooltip></Button>

@@ -19,7 +19,9 @@ import javafx.util.Duration;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -78,16 +80,52 @@ public class ComposeController {
     @FXML
     private void sendEmail(ActionEvent e) {
         try {
-            System.out.println(to.getText());
-            System.out.println(subject.getText());
-            System.out.println(carboncopy.getText());
-            System.out.println(blindcc.getText());
-            System.out.println(emailContent.getText());
-            System.out.println(Controller.emailAddress);
-
+            String recipients = to.getText();
+            String carbonCopies = carboncopy.getText();
+            String blindCC = blindcc.getText();
+            String subjectText = subject.getText();
+            String content = emailContent.getText();
+            String ourEmail = Controller.emailAddress;
+            StringBuilder passwordBuilder = new StringBuilder();
             for (int i = 0 ; i < Controller.password.length ; i++)
-                System.out.print(Controller.password[i]);
-            System.out.println("\n");
+                passwordBuilder.append(Controller.password[i]);
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", getEmailHost(ourEmail));
+            props.put("mail.smtp.port", 587);
+
+            Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(ourEmail, passwordBuilder.toString());
+                    }
+            });
+
+            Message mes = new MimeMessage(session);
+            mes.setFrom(new InternetAddress(ourEmail));
+
+            //todo make sure at least one recipient and what if no ccs or bccs?
+            //todo not working of course
+
+            mes.addRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
+            mes.addRecipients(Message.RecipientType.CC, InternetAddress.parse(carbonCopies));
+            mes.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(blindCC));
+
+            mes.setSubject(subjectText);
+
+            Multipart emailContent = new MimeMultipart();
+
+            MimeBodyPart textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(content);
+
+            emailContent.addBodyPart(textBodyPart);
+            addAttachements(emailContent);
+
+            mes.setContent(emailContent);
+
+            Transport.send(mes);
         }
 
         catch (Exception ex) {
@@ -95,42 +133,31 @@ public class ComposeController {
         }
     }
 
-    private void emailTest(String email, String password) {
-        Properties props = new Properties();
-
-        props.put("mail.smtp.auth", true);
-        props.put("mail.smtp.starttls.enable", true);
-        props.put("mail.smtp.host", "mail.dqnorthshore.com");
-        props.put("mail.smtp.port", 587);
-
-        Session session = Session.getInstance(props, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(email, password);
-            }
-        });
-
-        //todo recipient field switch based on if comma
-        Message message = prepareMessageOne(session, email, "nathan.vincent.2.718@gmail.com");
-
+    private void addAttachements(Multipart multipart) {
         try {
-            Transport.send(message);
-        } catch (MessagingException e) {
+            if (!attachements.isEmpty()) {
+                for (File file : attachements) {
+                    MimeBodyPart attachement = new MimeBodyPart();
+                    attachement.attachFile(file);
+                    multipart.addBodyPart(attachement);
+                }
+            }
+        }
+
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private Message prepareMessageOne(Session session, String account, String recip) {
-        try {
-            Message mes = new MimeMessage(session);
-            mes.setFrom(new InternetAddress(account));
-            mes.setRecipient(Message.RecipientType.TO, new InternetAddress(recip));
-            mes.setSubject("Subject about java mail for StaightShot");
-            mes.setText("Hide the body as soon as you can!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    private String getEmailHost(String email) throws Exception {
+        if (email.endsWith("gmail.com"))
+            return "smtp.gmail.com";
+        else if (email.endsWith("yahoo.com"))
+            return "smtp.mail.yahoo.com";
+        else if (email.endsWith("outlook.com"))
+            return "smtp.office365.com";
+        else
+            throw new Exception("Unsupported email host");
     }
 
     @FXML

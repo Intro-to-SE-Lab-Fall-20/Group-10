@@ -82,7 +82,7 @@ public class Controller {
     @FXML
     private void login(ActionEvent e) {
         emailAddress = emailField.getText();
-        //password = passField.getText().toCharArray();
+        password = passField.getText().toCharArray();
         System.out.println(emailField.getText() + "," + passField.getText());
         System.out.println("SHA256 hashed password: " + toHexString(getSHA(passField.getText().toCharArray())));
         this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
