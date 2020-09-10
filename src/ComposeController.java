@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -15,10 +17,14 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 public class ComposeController {
 
@@ -26,6 +32,17 @@ public class ComposeController {
 
     @FXML
     public Button attachButton;
+
+    @FXML
+    public TextField to;
+    @FXML
+    public TextField subject;
+    @FXML
+    public TextField carboncopy;
+    @FXML
+    public TextField blindcc;
+    @FXML
+    public TextArea emailContent;
 
     @FXML
     public void initialize() {
@@ -61,13 +78,59 @@ public class ComposeController {
     @FXML
     private void sendEmail(ActionEvent e) {
         try {
-            System.out.println("Grab information from fields and form email based on it and send.\n" +
-                    "Inform user of successful send");
+            System.out.println(to.getText());
+            System.out.println(subject.getText());
+            System.out.println(carboncopy.getText());
+            System.out.println(blindcc.getText());
+            System.out.println(emailContent.getText());
+            System.out.println(Controller.emailAddress);
+
+            for (int i = 0 ; i < Controller.password.length ; i++)
+                System.out.print(Controller.password[i]);
+            System.out.println("\n");
         }
 
         catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void emailTest(String email, String password) {
+        Properties props = new Properties();
+
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.host", "mail.dqnorthshore.com");
+        props.put("mail.smtp.port", 587);
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(email, password);
+            }
+        });
+
+        //todo recipient field switch based on if comma
+        Message message = prepareMessageOne(session, email, "nathan.vincent.2.718@gmail.com");
+
+        try {
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Message prepareMessageOne(Session session, String account, String recip) {
+        try {
+            Message mes = new MimeMessage(session);
+            mes.setFrom(new InternetAddress(account));
+            mes.setRecipient(Message.RecipientType.TO, new InternetAddress(recip));
+            mes.setSubject("Subject about java mail for StaightShot");
+            mes.setText("Hide the body as soon as you can!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @FXML
@@ -84,8 +147,6 @@ public class ComposeController {
                     build.append(attachement.getName()).append(" ").append((int) Math.ceil(attachement.length() / 1024.0)).append("KB").append("\n");
                 }
 
-                //todo change this to a list view where the user can delete individual files
-                //attachements list will stay because that's what we'll use when sending emails
                 attachButton.setTooltip(new Tooltip(build.toString()));
             }
 

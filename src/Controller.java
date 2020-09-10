@@ -17,16 +17,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.UUID;
 
 public class Controller {
@@ -59,6 +55,7 @@ public class Controller {
     @FXML public PasswordField passField;
 
     public static String emailAddress;
+    public static char[] password;
 
     @FXML
     ChoiceBox<String> switchCSS;
@@ -85,6 +82,7 @@ public class Controller {
     @FXML
     private void login(ActionEvent e) {
         emailAddress = emailField.getText();
+        //password = passField.getText().toCharArray();
         System.out.println(emailField.getText() + "," + passField.getText());
         System.out.println("SHA256 hashed password: " + toHexString(getSHA(passField.getText().toCharArray())));
         this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
@@ -96,43 +94,6 @@ public class Controller {
         }
         loadCompose(e);
         //call loadEmail() to load the email frame you'll design which then will call loadCompose if user presses compose button: mallory
-    }
-
-    private void testSendEmail() {
-        Properties props = new Properties();
-
-        props.put("mail.smtp.auth", true);
-        props.put("mail.smtp.starttls.enable", true);
-        props.put("mail.smtp.host", "mail.dqnorthshore.com");
-        props.put("mail.smtp.port", 587);
-
-        Session session = Session.getInstance(props, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(emailField.getText(), passField.getText());
-            }
-        });
-
-        Message message = prepareMessage(session, emailField.getText(), "nathan.vincent.2.718@gmail.com");
-
-        try {
-            Transport.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Message prepareMessage(Session session, String account, String recip) {
-        try {
-            Message mes = new MimeMessage(session);
-            mes.setFrom(new InternetAddress(account));
-            mes.setRecipient(Message.RecipientType.TO, new InternetAddress(recip));
-            mes.setSubject("Subject about java mail for StaightShot");
-            mes.setText("Hide the body as soon as you can!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     //Secure Hashing Algorithm 256 bit std encryption

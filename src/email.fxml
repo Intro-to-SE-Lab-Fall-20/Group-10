@@ -14,12 +14,12 @@
                 <Label alignment="CENTER" contentDisplay="CENTER" styleClass="window-label" text="StraightShot" textFill="WHITE" translateX="-15.0" />
                 <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
             </children></HBox>
-      <Button fx:id="composeButton" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" styleClass="button-login" text="Compose">
+      <Button fx:id="composeButton" layoutX="308.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" styleClass="button-login" text="Compose">
          <tooltip>
             <Tooltip text="Write an email" />
          </tooltip>
       </Button>
-      <Button fx:id="logoutButton" layoutX="323.0" layoutY="410.0" mnemonicParsing="false" onAction="#goBack" styleClass="button-discard" text="Logout">
+      <Button fx:id="logoutButton" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#goBack" styleClass="button-discard" text="Logout">
          <tooltip>
             <Tooltip text="Take me home (country roads)" />
          </tooltip>
