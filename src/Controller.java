@@ -31,7 +31,6 @@ public class Controller {
     @FXML
     public void initialize() {
         loadCSSFiles();
-        //other stuff you need on startup
     }
 
     @FXML

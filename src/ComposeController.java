@@ -81,51 +81,64 @@ public class ComposeController {
     private void sendEmail(ActionEvent e) {
         try {
             String recipients = to.getText();
-            String carbonCopies = carboncopy.getText();
-            String blindCC = blindcc.getText();
-            String subjectText = subject.getText();
-            String content = emailContent.getText();
-            String ourEmail = Controller.emailAddress;
-            StringBuilder passwordBuilder = new StringBuilder();
-            for (int i = 0 ; i < Controller.password.length ; i++)
-                passwordBuilder.append(Controller.password[i]);
 
-            Properties props = new Properties();
-            props.put("mail.smtp.auth", true);
-            props.put("mail.smtp.starttls.enable", true);
-            props.put("mail.smtp.host", getEmailHost(ourEmail));
-            props.put("mail.smtp.port", 587);
+            //if theres at least one email address
+            if (recipients.contains("@")) {
+                String carbonCopies = carboncopy.getText();
+                String blindCC = blindcc.getText();
+                String subjectText = subject.getText();
+                String content = emailContent.getText();
+                String ourEmail = Controller.emailAddress;
+                StringBuilder passwordBuilder = new StringBuilder();
+                for (int i = 0 ; i < Controller.password.length ; i++)
+                    passwordBuilder.append(Controller.password[i]);
 
-            Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(ourEmail, passwordBuilder.toString());
-                    }
-            });
+                Properties props = new Properties();
+                props.put("mail.smtp.auth", true);
+                props.put("mail.smtp.starttls.enable", true);
+                props.put("mail.smtp.host", getEmailHost(ourEmail));
+                props.put("mail.smtp.port", 587);
 
-            Message mes = new MimeMessage(session);
-            mes.setFrom(new InternetAddress(ourEmail));
+                Session session = Session.getDefaultInstance(props,
+                        new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(ourEmail, passwordBuilder.toString());
+                            }
+                        });
 
-            //todo make sure at least one recipient and what if no ccs or bccs?
-            //todo not working of course
+                //todo not working of course mimemessage not found
+                Message mes = new MimeMessage(session);
+                mes.setFrom(new InternetAddress(ourEmail));
 
-            mes.addRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
-            mes.addRecipients(Message.RecipientType.CC, InternetAddress.parse(carbonCopies));
-            mes.addRecipients(Message.RecipientType.BCC, InternetAddress.parse(blindCC));
+                //todo make sure at least one recipient and what if no ccs or bccs?
 
-            mes.setSubject(subjectText);
+                InternetAddress[] addresses = InternetAddress.parse(recipients);
+                mes.addRecipients(Message.RecipientType.TO, addresses);
 
-            Multipart emailContent = new MimeMultipart();
+                InternetAddress[] ccAddresses = InternetAddress.parse(carbonCopies);
+                if (ccAddresses.length > 0) {
+                    mes.addRecipients(Message.RecipientType.CC, ccAddresses);
+                }
 
-            MimeBodyPart textBodyPart = new MimeBodyPart();
-            textBodyPart.setText(content);
+                InternetAddress[] bccAddresses = InternetAddress.parse(blindCC);
+                if (bccAddresses.length > 0) {
+                    mes.addRecipients(Message.RecipientType.BCC, bccAddresses);
+                }
 
-            emailContent.addBodyPart(textBodyPart);
-            addAttachements(emailContent);
+                mes.setSubject(subjectText);
 
-            mes.setContent(emailContent);
+                Multipart emailContent = new MimeMultipart();
 
-            Transport.send(mes);
+                MimeBodyPart textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(content);
+
+                emailContent.addBodyPart(textBodyPart);
+                addAttachements(emailContent);
+
+                mes.setContent(emailContent);
+
+                Transport.send(mes);
+            }
         }
 
         catch (Exception ex) {
