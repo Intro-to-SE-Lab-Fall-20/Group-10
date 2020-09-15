@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,7 +17,7 @@
                 <Label alignment="CENTER" contentDisplay="CENTER" styleClass="window-label" text="StraightShot" textFill="WHITE" translateX="-15.0" />
                 <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
             </children></HBox>
-      <Button fx:id="composeButton" layoutX="308.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" styleClass="button-login" text="Compose">
+      <Button fx:id="composeButton" layoutX="91.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="87.0" styleClass="button-login" text="Compose">
          <tooltip>
             <Tooltip text="Write an email" />
          </tooltip>
@@ -25,5 +28,23 @@
          </tooltip>
       </Button>
       <Label fx:id="inboxLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0" styleClass="description-label" text="Viewing inbox of:" textFill="WHITE" />
+      <ListView layoutX="14.0" layoutY="98.0" prefHeight="305.0" prefWidth="371.0" style="-fx-border-color: black;" />
+      <Button fx:id="replyButton" layoutX="299.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Reply">
+         <tooltip>
+            <Tooltip text="Write an email" />
+         </tooltip>
+      </Button>
+      <Button fx:id="forwardButton" layoutX="200.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Forward">
+         <tooltip>
+            <Tooltip text="Write an email" />
+         </tooltip>
+      </Button>
+      <ProgressBar layoutX="14.0" layoutY="51.0" prefHeight="18.0" prefWidth="143.0" progress="0.32" styleClass="stripes">
+         <tooltip>
+            <Tooltip text="Loading/Sending" />
+         </tooltip>
+      </ProgressBar>
+      <CheckBox layoutX="18.0" layoutY="75.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
+      <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="77.0" styleClass="description-label" text="69 unread emails" textFill="WHITE" />
     </children>
 </AnchorPane>

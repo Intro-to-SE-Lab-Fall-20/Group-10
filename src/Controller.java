@@ -82,17 +82,25 @@ public class Controller {
     private void login(ActionEvent e) {
         emailAddress = emailField.getText();
         password = passField.getText().toCharArray();
-        System.out.println(emailField.getText() + "," + passField.getText());
-        System.out.println("SHA256 hashed password: " + toHexString(getSHA(passField.getText().toCharArray())));
-        this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
 
-        try {
-            this.user.writeUser();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        if (!emailAddress.contains("@") || emailAddress.length() == 0 || password.length == 0) {
+            //todo popup informing invalid email, also add more validation here so you know the
+            //email works before they even get to the inbox screen where you querry the DB for their emails
         }
-        loadCompose(e);
-        //call loadEmail() to load the email frame you'll design which then will call loadCompose if user presses compose button: mallory
+
+        else {
+            System.out.println(emailField.getText() + "," + passField.getText());
+            System.out.println("SHA256 hashed password: " + toHexString(getSHA(passField.getText().toCharArray())));
+            this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
+
+            try {
+                this.user.writeUser();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            loadCompose(e);
+        }
+
     }
 
     //Secure Hashing Algorithm 256 bit std encryption
