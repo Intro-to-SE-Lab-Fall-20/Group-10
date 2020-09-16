@@ -17,14 +17,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Store;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.UUID;
 
 public class Controller {
@@ -79,29 +82,62 @@ public class Controller {
         switchCSS.getSelectionModel().select(0);
     }
 
-    private boolean isValidEmail(String email, char[] pass) {
-        boolean ret = true;
+    private boolean isValidEmail(String email) {
+        if (!email.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
+                "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])" +
+                "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])" +
+                "|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-" +
+                "\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"))
+            return false;
 
-        //tests aside from email and password validation
-        if (!email.endsWith("@gmail.com") ||
-            !email.endsWith("@yahoo.com") ||
-            !email.endsWith("@outlook.com") ||
-             email.trim().length() == 0 ||
-             pass.length == 0) {
-            ret = false;
-        }
 
-        //todo thinks my gmail address is not valid with proper credentials :(
+        return (email.endsWith("@gmail.com") ||
+                email.endsWith("@yahoo.com") ||
+                email.endsWith("@outlook.com")) &&
+                email.trim().length() > 0;
+    }
+
+    //todo nathan working here, need to get it working then i'll add a getInbox function
+    //from https://www.tutorialspoint.com/javamail_api/javamail_api_checking_emails.htm
+    //todo this is how you load an inbox I guess FYI Mallory
+    public boolean validateCredentials(String user, char[] pass) {
         try {
-            InternetAddress internetAddress = new InternetAddress(email);
-            internetAddress.validate();
+            Properties props = new Properties();
+
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.host", getEmailHost(user));
+            props.put("mail.smtp.port", 587);
+
+            Session emailSession = Session.getDefaultInstance(props);
+            Store sessionStore = emailSession.getStore("pop3");
+
+            StringBuilder passBuild = new StringBuilder();
+            for (char c : pass) passBuild.append(c);
+
+            sessionStore.connect(getEmailHost(user), user, passBuild.toString());
+
+            //folder object and open it, could read from trash and such by changing INBOX
+            Folder emailFolder = sessionStore.getFolder("INBOX");
+            emailFolder.open(Folder.READ_ONLY); //HOLDS_FOLDERS, HOLDS_MESSAGES, READ_ONLY, WRITE_ONLY
+
+            Message[] messages = emailFolder.getMessages();
+            int unreadEmailsNum = messages.length;
+
+            //now you can get a message from messages and call .getSubject, .getFrom, .getContent, etc.
+
+            emailFolder.close(false);
+            sessionStore.close();
+
+            //todo try and get inbox of user and if it fails its invalid
+
+            return true;
         }
 
-        catch (AddressException ignored) {
-            ret = false;
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return ret;
+        return false;
     }
 
     @FXML
@@ -109,7 +145,7 @@ public class Controller {
         emailAddress = emailField.getText();
         password = passField.getText().toCharArray();
 
-        if (isValidEmail(emailAddress, password)) {
+//        if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
             this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
 
             try {
@@ -121,11 +157,11 @@ public class Controller {
             }
 
             loadCompose(e);
-        }
+//        }
 
-        else {
-            System.out.println("todo popup informing invalid email");
-        }
+//        else {
+//            System.out.println("todo popup informing invalid email");
+//        }
     }
 
     private String getEmailHost(String email) throws Exception {
