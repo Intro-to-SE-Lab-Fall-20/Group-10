@@ -82,8 +82,7 @@ public class ComposeController {
         try {
             String recipients = to.getText();
 
-            //if theres at least one email address
-            if (recipients.contains("@")) {
+            if (recipients.contains("@")) { //todo not the best way to make sure there is an email address
                 String carbonCopies = carboncopy.getText();
                 String blindCC = blindcc.getText();
                 String subjectText = subject.getText();
@@ -92,6 +91,10 @@ public class ComposeController {
                 StringBuilder passwordBuilder = new StringBuilder();
                 for (int i = 0 ; i < Controller.password.length ; i++)
                     passwordBuilder.append(Controller.password[i]);
+
+                //todo inform if no subject line and confirm send email
+
+                //todo add better input checking
 
                 Properties props = new Properties();
                 props.put("mail.smtp.auth", true);
@@ -102,15 +105,11 @@ public class ComposeController {
                 Session session = Session.getDefaultInstance(props,
                         new javax.mail.Authenticator() {
                             protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication(ourEmail, passwordBuilder.toString());
-                            }
-                        });
+                                return new PasswordAuthentication(ourEmail, passwordBuilder.toString()); }
+                });
 
-                //todo not working of course mimemessage not found
                 Message mes = new MimeMessage(session);
                 mes.setFrom(new InternetAddress(ourEmail));
-
-                //todo make sure at least one recipient and what if no ccs or bccs?
 
                 InternetAddress[] addresses = InternetAddress.parse(recipients);
                 mes.addRecipients(Message.RecipientType.TO, addresses);
@@ -138,6 +137,10 @@ public class ComposeController {
                 mes.setContent(emailContent);
 
                 Transport.send(mes);
+
+                //todo inform of successful send of email and go back to main screen
+                System.out.println("Sent messaage");
+                goBack(null);
             }
         }
 
@@ -148,7 +151,7 @@ public class ComposeController {
 
     private void addAttachements(Multipart multipart) {
         try {
-            if (!attachements.isEmpty()) {
+            if (attachements != null && !attachements.isEmpty()) {
                 for (File file : attachements) {
                     MimeBodyPart attachement = new MimeBodyPart();
                     attachement.attachFile(file);
@@ -184,7 +187,7 @@ public class ComposeController {
                 StringBuilder build = new StringBuilder();
 
                 for (File attachement : attachements) {
-                    build.append(attachement.getName()).append(" ").append((int) Math.ceil(attachement.length() / 1024.0)).append("KB").append("\n");
+                    build.append(attachement.getName()).append(" ").append((int) Math.ceil(attachement.length() / 1024.0) / 1024.0).append("MB").append("\n");
                 }
 
                 attachButton.setTooltip(new Tooltip(build.toString()));

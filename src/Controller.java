@@ -17,6 +17,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -77,30 +79,64 @@ public class Controller {
         switchCSS.getSelectionModel().select(0);
     }
 
+    private boolean isValidEmail(String email, char[] pass) {
+        boolean ret = true;
+
+        //tests aside from email and password validation
+        if (!email.endsWith("@gmail.com") ||
+            !email.endsWith("@yahoo.com") ||
+            !email.endsWith("@outlook.com") ||
+             email.trim().length() == 0 ||
+             pass.length == 0) {
+            ret = false;
+        }
+
+        //todo thinks my gmail address is not valid with proper credentials :(
+        try {
+            InternetAddress internetAddress = new InternetAddress(email);
+            internetAddress.validate();
+        }
+
+        catch (AddressException ignored) {
+            ret = false;
+        }
+
+        return ret;
+    }
 
     @FXML
     private void login(ActionEvent e) {
         emailAddress = emailField.getText();
         password = passField.getText().toCharArray();
 
-        if (!emailAddress.contains("@") || emailAddress.length() == 0 || password.length == 0) {
-            //todo popup informing invalid email, also add more validation here so you know the
-            //email works before they even get to the inbox screen where you querry the DB for their emails
-        }
-
-        else {
-            System.out.println(emailField.getText() + "," + passField.getText());
-            System.out.println("SHA256 hashed password: " + toHexString(getSHA(passField.getText().toCharArray())));
+        if (isValidEmail(emailAddress, password)) {
             this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
 
             try {
                 this.user.writeUser();
-            } catch (IOException ex) {
+            }
+
+            catch (IOException ex) {
                 ex.printStackTrace();
             }
+
             loadCompose(e);
         }
 
+        else {
+            System.out.println("todo popup informing invalid email");
+        }
+    }
+
+    private String getEmailHost(String email) throws Exception {
+        if (email.endsWith("gmail.com"))
+            return "smtp.gmail.com";
+        else if (email.endsWith("yahoo.com"))
+            return "smtp.mail.yahoo.com";
+        else if (email.endsWith("outlook.com"))
+            return "smtp.office365.com";
+        else
+            throw new Exception("Unsupported email host");
     }
 
     //Secure Hashing Algorithm 256 bit std encryption
