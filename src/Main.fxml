@@ -50,6 +50,7 @@
             </ImageView>
             <Label focusTraversable="false" layoutX="182.0" layoutY="255.0" styleClass="description-label" text="Email:" />
             <Label focusTraversable="false" layoutX="171.0" layoutY="310.0" styleClass="description-label" text="Password:" />
+         <Label focusTraversable="false" layoutX="91.0" layoutY="399.0" prefHeight="37.0" prefWidth="233.0" style="-fx-font-size: 10;" styleClass="description-label" text="Supports Gmail, Outlook, and Yahoo accounts that do not use 2FA " textAlignment="CENTER" wrapText="true" />
         </children>
     </AnchorPane>
 </StackPane>
