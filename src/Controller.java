@@ -97,9 +97,8 @@ public class Controller {
                 email.trim().length() > 0;
     }
 
-    //todo nathan working here, need to get it working then i'll add a getInbox function
-    //from https://www.tutorialspoint.com/javamail_api/javamail_api_checking_emails.htm
-    //todo this is how you load an inbox I guess FYI Mallory
+    //todo nathan working here, need to get it working then i'll add a getInbox function where you pass in a folder
+    //this is what I was talking about that you don't need a database for this program
     public boolean validateCredentials(String user, char[] pass) {
         try {
             Properties props = new Properties();

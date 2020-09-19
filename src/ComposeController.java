@@ -7,14 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.mail.*;
@@ -77,24 +76,66 @@ public class ComposeController {
         }
     }
 
+    private boolean hasARecipient(String recip) {
+        String[] recips = recip.split(",");
+
+        for (String email: recips) {
+            if (!email.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
+                    "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])" +
+                    "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])" +
+                    "|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-" +
+                    "\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"))
+                return false;
+        }
+
+        return true;
+    }
+
+    private boolean validCarbonCopies(String cc) {
+        String[] ccs = cc.split(",");
+
+        for (String email: ccs) {
+            if (!email.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
+                    "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])" +
+                    "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])" +
+                    "|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-" +
+                    "\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"))
+                return false;
+        }
+
+        return true;
+    }
+
     @FXML
     private void sendEmail(ActionEvent e) {
         try {
-            String recipients = to.getText();
+            String recipients = to.getText().trim();
+            String carbonCopies = carboncopy.getText().trim();
+            String blindCC = blindcc.getText().trim();
+            String subjectText = subject.getText().trim();
+            String content = emailContent.getText().trim();
 
-            if (recipients.contains("@")) { //todo not the best way to make sure there is an email address
-                String carbonCopies = carboncopy.getText();
-                String blindCC = blindcc.getText();
-                String subjectText = subject.getText();
-                String content = emailContent.getText();
+            if (!hasARecipient(recipients)) {
+                showPopupMessage("Please check your recipients email addresses", Main.primaryStage);
+            }
+
+            else if (!validCarbonCopies(carbonCopies) || !validCarbonCopies(blindCC)) {
+                showPopupMessage("Please check your cc and bccs emails", Main.primaryStage);
+            }
+
+            else {
+                if (subjectText.length() == 0) {
+                    showPopupMessage("Please note there is no subject", Main.primaryStage);
+                }
+
+                if (content.length() == 0) {
+                    showPopupMessage("Please note there is no message body", Main.primaryStage);
+                }
+
                 String ourEmail = Controller.emailAddress;
                 StringBuilder passwordBuilder = new StringBuilder();
                 for (int i = 0 ; i < Controller.password.length ; i++)
                     passwordBuilder.append(Controller.password[i]);
-
-                //todo inform if no subject line and confirm send email
-
-                //todo add better input checking
 
                 Properties props = new Properties();
                 props.put("mail.smtp.auth", true);
@@ -136,10 +177,11 @@ public class ComposeController {
 
                 mes.setContent(emailContent);
 
-                Transport.send(mes);
+                Transport.send(mes); //error for invalid credentials here even if right password and username,
+                //todo add message to make sure "enable less secure app usage" is on and might have to disable 2FA for SS
 
-                //todo inform of successful send of email and go back to main screen
-                System.out.println("Sent messaage");
+                showPopupMessage("Sent messaage", Main.primaryStage);
+
                 goBack(null);
             }
         }
@@ -221,5 +263,27 @@ public class ComposeController {
         }
 
         System.exit(0);
+    }
+
+    private Popup createPopup(final String message) {
+        final Popup popup = new Popup();
+        popup.setAutoFix(true);
+        popup.setAutoHide(true);
+        popup.setHideOnEscape(true);
+        Label label = new Label(message);
+        label.setOnMouseReleased(e -> popup.hide());
+        label.getStylesheets().add("DefaultStyle.css");
+        label.getStyleClass().add("popup");
+        popup.getContent().add(label);
+        return popup;
+    }
+
+    private void showPopupMessage(final String message, final Stage stage) {
+        final Popup popup = createPopup(message);
+        popup.setOnShown(e -> {
+            popup.setX(stage.getX() + stage.getWidth() / 2 - popup.getWidth() / 2);
+            popup.setY(stage.getY() + 25);
+        });
+        popup.show(stage);
     }
 }
