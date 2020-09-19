@@ -9,18 +9,29 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import javax.mail.*;
+import javax.swing.*;
+import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Properties;
 
 public class EmailController {
 
     @FXML
     public Label inboxLabel;
+    public TableColumn message;
+    public TableView table;
+    public TableColumn from;
+    public TableColumn date;
 
 
     @FXML
@@ -39,6 +50,52 @@ public class EmailController {
     public Button composeButton;
     @FXML
     public Button logoutButton;
+
+    @FXML
+    private void fetchEmail(Action e) throws Exception {
+        StringBuilder passwordBuilder = new StringBuilder();
+        for (int i = 0 ; i < Controller.password.length ; i++)
+            passwordBuilder.append(Controller.password[i]);
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", true);
+        props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
+        props.put("mail.smtp.port", 587);
+
+        Session session = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(getEmailAddress(), passwordBuilder.toString()); }
+                });
+        Store store = session.getStore("smtp");
+        store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+
+        Folder emailFolder = store.getFolder("Inbox");
+        emailFolder.open(Folder.READ_ONLY);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Message[] messages = emailFolder.getMessages();
+
+        for (int i = 0; i < messages.length; i++) {
+            Message message = messages[i];
+
+            System.out.println("---------------------------------");
+            writePart(message);
+            String line = reader.readLine();
+            if ("YES".equals(line)) {
+                message.writeTo(System.out);
+            } else if ("QUIT".equals(line)) {
+                break;
+            }
+        }
+
+        emailFolder.close(false);
+        store.close();
+    }
+
+    private void writePart(Part p){
+
+    }
 
     @FXML
     private void gotoCompose(ActionEvent event) {
@@ -89,6 +146,17 @@ public class EmailController {
     @FXML
     private void minimize_stage(MouseEvent e) {
         Main.primaryStage.setIconified(true);
+    }
+
+    private String getEmailHost(String email) throws Exception {
+        if (email.endsWith("gmail.com"))
+            return "smtp.gmail.com";
+        else if (email.endsWith("yahoo.com"))
+            return "smtp.mail.yahoo.com";
+        else if (email.endsWith("outlook.com"))
+            return "smtp.office365.com";
+        else
+            throw new Exception("Unsupported email host");
     }
 
     @FXML
