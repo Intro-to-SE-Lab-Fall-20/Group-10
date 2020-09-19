@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -28,16 +29,18 @@ public class EmailController {
 
     @FXML
     public Label inboxLabel;
-    public TableColumn message;
     public TableView table;
+    public TableColumn message;
     public TableColumn from;
     public TableColumn date;
+    public TableColumn subject;
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws Exception {
         //stuff you need on startup of email page
         inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
+        fetchEmail();
     }
 
     private String getEmailAddress() {
@@ -52,9 +55,9 @@ public class EmailController {
     public Button logoutButton;
 
     @FXML
-    private void fetchEmail(Action e) throws Exception {
+    private void fetchEmail() throws Exception {
         StringBuilder passwordBuilder = new StringBuilder();
-        for (int i = 0 ; i < Controller.password.length ; i++)
+        for (int i = 0; i < Controller.password.length; i++)
             passwordBuilder.append(Controller.password[i]);
 
         Properties props = new Properties();
@@ -66,7 +69,8 @@ public class EmailController {
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(getEmailAddress(), passwordBuilder.toString()); }
+                        return new PasswordAuthentication(getEmailAddress(), passwordBuilder.toString());
+                    }
                 });
         Store store = session.getStore("smtp");
         store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
@@ -93,8 +97,19 @@ public class EmailController {
         store.close();
     }
 
-    private void writePart(Part p){
-
+    private void writePart(Part p) throws MessagingException, IOException {
+        Address[] a;
+        Message m = (Message) p;
+        // FROM
+        StringBuilder fromBuild = new StringBuilder();
+        if ((a = m.getFrom()) != null) {
+            for (int j = 0; j < a.length; j++) {
+                fromBuild.append(a[j].toString());
+            }
+        }
+        from.setCellFactory(new PropertyValueFactory(fromBuild.toString()));
+        subject.setCellFactory(new PropertyValueFactory(m.getSubject()));
+        message.setCellFactory(new PropertyValueFactory(p.getContent().toString()));
     }
 
     @FXML
@@ -108,14 +123,12 @@ public class EmailController {
             pc.getChildren().add(root);
 
             Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(root.translateYProperty(), 0 , Interpolator.EASE_IN);
+            KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -131,14 +144,12 @@ public class EmailController {
             pc.getChildren().add(root);
 
             Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(root.translateXProperty(), 0 , Interpolator.EASE_IN);
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
