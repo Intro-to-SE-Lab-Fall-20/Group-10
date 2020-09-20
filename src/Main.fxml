@@ -21,36 +21,39 @@
                     <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" styleClass="window-label" text="StraightShot" textFill="WHITE" translateX="-15.0" />
                     <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
                 </children></HBox>
-            <Label focusTraversable="false" layoutX="116.0" layoutY="57.0" prefHeight="20.0" prefWidth="168.0" styleClass="description-label" text="An email client designed by" />
-            <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" text="Mallory Duke and Nathan Cheshire" />
-            <TextField fx:id="emailField" layoutX="127.0" layoutY="277.0" styleClass="input-field">
+            <Label focusTraversable="false" layoutX="87.0" layoutY="40.0" prefHeight="37.0" prefWidth="211.0" styleClass="description-label" text="An email client designed by Mallory Duke and Nathan Cheshire" textAlignment="CENTER" wrapText="true" />
+            <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" />
+            <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" styleClass="input-field">
                 <tooltip>
                     <Tooltip text="Complete email (ex: Straight@Shot.com)" />
                 </tooltip>
             </TextField>
-            <PasswordField fx:id="passField" layoutX="128.0" layoutY="332.0" styleClass="input-field">
+            <PasswordField fx:id="passField" layoutX="128.0" layoutY="307.0" styleClass="input-field">
                 <tooltip>
                     <Tooltip text="Password" />
                 </tooltip>
             </PasswordField>
-            <Button fx:id="login" layoutX="129.0" layoutY="367.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="63.0" styleClass="button-login" text="Login">
+            <Button fx:id="login" layoutX="128.0" layoutY="342.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="63.0" styleClass="button-login" text="Login">
                 <tooltip>
                     <Tooltip text="Login" />
                 </tooltip>
             </Button>
-            <ChoiceBox fx:id="switchCSS" layoutX="199.0" layoutY="368.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="79.0">
+            <ChoiceBox fx:id="switchCSS" layoutX="195.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="79.0">
                 <tooltip>
                     <Tooltip text="Switch between css styles" />
                 </tooltip>
             </ChoiceBox>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="127.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="119.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@IO/Logo.png" />
                 </image>
             </ImageView>
-            <Label focusTraversable="false" layoutX="182.0" layoutY="255.0" styleClass="description-label" text="Email:" />
-            <Label focusTraversable="false" layoutX="171.0" layoutY="310.0" styleClass="description-label" text="Password:" />
-         <Label focusTraversable="false" layoutX="91.0" layoutY="399.0" prefHeight="37.0" prefWidth="233.0" style="-fx-font-size: 10;" styleClass="description-label" text="Supports Gmail, Outlook, and Yahoo accounts that do not use 2FA " textAlignment="CENTER" wrapText="true" />
+            <Label focusTraversable="false" layoutX="183.0" layoutY="227.0" styleClass="description-label" text="Email:" />
+            <Label focusTraversable="false" layoutX="171.0" layoutY="285.0" styleClass="description-label" text="Password:" />
+         <Label focusTraversable="false" layoutX="84.0" layoutY="389.0" onMouseClicked="#enableIMAP" prefHeight="37.0" prefWidth="233.0" style="-fx-font-size: 10;" styleClass="description-label" text="Supports Gmail, Outlook, and Yahoo accounts that do not use 2FA. Make sure to have IMAP/POP3 enabled" textAlignment="CENTER" wrapText="true">
+            <tooltip>
+               <Tooltip text="Click me to learn how to complete these actions!" />
+            </tooltip></Label>
         </children>
     </AnchorPane>
 </StackPane>

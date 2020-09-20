@@ -115,12 +115,16 @@ public class ComposeController {
             String subjectText = subject.getText().trim();
             String content = emailContent.getText().trim();
 
-            if (!hasARecipient(recipients)) {
+            if (!hasARecipient(recipients) || recipients.trim().length() == 0) {
                 showPopupMessage("Please check your recipients email addresses", Main.primaryStage);
             }
 
-            else if (!validCarbonCopies(carbonCopies) || !validCarbonCopies(blindCC)) {
-                showPopupMessage("Please check your cc and bccs emails", Main.primaryStage);
+            else if (!validCarbonCopies(carbonCopies) && carbonCopies.trim().length() > 0) {
+                showPopupMessage("Please check your cc emails", Main.primaryStage);
+            }
+
+            else if (!validCarbonCopies(blindCC) && blindCC.trim().length() > 0) {
+                showPopupMessage("Please check your bcc emails", Main.primaryStage);
             }
 
             else {
@@ -143,7 +147,7 @@ public class ComposeController {
                 props.put("mail.smtp.host", getEmailHost(ourEmail));
                 props.put("mail.smtp.port", 587);
 
-                Session session = Session.getDefaultInstance(props,
+                Session session = Session.getInstance(props,
                         new javax.mail.Authenticator() {
                             protected PasswordAuthentication getPasswordAuthentication() {
                                 return new PasswordAuthentication(ourEmail, passwordBuilder.toString()); }
@@ -191,6 +195,7 @@ public class ComposeController {
         }
     }
 
+    //todo display in a pane of their own where you can select it and delete it or replace it: nathan
     private void addAttachements(Multipart multipart) {
         try {
             if (attachements != null && !attachements.isEmpty()) {

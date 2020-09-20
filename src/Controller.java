@@ -10,20 +10,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Store;
+import javax.mail.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -97,43 +99,38 @@ public class Controller {
                 email.trim().length() > 0;
     }
 
-    //todo nathan working here, need to get it working then i'll add a getInbox function where you pass in a folder
-    //this is what I was talking about that you don't need a database for this program
+    public String getIMAPServer(String email) {
+        if (email.endsWith("gmail.com"))
+            return "imap.gmail.com";
+        else if (email.endsWith("yahoo.com"))
+            return "imap.mail.yahoo.com";
+        else if (email.endsWith("outlook.com"))
+            return "imap-mail.outlook.com";
+        else
+            return null;
+    }
+
+    //see if we can access stuff from the email, if it's denied then it exists, if invalid then an error is thrown
     public boolean validateCredentials(String user, char[] pass) {
+        StringBuilder passBuild = new StringBuilder();
+        for (char c : pass) passBuild.append(c);
+
+        Properties props = System.getProperties();
+
+        //we told the user to enable imaps and pop3 so this shouldn't be a problem
+        props.setProperty("mail.store.protocol", "imaps");
+
         try {
-            Properties props = new Properties();
+            Session session = Session.getDefaultInstance(props, null);
+            Store store = session.getStore("imaps");
 
-            props.put("mail.smtp.auth", true);
-            props.put("mail.smtp.host", getEmailHost(user));
-            props.put("mail.smtp.port", 587);
-
-            Session emailSession = Session.getDefaultInstance(props);
-            Store sessionStore = emailSession.getStore("pop3");
-
-            StringBuilder passBuild = new StringBuilder();
-            for (char c : pass) passBuild.append(c);
-
-            sessionStore.connect(getEmailHost(user), user, passBuild.toString());
-
-            //folder object and open it, could read from trash and such by changing INBOX
-            Folder emailFolder = sessionStore.getFolder("INBOX");
-            emailFolder.open(Folder.READ_ONLY); //HOLDS_FOLDERS, HOLDS_MESSAGES, READ_ONLY, WRITE_ONLY
-
-            Message[] messages = emailFolder.getMessages();
-            int unreadEmailsNum = messages.length;
-
-            //now you can get a message from messages and call .getSubject, .getFrom, .getContent, etc.
-
-            emailFolder.close(false);
-            sessionStore.close();
-
-            //todo try and get inbox of user and if it fails its invalid
+            store.connect(getIMAPServer(user), user, passBuild.toString());
 
             return true;
         }
 
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Account DNE");
         }
 
         return false;
@@ -144,7 +141,7 @@ public class Controller {
         emailAddress = emailField.getText();
         password = passField.getText().toCharArray();
 
-//        if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
+        if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
             this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
 
             try {
@@ -156,11 +153,15 @@ public class Controller {
             }
 
             loadCompose(e);
-//        }
+        }
 
-//        else {
-//            System.out.println("todo popup informing invalid email");
-//        }
+        else {
+            showPopupMessage("Sorry, " + System.getProperty("user.name") + ", but I couldn't validate\nthe email: " +
+                    emailAddress, Main.primaryStage);
+
+            emailField.setText("");
+            passField.setText("");
+        }
     }
 
     private String getEmailHost(String email) throws Exception {
@@ -234,5 +235,51 @@ public class Controller {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private Popup createPopup(final String message) {
+        final Popup popup = new Popup();
+        popup.setAutoFix(true);
+        popup.setAutoHide(true);
+        popup.setHideOnEscape(true);
+        Label label = new Label(message);
+        label.setOnMouseReleased(e -> popup.hide());
+        label.getStylesheets().add("DefaultStyle.css");
+        label.getStyleClass().add("popup");
+        popup.getContent().add(label);
+        return popup;
+    }
+
+    //todo make these look nicer, maybe slide in and out like in cyder? And also make timeout after 5 sec
+    private void showPopupMessage(final String message, final Stage stage) {
+        final Popup popup = createPopup(message);
+        popup.setOnShown(e -> {
+            popup.setX(stage.getX() + stage.getWidth() / 2 - popup.getWidth() / 2);
+            popup.setY(stage.getY() + 25);
+        });
+        popup.show(stage);
+    }
+
+    private void InternetConnect(String url) {
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(new URI(url));
+            } else {
+                // Ubuntu
+                Runtime runtime = Runtime.getRuntime();
+                runtime.exec("/usr/bin/firefox -new-window " + url);
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void enableIMAP() {
+        InternetConnect("https://shorturl.at/dgprT");
+        InternetConnect("https://shorturl.at/gsHO7");
     }
 }

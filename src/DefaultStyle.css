@@ -45,6 +45,7 @@
 }
 
 .input-field {
+    -fx-accent: rgb(204,153,0) ;
     -fx-background-color: #ffffff;
     background-color: #ffffff;
 

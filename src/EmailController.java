@@ -18,11 +18,12 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import javax.mail.*;
-import javax.swing.*;
+import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class EmailController {
@@ -37,10 +38,17 @@ public class EmailController {
 
 
     @FXML
-    public void initialize() throws Exception {
-        //stuff you need on startup of email page
-        inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
-        fetchEmail();
+    public void initialize() {
+        try {
+            //throwing excpetions is a dangerous practice :)
+            //you should always catch them and print the stack trace or do something else
+            inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
+            fetchEmail();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private String getEmailAddress() {
@@ -55,61 +63,101 @@ public class EmailController {
     public Button logoutButton;
 
     @FXML
-    private void fetchEmail() throws Exception {
-        StringBuilder passwordBuilder = new StringBuilder();
-        for (int i = 0; i < Controller.password.length; i++)
-            passwordBuilder.append(Controller.password[i]);
+    public Label unreadEmailsLabel;
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", true);
-        props.put("mail.smtp.starttls.enable", true);
-        props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
-        props.put("mail.smtp.port", 587);
+    @FXML
+    private void fetchEmail() {
+        try {
+            StringBuilder passwordBuilder = new StringBuilder();
+            for (int i = 0; i < Controller.password.length; i++)
+                passwordBuilder.append(Controller.password[i]);
 
-        Session session = Session.getDefaultInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(getEmailAddress(), passwordBuilder.toString());
-                    }
-                });
-        Store store = session.getStore("smtp");
-        store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
+            props.put("mail.smtp.port", 587);
 
-        Folder emailFolder = store.getFolder("Inbox");
-        emailFolder.open(Folder.READ_ONLY);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Message[] messages = emailFolder.getMessages();
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(getEmailAddress(), passwordBuilder.toString());
+                        }
+            });
 
-        for (int i = 0; i < messages.length; i++) {
-            Message message = messages[i];
+            Store store = session.getStore("imaps");
+            store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
-            System.out.println("---------------------------------");
-            writePart(message);
-            String line = reader.readLine();
-            if ("YES".equals(line)) {
-                message.writeTo(System.out);
-            } else if ("QUIT".equals(line)) {
-                break;
+            //todo if we want to we can add a choice box for trash/inbox/sent/etc. then call refresh if they update it
+            Folder emailFolder = store.getFolder("INBOX");
+            emailFolder.open(Folder.READ_ONLY);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            Message[] messages = emailFolder.getMessages();
+
+            unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " unread emails" : " 1 unread email");
+
+            for (int i = 0; i < messages.length; i++) {
+                Message message = messages[i];
+
+                System.out.println("\n\nMessage " + i);
+                System.out.println("---------------------------------");
+                System.out.println("from: " + Arrays.toString(message.getFrom()));
+                System.out.println("subject: " + message.getSubject());
+                System.out.println("Receive date: " + message.getReceivedDate());
+                System.out.println("Sent date: " + message.getSentDate());
+                System.out.println("All recipients: " + Arrays.toString(message.getAllRecipients()));
+                System.out.println("From folder: " + message.getFolder());
+
+                MimeMessage mimeMessage = (MimeMessage) message;
+                BodyPart regularText = null;
+                Multipart cont = (Multipart) mimeMessage.getContent();
+
+                int len = cont.getCount();
+
+                for (int j = 0 ; j < len ; j++) {
+                    regularText = cont.getBodyPart(j);
+                }
+
+                String result = (String) regularText.getContent();
+
+                System.out.println("Body: " + result);
+
+                //preview 40 characters until we click on it I suppose
+                writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), result.substring(0, Math.min(result.length(), 40)));
             }
+
+            emailFolder.close(false);
+            store.close();
         }
 
-        emailFolder.close(false);
-        store.close();
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private void writePart(Part p) throws MessagingException, IOException {
-        Address[] a;
-        Message m = (Message) p;
-        // FROM
-        StringBuilder fromBuild = new StringBuilder();
-        if ((a = m.getFrom()) != null) {
-            for (int j = 0; j < a.length; j++) {
-                fromBuild.append(a[j].toString());
-            }
+    //todo as you can see, it prints it to the console so we just need to display that in GUI form
+    //display email messages in content table
+    private void writePart(String from, String date, String subject, String message) {
+        try {
+            TableColumn fromCol = new TableColumn("From");
+            fromCol.setCellValueFactory(new PropertyValueFactory<String, String>("from"));
+
+            TableColumn dateCol = new TableColumn("Date");
+            dateCol.setCellValueFactory(new PropertyValueFactory<String, String>("date"));
+
+            TableColumn subjectCol = new TableColumn("Subject");
+            subjectCol.setCellValueFactory(new PropertyValueFactory<String, String>("subject"));
+
+            TableColumn messageCol = new TableColumn("Message");
+            messageCol.setCellValueFactory(new PropertyValueFactory<String, String>("message"));
+
+
+            table.getItems().addAll(fromCol, dateCol, subjectCol, messageCol);
         }
-        from.setCellFactory(new PropertyValueFactory(fromBuild.toString()));
-        subject.setCellFactory(new PropertyValueFactory(m.getSubject()));
-        message.setCellFactory(new PropertyValueFactory(p.getContent().toString()));
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
