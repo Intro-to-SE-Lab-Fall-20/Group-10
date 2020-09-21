@@ -28,7 +28,7 @@
                     <Tooltip text="Complete email (ex: Straight@Shot.com)" />
                 </tooltip>
             </TextField>
-            <PasswordField fx:id="passField" layoutX="128.0" layoutY="307.0" styleClass="input-field">
+            <PasswordField fx:id="passField" layoutX="128.0" layoutY="307.0" onAction="#login" styleClass="input-field">
                 <tooltip>
                     <Tooltip text="Password" />
                 </tooltip>
