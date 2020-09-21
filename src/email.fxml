@@ -10,69 +10,49 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css"
-            xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="EmailController">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EmailController">
     <children>
-        <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-              prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
+        <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
             <children>
-                <Label fx:id="CloseButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity"
-                       maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_app"
-                       prefHeight="20.0" prefWidth="20.0" styleClass="close-btn" stylesheets="@DefaultStyle.css"
-                       text="X" textFill="WHITE" translateX="380.0"/>
-                <Label alignment="CENTER" contentDisplay="CENTER" styleClass="window-label" text="StraightShot"
-                       textFill="WHITE" translateX="-15.0"/>
-                <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity"
-                       maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage"
-                       prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—"
-                       textFill="WHITE" translateX="252.0"/>
+                <Label fx:id="CloseButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_app" prefHeight="20.0" prefWidth="20.0" styleClass="close-btn" stylesheets="@DefaultStyle.css" text="X" textFill="WHITE" translateX="380.0" />
+                <Label alignment="CENTER" contentDisplay="CENTER" styleClass="window-label" text="StraightShot" textFill="WHITE" translateX="-15.0" />
+                <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
             </children>
         </HBox>
-        <Button fx:id="composeButton" layoutX="91.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose"
-                prefHeight="26.0" prefWidth="87.0" styleClass="button-login" text="Compose">
+        <Button fx:id="composeButton" layoutX="91.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="87.0" styleClass="button-login" text="Compose">
             <tooltip>
-                <Tooltip text="Write an email"/>
+                <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <Button fx:id="logoutButton" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#goBack"
-                styleClass="button-discard" text="Logout">
+        <Button fx:id="logoutButton" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#goBack" styleClass="button-discard" text="Logout">
             <tooltip>
-                <Tooltip text="Take me home (country roads)"/>
+                <Tooltip text="Take me home (country roads)" />
             </tooltip>
         </Button>
-        <Label fx:id="inboxLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0"
-               styleClass="description-label" text="Viewing inbox of:" textFill="WHITE"/>
-        <Button fx:id="replyButton" layoutX="299.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose"
-                prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Reply">
+        <Label fx:id="inboxLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0" styleClass="description-label" text="Viewing inbox of:" textFill="WHITE" />
+        <Button fx:id="replyButton" layoutX="299.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Reply">
             <tooltip>
-                <Tooltip text="Write an email"/>
+                <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <Button fx:id="forwardButton" layoutX="200.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose"
-                prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Forward">
+        <Button fx:id="forwardButton" layoutX="200.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Forward">
             <tooltip>
-                <Tooltip text="Write an email"/>
+                <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <ProgressBar layoutX="14.0" layoutY="51.0" prefHeight="18.0" prefWidth="143.0" progress="0.32"
-                     styleClass="stripes">
+        <ProgressBar layoutX="14.0" layoutY="51.0" prefHeight="18.0" prefWidth="143.0" progress="0.32" styleClass="stripes">
             <tooltip>
-                <Tooltip text="Loading/Sending"/>
+                <Tooltip text="Loading/Sending" />
             </tooltip>
         </ProgressBar>
-        <CheckBox layoutX="18.0" layoutY="75.0" mnemonicParsing="false" selected="true"
-                  style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;"
-                  text="Hide on close"/>
-        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="77.0"
-               styleClass="description-label" text="69 unread emails" textFill="WHITE"/>
+        <CheckBox layoutX="18.0" layoutY="75.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
+        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="77.0" styleClass="description-label" text="69 unread emails" textFill="WHITE" />
         <TableView fx:id="table" layoutX="10.0" layoutY="110.0" prefHeight="280.0" prefWidth="380.0">
             <columns>
-                <TableColumn fx:id="from" prefWidth="60.0" text="From"/>
-                <TableColumn fx:id="date" prefWidth="50.0" text="Date"/>
-                <TableColumn fx:id="subject" prefWidth="75.0" text="Subject"/>
-                <TableColumn fx:id="message" prefWidth="200.0" text="Message"/>
+                <TableColumn fx:id="from" prefWidth="60.0" text="From" />
+                <TableColumn fx:id="date" prefWidth="50.0" text="Date" />
+                <TableColumn fx:id="subject" prefWidth="75.0" text="Subject" />
+                <TableColumn fx:id="message" prefWidth="200.0" text="Message" />
             </columns>
         </TableView>
     </children>

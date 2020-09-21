@@ -1,155 +1,257 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+.parent {
+    -fx-background-color: linear-gradient(to bottom, #c3cae2  , #461e7e);
+}
 
-body {
-    height: 60vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    font-family: sans-serif;
+.drag-label {
+    -fx-background-color: #303138;
+}
+
+.close-btn {
+    -fx-background-color: transparent;
+    -fx-font-size: 1.2em;
+    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
+
+}
+
+.close-btn:hover {
+    -fx-background-color: #E81123;
+}
+
+.min-btn {
+    -fx-background-color: transparent;
+    -fx-font-size: 1.2em;
+    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
+
+}
+
+.min-btn:hover {
+    -fx-background-color: #171717;
+}
+
+.window-label {
+    -fx-font-size: 1.2em;
+    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
+}
+
+.description-label{
+    -fx-text-fill: black;
+    -fx-background-radius: 8;
+    -fx-font-family: 'Tahoma';
+    -fx-font-weight: bold;
+    -fx-font-size: 1em;
+}
+
+.input-field {
+    -fx-accent: rgb(204,153,0) ;
+    -fx-background-color: #496777;
+    background-color: #496777;
+    -fx-text-fill: white;
+
+    -fx-font-family: sans-serif;
+    font-family:  sans-serif;
+
+    -fx-font-weight: bold;
     font-weight: bold;
+
+    -fx-font-size: 0,8em;
+    font-size: 0,8em;
 }
 
-h1 {
-    margin: 5px 0 -4% 0 ;
+.input-field:focused {
+    -fx-background-color:
+        #2196f3,
+        #ffffff;
+    background-color: 
+        #2196f3,
+        #ffffff;;
 }
 
-.form {
-    width:  50%;
-    position: relative;
-    height: 50px;
-    overflow: hidden;
+.choice-box {
+    -fx-background-color: #e2174d;
+   -fx-mark-color: white; 
+   -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
 }
 
-.form input {
-    width:  100%;
-    height: 100%;
-    font-size: 100%;
-    font-weight: initial;
-    color: #595f6e;
-    padding-top: 20px;
-    border:none;
-    outline: none;
-    border-bottom: 2px solid black;
+.choice-box > .label { 
+    -fx-text-fill: white; 
+    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
 }
 
-.form label {
-    position: absolute;
-    bottom: 0px;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    border-bottom: 1px solid black;
+.choice-box .context-menu { 
+    -fx-background-color: #e2174d;
 }
 
-.form label::after {
-    content: "";
-    position: absolute;
-    left: 0px;
-    bottom: -2px;
-    height: 100%;
-    width: 100%;
-    border-bottom: 4px solid #5fa8d3;
-    transform: translateX(-100%);
-    transition: all 0.8s ease;
+.choice-box .menu-item:focused { 
+    -fx-background-color: #bb123f; 
 }
 
-.content-name {
-    position: absolute;
-    bottom: 5px;
-    left: 0px;
-    transition: all 0.8s ease;
+.choice-box .menu-item > .label {
+     -fx-text-fill: white; 
+    }
+
+.choice-box .menu-item:focused > .label {
+    -fx-background-color: #bb123f;
 }
 
-.form input:focus + .label-name .content-name, 
-.form input:valid + .label-name .content-name{
-    transform: translateY(-150%);
-    font-size: 16px;
+.button-discard{
+    -fx-background-color: #e2174d;
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
 }
+
+.button-discard:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #e2174d;
+}
+
+
+.button-login{
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+}
+
+.button-login:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #2196f3;
+}
+
+.text-area .content{
+    -fx-background-color: rgb(194, 232, 250); 
+    -fx-text-fill: black;
+}
+
+.tooltip {
+    -fx-background-color: rgb(39, 40, 34); 
+    -fx-text-fill: rgb(85,85,255); 
+    -fx-font-family: tahoma;
+     -fx-font-weight: bold;
+     -fx-border-radius:1px 1px 1px 1px; 
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb{
+    -fx-background-color :#031b3f;
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color :transparent;
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 0.0 10.0 0.0;
+
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+
+}
+
+ .scroll-bar .increment-arrow,
+ .scroll-bar .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.15em 0.0;
+}
+
+ .scroll-bar:vertical .increment-arrow,
+ .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";    
+    -fx-padding :0.0 0.15em;
+}
+
+.progress-bar {
+    -fx-border-color :transparent;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(
+        from 0px .75em to .75em 0px,
+        repeat,
+        -fx-accent 0%,
+        -fx-accent 49%,
+        derive(-fx-accent, 30%) 50%,
+        derive(-fx-accent, 30%) 99%
+    );
+}
+
+.popup {
+    -fx-background-color:rgb(236,64,122);
+    -fx-padding: 10;
+    -fx-text-fill: rgb(0, 0, 0); 
+    -fx-font-weight: bold;
+    -fx-font-family: sans-serif;
+    -fx-border-color: transparent; 
+    -fx-border-radius :1.0em;
+    -fx-font-size: 12;
+}
+
+.table-view {
+    -fx-background-color: #899de1;
+    -fx-background-radius: 20;
+    -fx-fill: white;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #2f52c5;
+    -fx-background-radius: 20;
+    -fx-background-insets: 0 0 10 0;
+    -fx-padding: 0 0 10 0;
+    -fx-effect: dropshadow(two-pass-box, rgb(21, 94, 133) 15,0,0.1,3)
+}
+
+.table-view .column-header, .table-view .filter {
+    -fix-size: 20;
+    -fix-border-width: 0 0 10 0;
+    -fix-background-color: transparent;
+}
+
+.table-view .cell{
+    -fx-cell-size: 30;
+    -fx-border-width: 1;
+
+   -fx-alignment: center-left;
+   -fx-background-color: transparent;
+   -fx-border-color: #29292D;
+   -fx-text-fill: black;
+   -fx-alignment: CENTER_LEFT;
     
-.form input:focus + .label-name::after,
-.form input:valid+  .label-name::after {
-    transform: translateX(0%);
+ }
+
+.table-view .column-header {
+    -fx-background-radius: 16 16 16 16;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
 }
 
-.password {
-    width:  50%;
-    position: relative;
-    height: 50px;
-    overflow: hidden;
-}
-
-.password input {
-    width:  100%;
-    height: 100%;
-    font-size: 150%;
-    font-weight: initial;
-    color: #595f6e;
-    padding-top: 20px;
-    border:none;
-    outline: none;
-    border-bottom: 2px solid black;
-}
-
-.password label {
-    position: absolute;
-    bottom: 0px;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    border-bottom: 1px solid black;
-}
-
-.password label::after {
-    content: "";
-    position: absolute;
-    left: 0px;
-    bottom: -2px;
-    height: 100%;
-    width: 100%;
-    border-bottom: 4px solid #5fa8d3;
-    transform: translateX(-100%);
-    transition: all 0.8s ease;
-}
-
-
-.password input:focus + .label-name .content-name, 
-.password input:valid + .label-name .content-name{
-    transform: translateY(-150%);
-    font-size: 16px;
-}
-    
-.password input:focus + .label-name::after,
-.password input:valid+  .label-name::after {
-    transform: translateX(0%);
-}
-
-.container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.login {
-    border: 2px solid #3498db;
-    background: none;
-    padding: 10px 20px;
-    font-size: 20px;
-    font-family: sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 10px;
-    color: #3498db;
-    transition: 0.5s;
-    border-radius: 7%;
-}
-
-.login:hover {
-    color: #fff;
-    background: #3498db;
+.table-view .column-header .label {
+    -fx-background-radius: 16 16 16 16;
+    -fx-text-fill: black;
 }

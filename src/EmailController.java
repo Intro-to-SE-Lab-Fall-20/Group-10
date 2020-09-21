@@ -106,7 +106,7 @@ public class EmailController {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             Message[] messages = emailFolder.getMessages();
 
-            unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " unread emails" : " 1 unread email");
+            unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email");
 
             for (int i = 0; i < messages.length; i++) {
                 Message message = messages[i];
