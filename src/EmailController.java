@@ -18,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import javax.mail.*;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,10 +40,22 @@ public class EmailController {
     @FXML
     public void initialize() {
         try {
-            //throwing excpetions is a dangerous practice :)
-            //you should always catch them and print the stack trace or do something else
+            //throwing excpetions is a dangerous practice :) you should always catch them and print the stack trace or do something else
+
             inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
             fetchEmail();
+
+            TableColumn fromCol = new TableColumn("From");
+            TableColumn dateCol = new TableColumn("Date");
+            TableColumn subjectCol = new TableColumn("Subject");
+            TableColumn messageCol = new TableColumn("Message");
+
+            table.getItems().addAll(fromCol, dateCol, subjectCol, messageCol);
+
+            from.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("from"));
+            date.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("date"));
+            subject.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("subject"));
+            message.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("message"));
         }
 
         catch (Exception e) {
@@ -108,22 +120,10 @@ public class EmailController {
                 System.out.println("All recipients: " + Arrays.toString(message.getAllRecipients()));
                 System.out.println("From folder: " + message.getFolder());
 
-                MimeMessage mimeMessage = (MimeMessage) message;
-                BodyPart regularText = null;
-                Multipart cont = (Multipart) mimeMessage.getContent();
+                String body = getMessageText(message);
+                System.out.println("Body: " + body);
 
-                int len = cont.getCount();
-
-                for (int j = 0 ; j < len ; j++) {
-                    regularText = cont.getBodyPart(j);
-                }
-
-                String result = (String) regularText.getContent();
-
-                System.out.println("Body: " + result);
-
-                //preview 40 characters until we click on it I suppose
-                writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), result.substring(0, Math.min(result.length(), 40)));
+                writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), body.substring(0, Math.min(body.length(), 40)));
             }
 
             emailFolder.close(false);
@@ -135,29 +135,66 @@ public class EmailController {
         }
     }
 
-    //todo as you can see, it prints it to the console so we just need to display that in GUI form
-    //display email messages in content table
-    private void writePart(String from, String date, String subject, String message) {
+    //todo if file from email is .mp3, display song length, if picture, display preview and maybe pixel size: nathan
+
+    private String getMessageText(Message message) {
         try {
-            TableColumn fromCol = new TableColumn("From");
-            fromCol.setCellValueFactory(new PropertyValueFactory<String, String>("from"));
+            String result = "";
 
-            TableColumn dateCol = new TableColumn("Date");
-            dateCol.setCellValueFactory(new PropertyValueFactory<String, String>("date"));
+            if (message.isMimeType("text/plain"))
+                result = message.getContent().toString();
 
-            TableColumn subjectCol = new TableColumn("Subject");
-            subjectCol.setCellValueFactory(new PropertyValueFactory<String, String>("subject"));
+            else if (message.isMimeType("multipart/*")) {
+                MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
 
-            TableColumn messageCol = new TableColumn("Message");
-            messageCol.setCellValueFactory(new PropertyValueFactory<String, String>("message"));
+                result = MMText(mimeMultipart);
+            }
 
-
-            table.getItems().addAll(fromCol, dateCol, subjectCol, messageCol);
+            return result;
         }
 
         catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+
+    private String MMText(MimeMultipart mimeMulti)  {
+        try {
+            StringBuilder result = new StringBuilder();
+
+            int count = mimeMulti.getCount();
+
+            for (int i = 0; i < count; i++) {
+                BodyPart bodyPart = mimeMulti.getBodyPart(i);
+
+                if (bodyPart.isMimeType("text/plain")) {
+                    result.append("\n").append(bodyPart.getContent());
+
+                    break; //this is necessary, do not remove
+                }
+
+                else if (bodyPart.getContent() instanceof MimeMultipart)
+                    result.append(MMText((MimeMultipart) bodyPart.getContent()));
+            }
+
+            return result.toString();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    //todo add emails to table so that we can click on them and view the full message
+    //display email messages in content table
+    private void writePart(String from, String date, String subject, String message) {
+        EmailPreview addMe = new EmailPreview(from,date,subject,message);
+        table.getItems().add(addMe);
+        table.refresh();
     }
 
     @FXML
