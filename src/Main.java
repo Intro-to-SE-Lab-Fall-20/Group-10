@@ -47,9 +47,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    //for mallory: https://www.youtube.com/watch?v=T3NlWMzPyXM&ab_channel=GenuineCoder
-    //how to install the scene builder I use
-
     @Override
     public void stop() throws IOException {
         user.deleteUser();
