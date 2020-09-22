@@ -2,6 +2,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -23,6 +25,7 @@ import javafx.util.Duration;
 import javax.mail.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URI;
@@ -47,6 +50,14 @@ public class Controller {
 
     @FXML
     private void close_app(MouseEvent e) {
+        FileWriter file;
+        try {
+            file = new FileWriter("user.txt");
+            file.write("");
+            file.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         //here you can save user stuff like theme and what not: mallory
         System.exit(0);
     }
@@ -62,6 +73,7 @@ public class Controller {
 
     public static String emailAddress;
     public static char[] password;
+    public static String theme;
 
     @FXML
     ChoiceBox<String> switchCSS;
@@ -82,6 +94,11 @@ public class Controller {
         list.addAll(cssFiles);
         switchCSS.getItems().addAll(list);
         switchCSS.getSelectionModel().select(0);
+        switchCSS.getSelectionModel().selectedIndexProperty().addListener(
+                (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                    theme = String.valueOf(new_val);
+                });
+        if(theme == null) theme = "default";
     }
 
     private boolean isValidEmail(String email) {
@@ -141,8 +158,8 @@ public class Controller {
         emailAddress = emailField.getText();
         password = passField.getText().toCharArray();
 
-        if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
-            this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), switchCSS.getSelectionModel().getSelectedItem());
+        //if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
+            this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), theme);
 
             try {
                 this.user.writeUser();
@@ -153,15 +170,15 @@ public class Controller {
             }
 
             loadCompose(e);
-        }
+        //}
 
-        else {
+        /*else {
             showPopupMessage("Sorry, " + System.getProperty("user.name") + ", but I couldn't validate\nthe email: " +
                     emailAddress, Main.primaryStage);
 
             emailField.setText("");
             passField.setText("");
-        }
+        }*/
     }
 
     private String getEmailHost(String email) throws Exception {

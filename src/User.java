@@ -15,7 +15,8 @@ public class User {
         this.password = "";
         this.theme = "style";
     }
-    public User(String username, String password, String theme){
+
+    public User(String username, String password, String theme) {
         this.username = username;
         this.password = password;
         this.theme = theme;
@@ -27,6 +28,16 @@ public class User {
         JSONObject user = new JSONObject();
         user.put("username", this.username);
         user.put("password", this.password); // get secured password
+        switch (theme) {
+            case "0":
+                this.theme = "blueStyle";
+                break;
+            case "1":
+                this.theme = "pinkStyle";
+                break;
+            default:
+                this.theme = "defaultStyle";
+        }
         user.put("theme", this.theme);
         try {
             file = new FileWriter("user.txt");
