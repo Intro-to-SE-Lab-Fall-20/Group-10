@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -22,7 +21,8 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.mail.*;
+import javax.mail.Session;
+import javax.mail.Store;
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -95,9 +95,7 @@ public class Controller {
         switchCSS.getItems().addAll(list);
         switchCSS.getSelectionModel().select(0);
         switchCSS.getSelectionModel().selectedIndexProperty().addListener(
-                (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-                    theme = String.valueOf(new_val);
-                });
+                (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> theme = String.valueOf(new_val));
         if(theme == null) theme = "default";
     }
 
@@ -158,7 +156,7 @@ public class Controller {
         emailAddress = emailField.getText();
         password = passField.getText().toCharArray();
 
-        //if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
+        if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
             this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), theme);
 
             try {
@@ -170,15 +168,15 @@ public class Controller {
             }
 
             loadCompose(e);
-        //}
+        }
 
-        /*else {
+        else {
             showPopupMessage("Sorry, " + System.getProperty("user.name") + ", but I couldn't validate\nthe email: " +
                     emailAddress, Main.primaryStage);
 
             emailField.setText("");
             passField.setText("");
-        }*/
+        }
     }
 
     private String getEmailHost(String email) throws Exception {
