@@ -1,4 +1,3 @@
-package JavaFX;
 
 import org.json.simple.JSONObject;
 
@@ -14,14 +13,32 @@ public class User {
     public User() {
         this.username = "";
         this.password = "";
-        this.theme = "";
+        this.theme = "style";
     }
+
+    public User(String username, String password, String theme) {
+        this.username = username;
+        this.password = password;
+        this.theme = theme;
+    }
+
     public void writeUser() throws IOException {
         //todo use all the info from the interface to store in a JSON file: mallory
         FileWriter file = new FileWriter("user.txt");
         JSONObject user = new JSONObject();
         user.put("username", this.username);
         user.put("password", this.password); // get secured password
+        switch (theme) {
+            case "0":
+                this.theme = "blueStyle";
+                break;
+            case "1":
+                this.theme = "pinkStyle";
+                break;
+            default:
+                this.theme = "defaultStyle";
+        }
+        user.put("theme", this.theme);
         try {
             file = new FileWriter("user.txt");
             file.write(user.toJSONString());
@@ -55,5 +72,17 @@ public class User {
 
     public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getTheme() {
+        return theme;
     }
 }
