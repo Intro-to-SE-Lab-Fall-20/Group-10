@@ -16,6 +16,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.imageio.ImageIO;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -24,6 +25,7 @@ import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Properties;
 
@@ -181,8 +183,7 @@ public class ComposeController {
 
                 mes.setContent(emailContent);
 
-                Transport.send(mes); //error for invalid credentials here even if right password and username,
-                //todo add message to make sure "enable less secure app usage" is on and might have to disable 2FA for SS
+                Transport.send(mes);
 
                 showPopupMessage("Sent messaage", Main.primaryStage);
 
@@ -195,7 +196,48 @@ public class ComposeController {
         }
     }
 
-    //todo display in a pane of their own where you can select it and delete it or replace it: nathan
+    //must pass in a file that holds audio and this will return min:sec format of song length
+    private String getSongLength(File f) {
+        try {
+            //todo return the Minutes:Seconds length of an mp3 or wav audio file
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    //must pass in a file that is an iamge and will return [xDim, yDim] of the image
+    private int[] getImageDimensions(File imageFile) {
+        try {
+            return new int[]{ImageIO.read(imageFile).getWidth(), ImageIO.read(imageFile).getHeight()};
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new int[]{0,0};
+    }
+
+    //will return txt, png, mp3, or whatever the file type is
+    private String getFileExtension(File f) {
+        return f.getName().replace(f.getName().substring(0, f.getName().lastIndexOf('.')),"").replace(".","");
+    }
+
+    //returns a representation if a file in MB or KB with 2 decimal places
+    private String getDisplayFileSize(File f) {
+        DecimalFormat threeDecimal = new DecimalFormat("#.###");
+        double mbSize = f.length() / 1024.0 / 1024.0;
+
+        if (mbSize < 1)
+            return threeDecimal.format((mbSize * 1024.0)) + " KB";
+        else
+            return threeDecimal.format(mbSize) + " MB";
+    }
+
     private void addAttachements(Multipart multipart) {
         try {
             if (attachements != null && !attachements.isEmpty()) {
@@ -212,6 +254,7 @@ public class ComposeController {
         }
     }
 
+    //todo you need to test yahoho and outlook emails still
     private String getEmailHost(String email) throws Exception {
         if (email.endsWith("gmail.com"))
             return "smtp.gmail.com";
@@ -223,6 +266,8 @@ public class ComposeController {
             throw new Exception("Unsupported email host");
     }
 
+    //todo display in a pane the attachements where you can select it and delete it or replace it (name, size, type): nathan
+    //todo for pictures show dimensions, for mp3 files show song length
     @FXML
     private void addFiles(ActionEvent e) {
         try {
@@ -234,15 +279,15 @@ public class ComposeController {
                 StringBuilder build = new StringBuilder();
 
                 for (File attachement : attachements) {
+                    System.out.println(getImageDimensions(attachement)[0] + "," + getImageDimensions(attachement)[1]);
                     build.append(attachement.getName()).append(" ").append((int) Math.ceil(attachement.length() / 1024.0) / 1024.0).append("MB").append("\n");
                 }
 
                 attachButton.setTooltip(new Tooltip(build.toString()));
             }
 
-            else {
+            else
                 System.out.println("Invalid file");
-            }
         }
 
         catch (Exception ex) {
