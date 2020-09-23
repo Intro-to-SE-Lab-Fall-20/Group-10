@@ -1,0 +1,5 @@
+language: java
+jk:
+  - "openjdk8"
+notifications:
+  email: straightshotmsu@gmail.com
