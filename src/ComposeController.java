@@ -35,7 +35,6 @@ public class ComposeController {
 
     @FXML
     public Button attachButton;
-
     @FXML
     public TextField to;
     @FXML
@@ -46,14 +45,11 @@ public class ComposeController {
     public TextField blindcc;
     @FXML
     public TextArea emailContent;
-
-    @FXML
-    public void initialize() {
-        //stuff you need on startup of compose page
-    }
-
     @FXML
     public static AnchorPane parent;
+
+    @FXML
+    public void initialize() {}
 
     @FXML
     private void goBack(ActionEvent event) {
@@ -78,6 +74,7 @@ public class ComposeController {
         }
     }
 
+    //makes sure we have at least one recipient
     private boolean hasARecipient(String recip) {
         String[] recips = recip.split(",");
 
@@ -93,6 +90,7 @@ public class ComposeController {
         return true;
     }
 
+    //tells us if the requested ccs or bccs are valid
     private boolean validCarbonCopies(String cc) {
         String[] ccs = cc.split(",");
 
@@ -108,15 +106,18 @@ public class ComposeController {
         return true;
     }
 
+    //main driver method for StraightShot
     @FXML
     private void sendEmail(ActionEvent e) {
         try {
+            //first get all the text from the fields
             String recipients = to.getText().trim();
             String carbonCopies = carboncopy.getText().trim();
             String blindCC = blindcc.getText().trim();
             String subjectText = subject.getText().trim();
             String content = emailContent.getText().trim();
 
+            //now validate all the user input
             if (!hasARecipient(recipients) || recipients.trim().length() == 0) {
                 showPopupMessage("Please check your recipients email addresses", Main.primaryStage);
             }
@@ -129,7 +130,9 @@ public class ComposeController {
                 showPopupMessage("Please check your bcc emails", Main.primaryStage);
             }
 
+            //it's valid, yay!
             else {
+                //we can send an email with no subject or message body but we should inform the user to make sure it is intended
                 if (subjectText.length() == 0) {
                     showPopupMessage("Please note there is no subject", Main.primaryStage);
                 }
@@ -138,26 +141,31 @@ public class ComposeController {
                     showPopupMessage("Please note there is no message body", Main.primaryStage);
                 }
 
+                //init email and password
                 String ourEmail = Controller.emailAddress;
                 StringBuilder passwordBuilder = new StringBuilder();
                 for (int i = 0 ; i < Controller.password.length ; i++)
                     passwordBuilder.append(Controller.password[i]);
 
+                //init tls and smtp
                 Properties props = new Properties();
                 props.put("mail.smtp.auth", true);
                 props.put("mail.smtp.starttls.enable", true);
                 props.put("mail.smtp.host", getEmailHost(ourEmail));
                 props.put("mail.smtp.port", 587);
 
+                //create session
                 Session session = Session.getInstance(props,
                         new javax.mail.Authenticator() {
                             protected PasswordAuthentication getPasswordAuthentication() {
                                 return new PasswordAuthentication(ourEmail, passwordBuilder.toString()); }
                 });
 
+                //make a message
                 Message mes = new MimeMessage(session);
                 mes.setFrom(new InternetAddress(ourEmail));
 
+                //add recipients, carbon copies, and blind carbon copies to our email
                 InternetAddress[] addresses = InternetAddress.parse(recipients);
                 mes.addRecipients(Message.RecipientType.TO, addresses);
 
@@ -171,6 +179,7 @@ public class ComposeController {
                     mes.addRecipients(Message.RecipientType.BCC, bccAddresses);
                 }
 
+                //set subject, content, and body
                 mes.setSubject(subjectText);
 
                 Multipart emailContent = new MimeMultipart();
@@ -179,10 +188,13 @@ public class ComposeController {
                 textBodyPart.setText(content);
 
                 emailContent.addBodyPart(textBodyPart);
+
+                //add attachements to our Multipart if we have any
                 addAttachements(emailContent);
 
                 mes.setContent(emailContent);
 
+                //attempt to send and if successful, inform user and go back to inbox screen
                 Transport.send(mes);
 
                 showPopupMessage("Sent messaage", Main.primaryStage);
@@ -238,6 +250,21 @@ public class ComposeController {
             return threeDecimal.format(mbSize) + " MB";
     }
 
+    //todo you need to test yahoho and outlook emails still
+    private String getEmailHost(String email) throws Exception {
+        if (email.endsWith("gmail.com"))
+            return "smtp.gmail.com";
+        else if (email.endsWith("yahoo.com"))
+            return "smtp.mail.yahoo.com";
+        else if (email.endsWith("outlook.com"))
+            return "smtp.office365.com";
+        else
+            throw new Exception("Unsupported email host");
+    }
+
+    //todo display in a pane the attachements where you can select it and delete it or replace it (name, size, type): nathan
+    //todo for pictures show dimensions, for mp3 files show song length
+    //this method adds attachements to the actual email that we are going to send
     private void addAttachements(Multipart multipart) {
         try {
             if (attachements != null && !attachements.isEmpty()) {
@@ -254,20 +281,9 @@ public class ComposeController {
         }
     }
 
-    //todo you need to test yahoho and outlook emails still
-    private String getEmailHost(String email) throws Exception {
-        if (email.endsWith("gmail.com"))
-            return "smtp.gmail.com";
-        else if (email.endsWith("yahoo.com"))
-            return "smtp.mail.yahoo.com";
-        else if (email.endsWith("outlook.com"))
-            return "smtp.office365.com";
-        else
-            throw new Exception("Unsupported email host");
-    }
-
-    //todo display in a pane the attachements where you can select it and delete it or replace it (name, size, type): nathan
-    //todo for pictures show dimensions, for mp3 files show song length
+    //Nathan is going to overhaul this method soon
+    //basically add attachements to the email and the way we show that there are attachements right now is
+    //by setting the tooltip of the add attachements button
     @FXML
     private void addFiles(ActionEvent e) {
         try {
@@ -315,6 +331,7 @@ public class ComposeController {
         System.exit(0);
     }
 
+    //popup messages, can customize look based on the style sheet selected
     private Popup createPopup(final String message) {
         final Popup popup = new Popup();
         popup.setAutoFix(true);

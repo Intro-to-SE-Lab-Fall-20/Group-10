@@ -36,7 +36,20 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class Controller {
-    User user;
+    //do we need this at all? (static since only one user can be logged in at any one time)
+    public static User user;
+
+    @FXML public StackPane masterStack;
+    @FXML public AnchorPane parent;
+    @FXML public TextField emailField;
+    @FXML public PasswordField passField;
+    @FXML
+    ChoiceBox<String> switchCSS;
+    ObservableList list = FXCollections.observableArrayList();
+
+    public static String emailAddress;
+    public static char[] password;
+    public static String theme;
 
     @FXML
     public void initialize() {
@@ -58,27 +71,12 @@ public class Controller {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        //here you can save user stuff like theme and what not: mallory
+
         System.exit(0);
     }
 
-    //copy annotation like this if you add a component using scene builder
-    //you then need to make sure th fx:id is the same as below for you to use it in the code
-    //see how I got the username and password for a better explanation
-
-    @FXML public StackPane masterStack;
-    @FXML public AnchorPane parent;
-    @FXML public TextField emailField;
-    @FXML public PasswordField passField;
-
-    public static String emailAddress;
-    public static char[] password;
-    public static String theme;
-
-    @FXML
-    ChoiceBox<String> switchCSS;
-    ObservableList list = FXCollections.observableArrayList();
-
+    //finds css files and allows user to select any one
+    //todo be able to set this to the style used for EmailController and ComposeController
     private void loadCSSFiles() {
         list.removeAll();
 
@@ -99,7 +97,12 @@ public class Controller {
         if(theme == null) theme = "default";
     }
 
+
+    //return false if it is not formatted like an email should be
+    //examples: mnd199@msu.edu, nvc29@msstate.edu, Bryan.jones@cpe.msstate.edu, nathan@gmail.com
     private boolean isValidEmail(String email) {
+
+        //Don't ask me how it works; I'll get a headache again
         if (!email.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
                 "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])" +
                 "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])" +
@@ -114,6 +117,7 @@ public class Controller {
                 email.trim().length() > 0;
     }
 
+    //gets the iamp server based on the email provdider
     public String getIMAPServer(String email) {
         if (email.endsWith("gmail.com"))
             return "imap.gmail.com";
@@ -139,6 +143,8 @@ public class Controller {
             Session session = Session.getDefaultInstance(props, null);
             Store store = session.getStore("imaps");
 
+            //if this doesn't work then we know the email couldn't be validated so an exception
+            //will be thrown and we will informt the user we couldn't login
             store.connect(getIMAPServer(user), user, passBuild.toString());
 
             return true;
@@ -151,11 +157,13 @@ public class Controller {
         return false;
     }
 
+    //main login method
     @FXML
     private void login(ActionEvent e) {
         emailAddress = emailField.getText();
         password = passField.getText().toCharArray();
 
+        //make sure we can load stuff from the email and make sure it is formatted correctly using a regex
         if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
             this.user = new User(emailField.getText(), toHexString(getSHA(passField.getText().toCharArray())), theme);
 
@@ -179,6 +187,7 @@ public class Controller {
         }
     }
 
+    //get the email host, will remove cases if we cannot support any other mail services aside from (gmail)
     private String getEmailHost(String email) throws Exception {
         if (email.endsWith("gmail.com"))
             return "smtp.gmail.com";
@@ -190,7 +199,7 @@ public class Controller {
             throw new Exception("Unsupported email host");
     }
 
-    //Secure Hashing Algorithm 256 bit std encryption
+    //Secure Hashing Algorithm 256-bit (standard encryption for modern browsers)
     public byte[] getSHA(char[] input) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -204,7 +213,7 @@ public class Controller {
         return null;
     }
 
-    //returns hex representation of bit string
+    //returns hex representation of bin string
     public String toHexString(byte[] hash) {
         BigInteger number = new BigInteger(1, hash);
         StringBuilder hexString = new StringBuilder(number.toString(16));
@@ -216,7 +225,7 @@ public class Controller {
         return hexString.toString();
     }
 
-    //not need this method but here in case we need a UUID generator
+    //UUID generator
     public String generateUUID() {
         try {
             MessageDigest salt =MessageDigest.getInstance("SHA-256");
@@ -231,6 +240,7 @@ public class Controller {
         return null;
     }
 
+    //method explenation in EmailController
     @FXML
     private void loadCompose(ActionEvent event) {
         try {
@@ -252,6 +262,7 @@ public class Controller {
         }
     }
 
+    //used by below method (may custom in CSS file if you wish)
     private Popup createPopup(final String message) {
         final Popup popup = new Popup();
         popup.setAutoFix(true);
@@ -266,6 +277,7 @@ public class Controller {
     }
 
     //todo make these look nicer, maybe slide in and out like in cyder? And also make timeout after 5 sec
+    //show a popup message
     private void showPopupMessage(final String message, final Stage stage) {
         final Popup popup = createPopup(message);
         popup.setOnShown(e -> {
@@ -275,12 +287,14 @@ public class Controller {
         popup.show(stage);
     }
 
+    //open up a URL
     private void InternetConnect(String url) {
         try {
+            //windows/OS X
             if (Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().browse(new URI(url));
             } else {
-                // Ubuntu
+                //Ubuntu/Linux dist
                 Runtime runtime = Runtime.getRuntime();
                 runtime.exec("/usr/bin/firefox -new-window " + url);
             }
@@ -292,6 +306,7 @@ public class Controller {
 
     }
 
+    //this opens google queries that will help the user setup their email for SS use
     @FXML
     private void enableIMAP() {
         InternetConnect("https://shorturl.at/dgprT");

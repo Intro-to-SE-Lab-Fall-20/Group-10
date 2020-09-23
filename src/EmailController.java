@@ -26,8 +26,10 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Properties;
 
+
 public class EmailController {
 
+    //used for our inbox table, will add more stuff
     @FXML
     public Label inboxLabel;
     public TableView table;
@@ -36,22 +38,35 @@ public class EmailController {
     public TableColumn date;
     public TableColumn subject;
 
+    //UI elements
+    @FXML
+    public static AnchorPane parent;
+    @FXML
+    public Button composeButton;
+    @FXML
+    public Button logoutButton;
+    @FXML
+    public Label unreadEmailsLabel;
 
     @FXML
     public void initialize() {
         try {
-            //throwing excpetions is a dangerous practice :) you should always catch them and print the stack trace or do something else
-
+            //update the email address label
             inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
+
+            //load emails call
             fetchEmail();
 
+            //init table colum nnames
             TableColumn fromCol = new TableColumn("From");
             TableColumn dateCol = new TableColumn("Date");
             TableColumn subjectCol = new TableColumn("Subject");
             TableColumn messageCol = new TableColumn("Message");
 
+            //add columns to the table
             table.getItems().addAll(fromCol, dateCol, subjectCol, messageCol);
 
+            //set how each column will display its data <EmailPreview, String> means display this object as a string
             from.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("from"));
             date.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("date"));
             subject.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("subject"));
@@ -59,37 +74,33 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            //ALWAYS use try and catch, generally throwing an Exception is a bad practice
             e.printStackTrace();
         }
     }
 
+    //todo remove this: nathan since we are making emailAddress a class level variable inside of Controller
     private String getEmailAddress() {
         return Controller.emailAddress;
     }
 
-    @FXML
-    public static AnchorPane parent;
-    @FXML
-    public Button composeButton;
-    @FXML
-    public Button logoutButton;
-
-    @FXML
-    public Label unreadEmailsLabel;
-
+    //gets all emails from the validated folder, adds them to the table, and prints to console
     @FXML
     private void fetchEmail() {
         try {
+            //first convert char[] holding password to a string builder that we can call toString on
             StringBuilder passwordBuilder = new StringBuilder();
             for (int i = 0; i < Controller.password.length; i++)
                 passwordBuilder.append(Controller.password[i]);
 
+            //init properties for smtp (Simple Mail Transfer Protocol)
             Properties props = new Properties();
-            props.put("mail.smtp.auth", true);
-            props.put("mail.smtp.starttls.enable", true);
-            props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
-            props.put("mail.smtp.port", 587);
+            props.put("mail.smtp.auth", true); //we should authenticate
+            props.put("mail.smtp.starttls.enable", true); //(tls is transport layer security and is a good practice)
+            props.put("mail.smtp.host", getEmailHost(getEmailAddress())); //set host
+            props.put("mail.smtp.port", 587); //port 587 is the standard SMTP port
 
+            //create a session from our email (this is from our javaMail library)
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
                         protected PasswordAuthentication getPasswordAuthentication() {
@@ -97,17 +108,24 @@ public class EmailController {
                         }
             });
 
+            //imaps is simply a protocol (Internet Message Access Protocol)
+            //createa an imaps session using our emailAddress host, email, and password
             Store store = session.getStore("imaps");
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
-            //todo if we want to we can add a choice box for trash/inbox/sent/etc. then call refresh if they update it
-            Folder emailFolder = store.getFolder("INBOX");
+            //todo be able to change this if you have time with a choiceBox inside of EmailController
+            String loadFolder = "INBOX";
+
+            //get all the messages from the specified folder
+            Folder emailFolder = store.getFolder(loadFolder);
             emailFolder.open(Folder.READ_ONLY);
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             Message[] messages = emailFolder.getMessages();
 
+            //set how many emails we found
             unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email");
 
+            //print emails to console and write to table
             for (int i = 0; i < messages.length; i++) {
                 Message message = messages[i];
 
@@ -126,6 +144,7 @@ public class EmailController {
                 writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), body.substring(0, Math.min(body.length(), 40)));
             }
 
+            //good practice to close the folder and javax.mail.store
             emailFolder.close(false);
             store.close();
         }
@@ -135,8 +154,7 @@ public class EmailController {
         }
     }
 
-    //todo if file from email is .mp3, display song length, if picture, display preview and maybe pixel size: nathan
-
+    //get the body from a Message
     private String getMessageText(Message message) {
         try {
             String result = "";
@@ -146,7 +164,6 @@ public class EmailController {
 
             else if (message.isMimeType("multipart/*")) {
                 MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
-
                 result = MMText(mimeMultipart);
             }
 
@@ -160,6 +177,7 @@ public class EmailController {
         return null;
     }
 
+    //gets the email body of a MimeMultipart message
     private String MMText(MimeMultipart mimeMulti)  {
         try {
             StringBuilder result = new StringBuilder();
@@ -197,6 +215,8 @@ public class EmailController {
         table.refresh();
     }
 
+    //animation to compose scene
+    //see goBack() method for in detailed explentation
     @FXML
     private void gotoCompose(ActionEvent event) {
         try {
@@ -213,37 +233,50 @@ public class EmailController {
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
-        } catch (Exception e) {
+        }
+
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    //animate the sliding away Inbox scene back to the main menu
     @FXML
     private void goBack(ActionEvent event) {
         try {
+            //load new parent and scene
             Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
             Scene currentScene = logoutButton.getScene();
-            root.translateXProperty().set(-currentScene.getWidth());
+            root.translateXProperty().set(-currentScene.getWidth()); //new scene starts off current scene
 
+            //add the new scene
             StackPane pc = (StackPane) currentScene.getRoot();
             pc.getChildren().add(root);
 
+            //animate the scene in
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+
+            //play animation and when done, remove the old scene
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
-        } catch (Exception e) {
+        }
+
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    //would like to do a minimizing animation but might not have time
     @FXML
     private void minimize_stage(MouseEvent e) {
         Main.primaryStage.setIconified(true);
     }
 
+    //a general switch statement that only allows our supported email addresses
+    //if we can't get yahoo or outlook working, just remove those cases
     private String getEmailHost(String email) throws Exception {
         if (email.endsWith("gmail.com"))
             return "smtp.gmail.com";
