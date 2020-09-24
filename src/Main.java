@@ -13,9 +13,6 @@ public class Main extends Application {
     //stage to pass around to class that wish to add/remove stuff from it such as scenes or components
     public static Stage primaryStage;
 
-    //do we need this?
-    public User user = new User();
-
     //offsets used for window dragging
     private double xOffset = 0;
     private double yOffset = 0;
@@ -55,6 +52,5 @@ public class Main extends Application {
     //on excit of program, delete our user
     @Override
     public void stop() throws IOException {
-        user.deleteUser();
     }
 }

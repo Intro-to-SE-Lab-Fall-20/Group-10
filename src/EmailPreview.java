@@ -4,11 +4,11 @@ public class EmailPreview {
     private String Subject;
     private String Message;
 
-    EmailPreview(String From, String Date, String Subject, String Mesage) {
+    EmailPreview(String From, String Date, String Subject, String Message) {
         this.From = From;
         this.Date = Date;
         this.Subject = Subject;
-        this.Message = Mesage;
+        this.Message = Message;
     }
 
     public String getFrom() {
