@@ -37,6 +37,7 @@ import java.util.UUID;
 
 public class Controller {
     //do we need this at all? (static since only one user can be logged in at any one time)
+    // yes bc it is used in login method
     public static User user;
 
     @FXML public StackPane masterStack;
