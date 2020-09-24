@@ -15,6 +15,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
+import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 import javax.imageio.ImageIO;
 import javax.mail.*;
@@ -22,11 +24,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class ComposeController {
@@ -209,9 +214,20 @@ public class ComposeController {
     }
 
     //must pass in a file that holds audio and this will return min:sec format of song length
-    private String getSongLength(File f) {
+    public static String getSongLength(File f) {
         try {
-            //todo return the Minutes:Seconds length of an mp3 or wav audio file
+            AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(f);
+            Map properties = baseFileFormat.properties();
+            Long duration = (Long) properties.get("duration");
+            int seconds = (int) Math.round(duration / 1000.0 / 1000.0);
+            int minutes = 0;
+
+            while (seconds - 60 > 0) {
+                minutes++;
+                seconds -= 60;
+            }
+
+            return minutes + ":" + seconds;
         }
 
         catch (Exception e) {
@@ -295,8 +311,8 @@ public class ComposeController {
                 StringBuilder build = new StringBuilder();
 
                 for (File attachement : attachements) {
-                    System.out.println(getImageDimensions(attachement)[0] + "," + getImageDimensions(attachement)[1]);
-                    build.append(attachement.getName()).append(" ").append((int) Math.ceil(attachement.length() / 1024.0) / 1024.0).append("MB").append("\n");
+                    System.out.println(getSongLength(attachement));
+                    build.append(attachement.getName()).append(" ").append(getDisplayFileSize(attachement)).append("\n");
                 }
 
                 attachButton.setTooltip(new Tooltip(build.toString()));

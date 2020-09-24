@@ -109,7 +109,7 @@ public class EmailController {
             });
 
             //imaps is simply a protocol (Internet Message Access Protocol)
-            //createa an imaps session using our emailAddress host, email, and password
+            //create an imaps session using our emailAddress host, email, and password
             Store store = session.getStore("imaps");
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
