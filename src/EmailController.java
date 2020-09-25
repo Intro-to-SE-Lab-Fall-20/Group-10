@@ -2,15 +2,13 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -47,6 +45,15 @@ public class EmailController {
     public Button logoutButton;
     @FXML
     public Label unreadEmailsLabel;
+    @FXML
+    public CheckBox hideOnCloseCheckBox;
+
+    @FXML
+    public void toggleHideOnClose() {
+        System.out.println(hideOnCloseCheckBox.isSelected());
+    }
+
+    //todo: move loading emails after we've loaded the GUI so we can show progress of loading in the progress bar: nathan
 
     @FXML
     public void initialize() {
@@ -71,6 +78,15 @@ public class EmailController {
             date.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("date"));
             subject.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("subject"));
             message.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("message"));
+
+            //don't let the user rearrange the column ordering
+            table.getColumns().addListener((ListChangeListener) change -> {
+                change.next();
+                if(change.wasReplaced()) {
+                    table.getColumns().clear();
+                    table.getColumns().addAll(fromCol,dateCol,subjectCol,messageCol);
+                }
+            });
         }
 
         catch (Exception e) {
@@ -79,7 +95,6 @@ public class EmailController {
         }
     }
 
-    //todo remove this: nathan since we are making emailAddress a class level variable inside of Controller
     private String getEmailAddress() {
         return Controller.emailAddress;
     }
@@ -207,7 +222,8 @@ public class EmailController {
         return null;
     }
 
-    //todo add emails to table so that we can click on them and view the full message
+    //todo on click we should open it up for better viewing and the user can choose to delete, forward, reply, or go back
+    //todo on mouse hover display full message as tooltip
     //display email messages in content table
     private void writePart(String from, String date, String subject, String message) {
         EmailPreview addMe = new EmailPreview(from,date,subject,message);
@@ -233,6 +249,28 @@ public class EmailController {
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void gotoReply(ActionEvent event) {
+        try {
+            System.out.println("TODO");
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void gotoForward(ActionEvent event) {
+        try {
+            System.out.println("TODO");
         }
 
         catch (Exception e) {
@@ -300,6 +338,9 @@ public class EmailController {
             ex.printStackTrace();
         }
 
-        System.exit(0);
+        if (hideOnCloseCheckBox.isSelected())
+            Main.primaryStage.setIconified(true);
+        else
+            System.exit(0);
     }
 }

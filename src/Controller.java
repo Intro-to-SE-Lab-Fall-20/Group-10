@@ -69,11 +69,13 @@ public class Controller {
             file = new FileWriter("user.txt");
             file.write("");
             file.close();
-        } catch (IOException ex) {
+        }
+
+        catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        System.exit(0);
+        Main.primaryStage.setIconified(true);
     }
 
     //finds css files and allows user to select any one

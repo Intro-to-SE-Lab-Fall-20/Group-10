@@ -15,8 +15,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
-import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 import javax.imageio.ImageIO;
 import javax.mail.*;

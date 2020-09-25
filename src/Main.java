@@ -6,8 +6,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
     //stage to pass around to class that wish to add/remove stuff from it such as scenes or components
@@ -51,6 +49,6 @@ public class Main extends Application {
 
     //on excit of program, delete our user
     @Override
-    public void stop() throws IOException {
+    public void stop() {
     }
 }

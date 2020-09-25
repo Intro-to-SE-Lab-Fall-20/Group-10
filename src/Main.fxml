@@ -23,7 +23,7 @@
                 </children></HBox>
             <Label focusTraversable="false" layoutX="87.0" layoutY="40.0" prefHeight="37.0" prefWidth="211.0" styleClass="description-label" text="An email client designed by Mallory Duke and Nathan Cheshire" textAlignment="CENTER" wrapText="true" />
             <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" />
-            <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" styleClass="input-field">
+            <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" styleClass="input-field" text="straightshotmsu@gmail.com">
                 <tooltip>
                     <Tooltip text="Complete email (ex: Straight@Shot.com)" />
                 </tooltip>
