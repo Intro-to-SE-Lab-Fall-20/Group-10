@@ -1,5 +1,3 @@
-import java.text.SimpleDateFormat;
-
 public class EmailPreview {
     private String From;
     private String Date;

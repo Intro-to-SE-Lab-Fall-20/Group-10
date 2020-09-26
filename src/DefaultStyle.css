@@ -1,5 +1,5 @@
 .parent {
-    -fx-background-color: linear-gradient(to bottom, #fdfcfb  , #e2d1c3);
+    -fx-background-color: linear-gradient(to right, #cfd9df    , #e2ebf0);
 }
 
 .drag-label {
@@ -208,13 +208,13 @@
 }
 
 .table-view {
-    -fx-background-color: #f0d8ab;
+    -fx-background-color: #a1c4fd ;
     -fx-background-radius: 20;
     -fx-fill: white;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #f0d8ab;
+    -fx-background-color: #a1c4fd ;
     -fx-background-radius: 20;
     -fx-background-insets: 0 0 10 0;
     -fx-padding: 0 0 10 0;
