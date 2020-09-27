@@ -45,4 +45,9 @@ public class EmailPreview {
     public void setMessage(String message) {
         this.Message = message;
     }
+
+    @Override
+    public String toString() {
+        return this.Message;
+    }
 }

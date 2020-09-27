@@ -2,12 +2,14 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -52,7 +54,40 @@ public class ComposeController {
     public static AnchorPane parent;
 
     @FXML
-    public void initialize() {}
+    public TableView attachementTable;
+    @FXML
+    public TableColumn nameCol;
+    @FXML
+    public TableColumn sizeCol;
+    @FXML
+    public TableColumn typeCol;
+
+    @FXML
+    public void initialize() {
+        //init emailTable colum nnames
+        TableColumn nameCol = new TableColumn("Name");
+        TableColumn sizeCol = new TableColumn("Size");
+        TableColumn typeCol = new TableColumn("Type");
+
+        attachementTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        //add columns to the emailTable
+        attachementTable.getItems().addAll(nameCol, sizeCol, typeCol);
+
+        //set how each column will display its data <EmailPreview, String> means display this object as a string
+        nameCol.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("Name"));
+        sizeCol.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("Size"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("Type"));
+
+        //don't let the user rearrange the column ordering
+        attachementTable.getColumns().addListener((ListChangeListener) change -> {
+            change.next();
+            if(change.wasReplaced()) {
+                attachementTable.getColumns().clear();
+                attachementTable.getColumns().addAll(nameCol,sizeCol,typeCol);
+            }
+        });
+    }
 
     @FXML
     private void goBack(ActionEvent event) {
@@ -264,7 +299,7 @@ public class ComposeController {
             return threeDecimal.format(mbSize) + " MB";
     }
 
-    //todo you need to test yahoho and outlook emails still
+    //resolves email hosts if supported
     private String getEmailHost(String email) throws Exception {
         if (email.endsWith("gmail.com"))
             return "smtp.gmail.com";
@@ -273,11 +308,9 @@ public class ComposeController {
         else if (email.endsWith("outlook.com"))
             return "smtp.office365.com";
         else
-            throw new Exception("Unsupported email host");
+            throw new IllegalAccessException("Unsupported email host");
     }
 
-    //todo display in a pane the attachements where you can select it and delete it or replace it (name, size, type): nathan
-    //todo for pictures show dimensions, for mp3 files show song length
     //this method adds attachements to the actual email that we are going to send
     private void addAttachements(Multipart multipart) {
         try {
@@ -295,9 +328,15 @@ public class ComposeController {
         }
     }
 
-    //Nathan is going to overhaul this method soon
-    //basically add attachements to the email and the way we show that there are attachements right now is
-    //by setting the tooltip of the add attachements button
+    //todo select an attachement and press delete to delete it
+    //todo for pictures show dimensions, for mp3 files show song length
+
+    //used to add attachement representations to the table
+    private void addAttachementsToTable(String name, String size, String type) {
+        attachementTable.getItems().add(new AttachementPreview(name,size,type));
+        attachementTable.refresh();
+    }
+
     @FXML
     private void addFiles(ActionEvent e) {
         try {
@@ -306,14 +345,10 @@ public class ComposeController {
             attachements = fc.showOpenMultipleDialog(null);
 
             if (attachements != null) {
-                StringBuilder build = new StringBuilder();
-
                 for (File attachement : attachements) {
-                    System.out.println(getSongLength(attachement));
-                    build.append(attachement.getName()).append(" ").append(getDisplayFileSize(attachement)).append("\n");
+                    addAttachementsToTable(attachement.getName().replace(getFileExtension(attachement),""),
+                            getDisplayFileSize(attachement),getFileExtension(attachement));
                 }
-
-                attachButton.setTooltip(new Tooltip(build.toString()));
             }
 
             else
@@ -332,7 +367,6 @@ public class ComposeController {
 
     @FXML
     private void close_app(MouseEvent e) {
-        //here you can save user stuff like theme and what not: mallory
         FileWriter file;
         try {
             file = new FileWriter("user.txt");

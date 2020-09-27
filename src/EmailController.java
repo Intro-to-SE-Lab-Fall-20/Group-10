@@ -27,7 +27,7 @@ import java.util.Properties;
 
 public class EmailController {
 
-    //used for our inbox table, will add more stuff
+    //used for our inbox emailTable, will add more stuff
     @FXML
     public Label inboxLabel;
     public TableView table;
@@ -35,20 +35,13 @@ public class EmailController {
     public TableColumn from;
     public TableColumn date;
     public TableColumn subject;
-
-    //UI elements
-    @FXML
     public static AnchorPane parent;
-    @FXML
     public Button composeButton;
-    @FXML
     public Button logoutButton;
-    @FXML
     public Label unreadEmailsLabel;
-    @FXML
     public CheckBox hideOnCloseCheckBox;
 
-    @FXML
+    @FXML //todo Nate still you idiot
     public void toggleHideOnClose() {
         System.out.println(hideOnCloseCheckBox.isSelected());
     }
@@ -64,14 +57,16 @@ public class EmailController {
             //load emails call
             fetchEmail();
 
-            //init table colum nnames
+            //init emailTable colum names
             TableColumn fromCol = new TableColumn("From");
             TableColumn dateCol = new TableColumn("Date");
             TableColumn subjectCol = new TableColumn("Subject");
             TableColumn messageCol = new TableColumn("Message");
 
-            //add columns to the table
+            //add columns to the emailTable
             table.getItems().addAll(fromCol, dateCol, subjectCol, messageCol);
+
+            table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
             //set how each column will display its data <EmailPreview, String> means display this object as a string
             from.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("from"));
@@ -87,6 +82,31 @@ public class EmailController {
                     table.getColumns().addAll(fromCol,dateCol,subjectCol,messageCol);
                 }
             });
+
+            //todo check for new emails every 30 seconds or so
+
+            //todo do the same thing here for AttachementPreviews except for the tooltips
+
+            //todo update this somehow when refresh emails or delete one, this is slightly buggy
+            try {
+                table.setRowFactory(tv -> new TableRow<EmailPreview>() {
+                    private Tooltip tooltip = new Tooltip();
+                    @Override
+                    public void updateItem(EmailPreview ep, boolean empty) {
+                        super.updateItem(ep, empty);
+                        if (ep == null) {
+                            setTooltip(null);
+                        } else {
+                            tooltip.setText(ep.toString());
+                            setTooltip(tooltip);
+                        }
+                    }
+                });
+            }
+
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         catch (Exception e) {
@@ -99,7 +119,7 @@ public class EmailController {
         return Controller.emailAddress;
     }
 
-    //gets all emails from the validated folder, adds them to the table, and prints to console
+    //gets all emails from the validated folder, adds them to the emailTable, and prints to console
     @FXML
     private void fetchEmail() {
         try {
@@ -140,7 +160,7 @@ public class EmailController {
             //set how many emails we found
             unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email");
 
-            //print emails to console and write to table
+            //print emails to console and write to emailTable
             for (int i = 0; i < messages.length; i++) {
                 Message message = messages[i];
 
@@ -156,7 +176,7 @@ public class EmailController {
                 String body = getMessageText(message);
                 System.out.println("Body: " + body);
 
-                writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), body.substring(0, Math.min(body.length(), 40)));
+                writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), body);
             }
 
             //good practice to close the folder and javax.mail.store
@@ -223,11 +243,10 @@ public class EmailController {
     }
 
     //todo on click we should open it up for better viewing and the user can choose to delete, forward, reply, or go back
-    //todo on mouse hover display full message as tooltip
-    //display email messages in content table
+
+    //display email messages in content emailTable
     private void writePart(String from, String date, String subject, String message) {
-        EmailPreview addMe = new EmailPreview(from,date,subject,message);
-        table.getItems().add(addMe);
+        table.getItems().add(new EmailPreview(from,date,subject,message));
         table.refresh();
     }
 

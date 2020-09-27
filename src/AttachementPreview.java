@@ -1,37 +1,37 @@
 public class AttachementPreview {
-    private String name;
-    private String size;
-    private String type;
+    private String Name;
+    private String Size;
+    private String Type;
 
     AttachementPreview(String fileName, String fileSize, String fileType) {
-        this.name = fileName;
-        this.size = fileSize;
-        this.type = fileType;
+        this.Name = fileName;
+        this.Size = fileSize;
+        this.Type = fileType;
     }
 
     //todo max lengths for getters like EmailPreview
 
     public void setFileName(String fileName) {
-        this.name = fileName;
+        this.Name = fileName;
     }
 
     public String getFileName() {
-        return this.name;
+        return this.Name;
     }
 
     public void setFileSize(String fileSize) {
-        this.size = fileSize;
+        this.Size = fileSize;
     }
 
     public String getFileSize() {
-        return this.size;
+        return this.Size;
     }
 
     public void setFileType(String fileType) {
-        this.type = fileType;
+        this.Type = fileType;
     }
 
     public String getFileType() {
-        return this.type;
+        return (this.Type).replace(".","");
     }
 }

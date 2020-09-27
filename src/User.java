@@ -51,36 +51,39 @@ public class User {
         }
     }
 
+    //todo pls fix Mal, it gave a parse error after the userfiles have been written to and are not blank
     public boolean checkIfNewUser(){
-        JSONParser parser = new JSONParser();
-        String name = "";
-        try(Reader reader = new FileReader("users.text")) {
-            JSONObject object = (JSONObject) parser.parse(reader);
-            name = String.valueOf(object.get("username"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return !name.equals(this.username);
+//        JSONParser parser = new JSONParser();
+//        String name = "";
+//        try(Reader reader = new FileReader("users.txt")) {
+//            JSONObject object = (JSONObject) parser.parse(reader);
+//            name = String.valueOf(object.get("username"));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return !name.equals(this.username);
+        return false;
     }
 
     private boolean checkIfNewTheme(){
-        JSONParser parser = new JSONParser();
-        String theme1 = "";
-        try(Reader reader = new FileReader("users.text")) {
-            JSONObject object = (JSONObject) parser.parse(reader);
-            theme1 = String.valueOf(object.get("theme"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return !theme1.equals(this.theme);
+//        JSONParser parser = new JSONParser();
+//        String theme1 = "";
+//        try(Reader reader = new FileReader("users.txt")) {
+//            JSONObject object = (JSONObject) parser.parse(reader);
+//            theme1 = String.valueOf(object.get("theme"));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return !theme1.equals(this.theme);
+        return false;
     }
 
     private void setThemeValue(String theme){

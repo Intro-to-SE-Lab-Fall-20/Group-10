@@ -12,6 +12,16 @@
 
 <AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ComposeController">
     <children>
+      <TableView fx:id="attachementTable" focusTraversable="false" layoutX="35.0" layoutY="326.0" prefHeight="69.0" prefWidth="329.0" style="-fx-background-color: transparent;">
+         <columns>
+            <TableColumn fx:id="nameCol" editable="false" prefWidth="111.0" resizable="false" sortable="false" text="Name" />
+            <TableColumn fx:id="sizeCol" editable="false" minWidth="0.0" prefWidth="73.5" resizable="false" sortable="false" text="Size" />
+            <TableColumn fx:id="typeCol" editable="false" minWidth="0.0" prefWidth="143.5" resizable="false" sortable="false" text="Type" />
+         </columns>
+         <tooltip>
+            <Tooltip text="Attachements" />
+         </tooltip>
+      </TableView>
         <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
             <children>
                 <Label fx:id="CloseButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_app" prefHeight="20.0" prefWidth="20.0" styleClass="close-btn" stylesheets="@DefaultStyle.css" text="X" textFill="WHITE" translateX="380.0" />
@@ -54,15 +64,5 @@
       <Label focusTraversable="false" layoutX="18.0" layoutY="107.0" prefHeight="15.0" prefWidth="29.0" styleClass="description-label" text="CC:" translateX="2.0" />
       <Label focusTraversable="false" layoutX="178.0" layoutY="107.0" prefHeight="15.0" prefWidth="29.0" styleClass="description-label" text="BCC:" />
       <Label focusTraversable="false" layoutX="21.0" layoutY="75.0" prefHeight="15.0" prefWidth="57.0" styleClass="description-label" text="Subject:" />
-      <TableView focusTraversable="false" layoutX="35.0" layoutY="326.0" prefHeight="69.0" prefWidth="329.0">
-         <columns>
-            <TableColumn editable="false" prefWidth="111.0" sortable="false" text="Name" />
-            <TableColumn editable="false" minWidth="0.0" prefWidth="73.5" sortable="false" text="Size" />
-            <TableColumn editable="false" minWidth="0.0" prefWidth="143.5" sortable="false" text="Type" />
-         </columns>
-         <tooltip>
-            <Tooltip text="Attachements" />
-         </tooltip>
-      </TableView>
     </children>
 </AnchorPane>

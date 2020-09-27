@@ -75,7 +75,7 @@ public class Controller {
             ex.printStackTrace();
         }
 
-        Main.primaryStage.setIconified(true);
+        System.exit(0);
     }
 
     //finds css files and allows user to select any one

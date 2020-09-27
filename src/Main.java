@@ -46,9 +46,4 @@ public class Main extends Application {
 
         primaryStage.show();
     }
-
-    //on excit of program, delete our user
-    @Override
-    public void stop() {
-    }
 }

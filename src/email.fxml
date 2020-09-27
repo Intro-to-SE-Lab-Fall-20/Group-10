@@ -40,19 +40,19 @@
                 <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <ProgressBar layoutX="14.0" layoutY="51.0" prefHeight="18.0" prefWidth="143.0" progress="0.32" styleClass="stripes">
+        <ProgressBar fx:id="loadingProgressBar" layoutX="14.0" layoutY="51.0" prefHeight="18.0" prefWidth="367.0" styleClass="stripes">
             <tooltip>
                 <Tooltip text="Loading/Sending" />
             </tooltip>
         </ProgressBar>
         <CheckBox fx:id="hideOnCloseCheckBox" layoutX="18.0" layoutY="75.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
-        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="77.0" styleClass="description-label" text="69 unread emails" textFill="WHITE" />
+        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="77.0" styleClass="description-label" text="Unread emails" textFill="WHITE" />
         <TableView fx:id="table" layoutX="10.0" layoutY="110.0" prefHeight="280.0" prefWidth="380.0" scaleShape="false" style="-fx-background-color: transparent;">
             <columns>
-                <TableColumn fx:id="from" editable="false" maxWidth="80.5" minWidth="80.5" prefWidth="80.5" sortable="false" text="From" />
-                <TableColumn fx:id="date" editable="false" maxWidth="58.5" minWidth="58.5" prefWidth="58.5" sortable="false" text="Date" />
-                <TableColumn fx:id="subject" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Subject" />
-                <TableColumn fx:id="message" editable="false" maxWidth="300.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Message" />
+                <TableColumn fx:id="from" editable="false" maxWidth="114.5" minWidth="80.5" prefWidth="114.5" resizable="false" sortable="false" text="From" />
+                <TableColumn fx:id="date" editable="false" maxWidth="83.5" minWidth="49.5" prefWidth="80.5" resizable="false" sortable="false" text="Date" />
+                <TableColumn fx:id="subject" editable="false" maxWidth="120.0" minWidth="45.5" prefWidth="63.5" resizable="false" sortable="false" text="Subject" />
+                <TableColumn fx:id="message" editable="false" maxWidth="300.0" minWidth="116.0" prefWidth="120.5" resizable="false" sortable="false" text="Message" />
             </columns>
         </TableView>
     </children>
