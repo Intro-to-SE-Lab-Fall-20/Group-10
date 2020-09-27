@@ -57,7 +57,7 @@ public class EmailController {
             //load emails call
             fetchEmail();
 
-            //init emailTable colum names
+            //init emailTable column names
             TableColumn fromCol = new TableColumn("From");
             TableColumn dateCol = new TableColumn("Date");
             TableColumn subjectCol = new TableColumn("Subject");
@@ -88,25 +88,29 @@ public class EmailController {
             //todo do the same thing here for AttachementPreviews except for the tooltips
 
             //todo update this somehow when refresh emails or delete one, this is slightly buggy
-            try {
-                table.setRowFactory(tv -> new TableRow<EmailPreview>() {
-                    private Tooltip tooltip = new Tooltip();
-                    @Override
-                    public void updateItem(EmailPreview ep, boolean empty) {
-                        super.updateItem(ep, empty);
-                        if (ep == null) {
-                            setTooltip(null);
-                        } else {
-                            tooltip.setText(ep.toString());
-                            setTooltip(tooltip);
-                        }
-                    }
-                });
-            }
 
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+            //todo remove empty rows from both tables
+
+            //todo figure out how to properly set tooltips for table cells
+//            try {
+//                table.setRowFactory(tv -> new TableRow<EmailPreview>() {
+//                    private Tooltip tooltip = new Tooltip();
+//                    @Override
+//                    public void updateItem(EmailPreview ep, boolean empty) {
+//                        super.updateItem(ep, empty);
+//                        if (ep == null) {
+//                            setTooltip(null);
+//                        } else {
+//                            tooltip.setText(ep.toString());
+//                            setTooltip(tooltip);
+//                        }
+//                    }
+//                });
+//            }
+//
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
 
         catch (Exception e) {
@@ -159,6 +163,8 @@ public class EmailController {
 
             //set how many emails we found
             unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email");
+
+            table.getItems().clear();
 
             //print emails to console and write to emailTable
             for (int i = 0; i < messages.length; i++) {
@@ -250,8 +256,7 @@ public class EmailController {
         table.refresh();
     }
 
-    //animation to compose scene
-    //see goBack() method for in detailed explentation
+    //animation for going to compose screen
     @FXML
     private void gotoCompose(ActionEvent event) {
         try {

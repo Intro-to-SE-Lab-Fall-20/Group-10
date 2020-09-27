@@ -54,37 +54,34 @@ public class ComposeController {
     public static AnchorPane parent;
 
     @FXML
-    public TableView attachementTable;
-    @FXML
-    public TableColumn nameCol;
-    @FXML
-    public TableColumn sizeCol;
-    @FXML
-    public TableColumn typeCol;
+    public TableView table;
+    public TableColumn name;
+    public TableColumn size;
+    public TableColumn type;
 
     @FXML
     public void initialize() {
-        //init emailTable colum nnames
+        //init emailTable column names
         TableColumn nameCol = new TableColumn("Name");
         TableColumn sizeCol = new TableColumn("Size");
         TableColumn typeCol = new TableColumn("Type");
 
-        attachementTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         //add columns to the emailTable
-        attachementTable.getItems().addAll(nameCol, sizeCol, typeCol);
+        table.getItems().addAll(nameCol, sizeCol, typeCol);
 
-        //set how each column will display its data <EmailPreview, String> means display this object as a string
-        nameCol.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("Name"));
-        sizeCol.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("Size"));
-        typeCol.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("Type"));
+        //set how each column will display its data <AttachementPreview, String> means display this object as a string
+        name.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("name"));
+        size.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("size"));
+        type.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("type"));
 
         //don't let the user rearrange the column ordering
-        attachementTable.getColumns().addListener((ListChangeListener) change -> {
+        table.getColumns().addListener((ListChangeListener) change -> {
             change.next();
             if(change.wasReplaced()) {
-                attachementTable.getColumns().clear();
-                attachementTable.getColumns().addAll(nameCol,sizeCol,typeCol);
+                table.getColumns().clear();
+                table.getColumns().addAll(nameCol,sizeCol,typeCol);
             }
         });
     }
@@ -333,8 +330,8 @@ public class ComposeController {
 
     //used to add attachement representations to the table
     private void addAttachementsToTable(String name, String size, String type) {
-        attachementTable.getItems().add(new AttachementPreview(name,size,type));
-        attachementTable.refresh();
+        table.getItems().add(new AttachementPreview(name,size,type));
+        table.refresh();
     }
 
     @FXML
@@ -346,7 +343,7 @@ public class ComposeController {
 
             if (attachements != null) {
                 for (File attachement : attachements) {
-                    addAttachementsToTable(attachement.getName().replace(getFileExtension(attachement),""),
+                    addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
                             getDisplayFileSize(attachement),getFileExtension(attachement));
                 }
             }

@@ -227,6 +227,13 @@
     
  }
 
+ .table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+ 
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
 .table-view .column-header {
     -fx-background-radius: 16 16 16 16;
     -fx-text-fill: black;

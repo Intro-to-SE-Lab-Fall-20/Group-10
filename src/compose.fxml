@@ -12,15 +12,18 @@
 
 <AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ComposeController">
     <children>
-      <TableView fx:id="attachementTable" focusTraversable="false" layoutX="35.0" layoutY="326.0" prefHeight="69.0" prefWidth="329.0" style="-fx-background-color: transparent;">
+      <TableView fx:id="table" layoutX="35.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="86.0" prefWidth="329.0" style="-fx-background-color: transparent;">
          <columns>
-            <TableColumn fx:id="nameCol" editable="false" prefWidth="111.0" resizable="false" sortable="false" text="Name" />
-            <TableColumn fx:id="sizeCol" editable="false" minWidth="0.0" prefWidth="73.5" resizable="false" sortable="false" text="Size" />
-            <TableColumn fx:id="typeCol" editable="false" minWidth="0.0" prefWidth="143.5" resizable="false" sortable="false" text="Type" />
+            <TableColumn fx:id="name" editable="false" prefWidth="111.0" resizable="false" style="-fx-font-weight: bold;" text="Name" />
+            <TableColumn fx:id="size" editable="false" minWidth="0.0" prefWidth="73.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Size" />
+            <TableColumn fx:id="type" editable="false" minWidth="0.0" prefWidth="143.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Type" />
          </columns>
          <tooltip>
             <Tooltip text="Attachements" />
          </tooltip>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
         <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
             <children>
@@ -28,24 +31,24 @@
                 <Label alignment="CENTER" contentDisplay="CENTER" styleClass="window-label" text="StraightShot" textFill="WHITE" translateX="-15.0" />
                 <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
             </children></HBox>
-        <Label layoutX="16.0" layoutY="43.0" prefHeight="3.0" prefWidth="20.0" styleClass="description-label" text="To:" translateX="5.0" />
-      <TextField fx:id="to" layoutX="48.0" layoutY="38.0" prefHeight="25.0" prefWidth="338.0" promptText="Recipient(s) email address" styleClass="input-field">
+        <Label layoutX="16.0" layoutY="32.0" prefHeight="3.0" prefWidth="20.0" styleClass="description-label" text="To:" translateX="5.0" />
+      <TextField fx:id="to" layoutX="48.0" layoutY="27.0" prefHeight="25.0" prefWidth="338.0" promptText="Recipient(s) email address" styleClass="input-field">
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip></TextField>
-      <TextField fx:id="subject" layoutX="76.0" layoutY="70.0" prefHeight="25.0" prefWidth="309.0" promptText="Subject Line" styleClass="input-field">
+      <TextField fx:id="subject" layoutX="76.0" layoutY="59.0" prefHeight="25.0" prefWidth="309.0" promptText="Subject Line" styleClass="input-field">
          <tooltip>
             <Tooltip text="Email Subject" />
          </tooltip></TextField>
-      <TextField fx:id="carboncopy" layoutX="49.0" layoutY="102.0" prefHeight="25.0" prefWidth="117.0" promptText="Carbon Copy" styleClass="input-field">
+      <TextField fx:id="carboncopy" layoutX="49.0" layoutY="91.0" prefHeight="25.0" prefWidth="117.0" promptText="Carbon Copy" styleClass="input-field">
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip></TextField>
-      <TextField fx:id="blindcc" layoutX="216.0" layoutY="102.0" prefHeight="25.0" prefWidth="168.0" promptText="Blind Carbon Copy" styleClass="input-field">
+      <TextField fx:id="blindcc" layoutX="216.0" layoutY="91.0" prefHeight="25.0" prefWidth="168.0" promptText="Blind Carbon Copy" styleClass="input-field">
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip></TextField>
-      <TextArea fx:id="emailContent" layoutX="36.0" layoutY="134.0" prefHeight="183.0" prefWidth="329.0" styleClass="input-field">
+      <TextArea fx:id="emailContent" layoutX="36.0" layoutY="123.0" prefHeight="183.0" prefWidth="329.0" styleClass="input-field">
          <tooltip>
             <Tooltip text="HTML supported" />
          </tooltip></TextArea>
@@ -61,8 +64,8 @@
          <tooltip>
             <Tooltip onCloseRequest="#sendEmail" text="Send Email (Unreversable action)" />
          </tooltip></Button>
-      <Label focusTraversable="false" layoutX="18.0" layoutY="107.0" prefHeight="15.0" prefWidth="29.0" styleClass="description-label" text="CC:" translateX="2.0" />
-      <Label focusTraversable="false" layoutX="178.0" layoutY="107.0" prefHeight="15.0" prefWidth="29.0" styleClass="description-label" text="BCC:" />
-      <Label focusTraversable="false" layoutX="21.0" layoutY="75.0" prefHeight="15.0" prefWidth="57.0" styleClass="description-label" text="Subject:" />
+      <Label focusTraversable="false" layoutX="18.0" layoutY="96.0" prefHeight="15.0" prefWidth="29.0" styleClass="description-label" text="CC:" translateX="2.0" />
+      <Label focusTraversable="false" layoutX="178.0" layoutY="96.0" prefHeight="15.0" prefWidth="29.0" styleClass="description-label" text="BCC:" />
+      <Label focusTraversable="false" layoutX="21.0" layoutY="64.0" prefHeight="15.0" prefWidth="57.0" styleClass="description-label" text="Subject:" />
     </children>
 </AnchorPane>
