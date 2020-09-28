@@ -49,10 +49,10 @@
         <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="77.0" styleClass="description-label" text="Unread emails" textAlignment="RIGHT" textFill="WHITE" />
         <TableView fx:id="table" layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="380.0" scaleShape="false" style="-fx-background-color: transparent;">
             <columns>
-                <TableColumn fx:id="from" editable="false" maxWidth="114.5" minWidth="80.5" prefWidth="114.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="From" />
-                <TableColumn fx:id="date" editable="false" maxWidth="83.5" minWidth="49.5" prefWidth="80.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Date" />
-                <TableColumn fx:id="subject" editable="false" maxWidth="120.0" minWidth="45.5" prefWidth="63.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Subject" />
-                <TableColumn fx:id="message" editable="false" maxWidth="300.0" minWidth="116.0" prefWidth="120.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Message" />
+                <TableColumn fx:id="from" editable="false" maxWidth="114.5" minWidth="80.5" prefWidth="114.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="From" />
+                <TableColumn fx:id="date" editable="false" maxWidth="83.5" minWidth="49.5" prefWidth="80.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Date" />
+                <TableColumn fx:id="subject" editable="false" maxWidth="120.0" minWidth="45.5" prefWidth="63.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Subject" />
+                <TableColumn fx:id="message" editable="false" maxWidth="300.0" minWidth="116.0" prefWidth="120.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Message" />
             </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

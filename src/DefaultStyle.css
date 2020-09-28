@@ -135,17 +135,15 @@
 }
 
 .scroll-bar:vertical .thumb{
-    -fx-background-color :#a1c4fd;
+    -fx-background-color :#123368;
     -fx-border-color :transparent;
     -fx-background-radius : 0.0em;
-    -fx-border-radius :2.0em;
 }
 
 .scroll-bar:vertical .track{
-    -fx-background-color :#4c88e9;
-    -fx-border-color :transparent;
+    -fx-background-color :white;
+    -fx-border-color :black;
     -fx-background-radius : 0.0em;
-    -fx-border-radius :2.0em;
 }
 
 
@@ -170,10 +168,9 @@
 }
 
 .progress-bar {
-    -fx-border-color :transparent;
-
+    -fx-background-color: transparent;
+    -fx-indeterminate-bar-length: 169;
 }
-
 .progress-bar > .bar {
     -fx-background-color: linear-gradient(
         from 0px .75em to .75em 0px,
@@ -183,6 +180,30 @@
         derive(-fx-accent, 30%) 50%,
         derive(-fx-accent, 30%) 99%
     );
+    -fx-background-insets: 3 3 4 3;
+    -fx-background-radius: 3em;
+    -fx-border-radius: 30px;
+    -fx-padding: 0.75em;
+    
+}
+.progress-bar:indeterminate > .bar {
+    -fx-background-color: linear-gradient(
+        from 0px .75em to .75em 0px,
+        repeat,
+        -fx-accent 0%,
+        -fx-accent 49%,
+        -fx-background-color red,
+        derive(-fx-accent, 30%) 50%,
+        derive(-fx-accent, 30%) 99%
+    );
+
+
+}
+.progress-bar > .track {
+    -fx-background-color: transparent;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-border-radius: 25px;
 }
 
 .popup {
@@ -197,31 +218,33 @@
 }
 
 .table-view {
-    -fx-background-color: #a1c4fd ;
+    -fx-background-color: #123368 ;
     -fx-background-radius: 20;
     -fx-fill: white;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #a1c4fd ;
+    -fx-background-color: #123368 ;
     -fx-background-radius: 20;
     -fx-background-insets: 0 0 10 0;
     -fx-padding: 0 0 10 0;
+    -fx-fill: white;
 }
 
 .table-view .column-header, .table-view .filter {
     -fix-size: 20;
     -fix-border-width: 0 0 10 0;
     -fix-background-color: transparent;
+    -fx-fill: white;
 }
 
 .table-view .cell{
     -fx-cell-size: 30;
-    -fx-border-width: 0.8;
+    -fx-border-width: 0.6;
 
    -fx-alignment: center-left;
    -fx-background-color: transparent;
-   -fx-border-color: #29292D;
+   -fx-border-color: black;
    -fx-text-fill: black;
    -fx-alignment: CENTER_LEFT;
     
@@ -236,14 +259,14 @@
 }
 .table-view .column-header {
     -fx-background-radius: 16 16 16 16;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-color: transparent;
 }
 
 .table-view .column-header .label {
     -fx-background-radius: 16 16 16 16;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .table-view *.scroll-bar:horizontal *.increment-button,
@@ -261,4 +284,56 @@
   -fx-background-insets: 0;
   -fx-padding: 0;
   -fx-shape: null;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #e2174d;
+    -fx-border-color:#e2174d;
+    -fx-border-radius:4px; 
+}
+    
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+    
+.check-box:selected .box {
+    -fx-background-color: #e2174d;
+}
+
+.check-box:selected .box:hover {
+    -fx-background-color: white;
+    -fx-border-color:white;
+    -fx-border-radius:4px; 
+}
+    
+.check-box:selected .mark:hover {
+    -fx-background-color: #e2174d;
+}
+    
+.check-box:selected .box:hover {
+    -fx-background-color: white;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:white;
+    -fx-border-radius:4px; 
+}
+    
+.check-box .box {
+    -fx-background-color: white;
+}
+
+.check-box .box:hover {
+    -fx-background-color: white;
+    -fx-border-color:white;
+    -fx-border-radius:4px; 
+}
+    
+.check-box .mark:hover {
+    -fx-background-color: #e2174d;
+}
+    
+.check-box .box:hover {
+    -fx-background-color: white;
 }

@@ -279,7 +279,6 @@ public class Controller {
         return popup;
     }
 
-    //todo make these look nicer, maybe slide in and out like in cyder? And also make timeout after 5 sec
     //show a popup message
     private void showPopupMessage(final String message, final Stage stage) {
         final Popup popup = createPopup(message);

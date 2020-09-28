@@ -325,9 +325,6 @@ public class ComposeController {
         }
     }
 
-    //todo select an attachement and press delete to delete it
-    //todo for pictures show dimensions, for mp3 files show song length
-
     //used to add attachement representations to the table
     private void addAttachementsToTable(String name, String size, String type) {
         table.getItems().add(new AttachementPreview(name,size,type));

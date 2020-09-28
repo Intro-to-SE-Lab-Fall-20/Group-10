@@ -41,12 +41,8 @@ public class EmailController {
     public Label unreadEmailsLabel;
     public CheckBox hideOnCloseCheckBox;
 
-    @FXML //todo Nate still you idiot
-    public void toggleHideOnClose() {
-        System.out.println(hideOnCloseCheckBox.isSelected());
-    }
-
-    //todo: move loading emails after we've loaded the GUI so we can show progress of loading in the progress bar: nathan
+    @FXML
+    public void toggleHideOnClose() {}
 
     @FXML
     public void initialize() {
@@ -55,16 +51,13 @@ public class EmailController {
             inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
 
             //load emails call
-            fetchEmail();
+            fetchEmail("INBOX");
 
             //init emailTable column names
             TableColumn fromCol = new TableColumn("From");
             TableColumn dateCol = new TableColumn("Date");
             TableColumn subjectCol = new TableColumn("Subject");
             TableColumn messageCol = new TableColumn("Message");
-
-            //add columns to the emailTable
-            table.getItems().addAll(fromCol, dateCol, subjectCol, messageCol);
 
             table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -79,42 +72,35 @@ public class EmailController {
                 change.next();
                 if(change.wasReplaced()) {
                     table.getColumns().clear();
-                    table.getColumns().addAll(fromCol,dateCol,subjectCol,messageCol);
+                    table.getColumns().addAll(from,date,subject,message);
                 }
             });
 
-            //todo check for new emails every 30 seconds or so
+            //todo add choicebox for different folders
+            //todo Nathan check for new emails every 30 seconds or so
+            //todo Nathan let user see if they've selected a column
+            //todo Nathan move loading of emails after you've loaded the screen already, same for going back to this screen
+            //todo Nathan forward and reply should be disabled unless a tablerow (email) is focused
+            //todo Nathan make popups look better, slide away after 5 seconds
+            //todo Nathan select an email and press delete to delete it
+            //todo Nathan for pictures show dimensions, for mp3 files show song length
+            //todo on click we should open it up for better viewing and the user can choose to delete, forward, reply, or go back
+            //todo: move loading emails after we've loaded the GUI so we can show progress of loading in the progress bar: nathan
 
-            //todo do the same thing here for AttachementPreviews except for the tooltips
-
-            //todo update this somehow when refresh emails or delete one, this is slightly buggy
-
-            //todo remove empty rows from both tables
-
-            //todo figure out how to properly set tooltips for table cells
-//            try {
-//                table.setRowFactory(tv -> new TableRow<EmailPreview>() {
-//                    private Tooltip tooltip = new Tooltip();
-//                    @Override
-//                    public void updateItem(EmailPreview ep, boolean empty) {
-//                        super.updateItem(ep, empty);
-//                        if (ep == null) {
-//                            setTooltip(null);
-//                        } else {
-//                            tooltip.setText(ep.toString());
-//                            setTooltip(tooltip);
-//                        }
-//                    }
-//                });
-//            }
-//
-//            catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            table.setRowFactory( tv -> {
+                TableRow<EmailPreview> row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                        EmailPreview rowData = row.getItem();
+                        System.out.println(rowData.getSubject());
+                        //TODO open email ready to be fowarded or replied to
+                    }
+                });
+                return row ;
+            });
         }
 
         catch (Exception e) {
-            //ALWAYS use try and catch, generally throwing an Exception is a bad practice
             e.printStackTrace();
         }
     }
@@ -125,7 +111,7 @@ public class EmailController {
 
     //gets all emails from the validated folder, adds them to the emailTable, and prints to console
     @FXML
-    private void fetchEmail() {
+    private void fetchEmail(String loadFolder) {
         try {
             //first convert char[] holding password to a string builder that we can call toString on
             StringBuilder passwordBuilder = new StringBuilder();
@@ -151,9 +137,6 @@ public class EmailController {
             //create an imaps session using our emailAddress host, email, and password
             Store store = session.getStore("imaps");
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
-
-            //todo be able to change this if you have time with a choiceBox inside of EmailController
-            String loadFolder = "INBOX";
 
             //get all the messages from the specified folder
             Folder emailFolder = store.getFolder(loadFolder);
@@ -247,8 +230,6 @@ public class EmailController {
 
         return null;
     }
-
-    //todo on click we should open it up for better viewing and the user can choose to delete, forward, reply, or go back
 
     //display email messages in content emailTable
     private void writePart(String from, String date, String subject, String message) {
