@@ -1,7 +1,7 @@
 # Group 10
 Mallory Duke(@malloryDuke)   
 Nathan Cheshire (@NathanCheshire)   
-Description: repo for email client     
+Description: Respository for email client StraightShot   
 Objection: Create an email client for users     
 Features:    
 Users will be able to:
@@ -9,3 +9,4 @@ Users will be able to:
 - search their inbox.
 - send attachments with an email.
 - login with their username and secure password.
+- associate a css theme with their email address.
