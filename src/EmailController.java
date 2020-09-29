@@ -2,7 +2,10 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +20,8 @@ import javafx.util.Duration;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -38,8 +39,13 @@ public class EmailController {
     public static AnchorPane parent;
     public Button composeButton;
     public Button logoutButton;
+    public Button deleteButton;
     public Label unreadEmailsLabel;
     public CheckBox hideOnCloseCheckBox;
+    public ChoiceBox<String> folderChoiceBox;
+
+    private String currentFolder;
+    public ObservableList folderList = FXCollections.observableArrayList();
 
     @FXML
     public void toggleHideOnClose() {}
@@ -49,9 +55,6 @@ public class EmailController {
         try {
             //update the email address label
             inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
-
-            //load emails call
-            fetchEmail("INBOX");
 
             //init emailTable column names
             TableColumn fromCol = new TableColumn("From");
@@ -76,28 +79,28 @@ public class EmailController {
                 }
             });
 
-            //todo add choicebox for different folders
+            //todo let choicebox change displayed content
             //todo Nathan check for new emails every 30 seconds or so
-            //todo Nathan let user see if they've selected a column
             //todo Nathan move loading of emails after you've loaded the screen already, same for going back to this screen
             //todo Nathan forward and reply should be disabled unless a tablerow (email) is focused
-            //todo Nathan make popups look better, slide away after 5 seconds
+            //todo Nathan make popups look better (perhaps don't use a popup? use top bar for message that disappears)
             //todo Nathan select an email and press delete to delete it
             //todo Nathan for pictures show dimensions, for mp3 files show song length
             //todo on click we should open it up for better viewing and the user can choose to delete, forward, reply, or go back
-            //todo: move loading emails after we've loaded the GUI so we can show progress of loading in the progress bar: nathan
 
             table.setRowFactory( tv -> {
                 TableRow<EmailPreview> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         EmailPreview rowData = row.getItem();
-                        System.out.println(rowData.getSubject());
-                        //TODO open email ready to be fowarded or replied to
+                        //TODO set table to a textarea instead that displays the message (back arrow too)
                     }
                 });
                 return row ;
             });
+
+            //load inbox folder by default
+            fetchEmail("INBOX");
         }
 
         catch (Exception e) {
@@ -137,6 +140,26 @@ public class EmailController {
             //create an imaps session using our emailAddress host, email, and password
             Store store = session.getStore("imaps");
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+
+            Folder[] f = store.getDefaultFolder().list();
+
+            for(Folder fd:f)
+                System.out.println(">> "+fd.getName());
+
+            folderList.removeAll();
+
+            ArrayList<String> folders = new ArrayList<>();
+
+            for (Folder fd:f) {
+                folders.add(fd.getName());
+            }
+
+            folderList.addAll(folders);
+            folderChoiceBox.getItems().addAll(folderList);
+            folderChoiceBox.getSelectionModel().select(0);
+
+            folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> ov,
+                            Number old_val, Number new_val) -> currentFolder = String.valueOf(new_val));
 
             //get all the messages from the specified folder
             Folder emailFolder = store.getFolder(loadFolder);
@@ -329,6 +352,11 @@ public class EmailController {
             return "smtp.office365.com";
         else
             throw new Exception("Unsupported email host");
+    }
+
+    @FXML
+    public void deleteEmail() {
+        System.out.println("todo delete selected email");
     }
 
     @FXML

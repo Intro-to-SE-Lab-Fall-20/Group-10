@@ -48,6 +48,6 @@ public class EmailPreview {
 
     @Override
     public String toString() {
-        return this.Message;
+        return this.From + "\n" + this.Date + "\n" + this.Subject + "\n" + this.Message + "\n";
     }
 }

@@ -44,8 +44,7 @@ public class Controller {
     @FXML public AnchorPane parent;
     @FXML public TextField emailField;
     @FXML public PasswordField passField;
-    @FXML
-    ChoiceBox<String> switchCSS;
+    @FXML public ChoiceBox<String> switchCSS;
     ObservableList list = FXCollections.observableArrayList();
 
     public static String emailAddress;

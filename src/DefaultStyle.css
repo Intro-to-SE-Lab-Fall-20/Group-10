@@ -192,7 +192,7 @@
         repeat,
         -fx-accent 0%,
         -fx-accent 49%,
-        -fx-background-color red,
+        -fx-background-color,
         derive(-fx-accent, 30%) 50%,
         derive(-fx-accent, 30%) 99%
     );
@@ -238,9 +238,13 @@
     -fx-fill: white;
 }
 
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #2196f3;
+    }
+
 .table-view .cell{
     -fx-cell-size: 30;
-    -fx-border-width: 0.6;
+    -fx-border-width: 1;
 
    -fx-alignment: center-left;
    -fx-background-color: transparent;

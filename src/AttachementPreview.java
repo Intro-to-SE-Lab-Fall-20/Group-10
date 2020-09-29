@@ -37,6 +37,6 @@ public class AttachementPreview {
 
     @Override
     public String toString() {
-        return this.getName() + " : " + this.getSize() + " : " + this.getType();
+        return this.getName() + "\n" + this.getSize() + "\n" + this.getType();
     }
 }
