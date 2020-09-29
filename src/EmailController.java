@@ -20,7 +20,10 @@ import javafx.util.Duration;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
@@ -44,7 +47,10 @@ public class EmailController {
     public CheckBox hideOnCloseCheckBox;
     public ChoiceBox<String> folderChoiceBox;
 
-    private String currentFolder;
+    //current email folder
+    private Message[] messages;
+    private String currentFolder = "INBOX";
+
     public ObservableList folderList = FXCollections.observableArrayList();
 
     @FXML
@@ -79,28 +85,30 @@ public class EmailController {
                 }
             });
 
-            //todo let choicebox change displayed content
-            //todo Nathan check for new emails every 30 seconds or so
-            //todo Nathan move loading of emails after you've loaded the screen already, same for going back to this screen
-            //todo Nathan forward and reply should be disabled unless a tablerow (email) is focused
-            //todo Nathan make popups look better (perhaps don't use a popup? use top bar for message that disappears)
-            //todo Nathan select an email and press delete to delete it
-            //todo Nathan for pictures show dimensions, for mp3 files show song length
-            //todo on click we should open it up for better viewing and the user can choose to delete, forward, reply, or go back
+            //todo check for new emails every 30 seconds or so
+            //todo forward and reply should be disabled unless a tablerow (email) is focused
+            //todo search for emails or subjects containing whats in searchbox, if null or "" display everything in folder
+            //todo for pictures show dimensions, for mp3 files show song length
+            //todo update currentfolder when user interacts with it
 
             table.setRowFactory( tv -> {
                 TableRow<EmailPreview> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         EmailPreview rowData = row.getItem();
-                        //TODO set table to a textarea instead that displays the message (back arrow too)
+                        //TODO open up displayer (similar to compose) displays the message [back, delete, foward, reply]
                     }
                 });
                 return row ;
             });
 
-            //load inbox folder by default
+            initFolders();
             fetchEmail("INBOX");
+
+            folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, n1, n2) -> {
+                String folder = folderChoiceBox.getItems().get((Integer) ov.getValue());
+                fetchEmail(folder);
+            });
         }
 
         catch (Exception e) {
@@ -110,6 +118,52 @@ public class EmailController {
 
     private String getEmailAddress() {
         return Controller.emailAddress;
+    }
+
+    //initialize folders choicebox for email address
+    private void initFolders() {
+        try {
+            StringBuilder passwordBuilder = new StringBuilder();
+            for (int i = 0; i < Controller.password.length; i++)
+                passwordBuilder.append(Controller.password[i]);
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
+            props.put("mail.smtp.port", 587);
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(getEmailAddress(), passwordBuilder.toString());
+                        }
+                    });
+
+            Store store = session.getStore("imaps");
+            store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+
+            Folder[] f = store.getDefaultFolder().list();
+            folderList.clear();
+
+            ArrayList<String> folders = new ArrayList<>();
+
+            for (Folder fd:f) {
+                folders.add(fd.getName());
+            }
+
+            folderList.clear();
+            folderList.addAll(folders);
+            folderChoiceBox.getItems().addAll(folderList);
+            folderChoiceBox.getSelectionModel().select(0);
+
+            folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> ov,
+                                                                                     Number old_val, Number new_val) -> currentFolder = String.valueOf(new_val));
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //gets all emails from the validated folder, adds them to the emailTable, and prints to console
@@ -141,58 +195,25 @@ public class EmailController {
             Store store = session.getStore("imaps");
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
-            Folder[] f = store.getDefaultFolder().list();
-
-            for(Folder fd:f)
-                System.out.println(">> "+fd.getName());
-
-            folderList.removeAll();
-
-            ArrayList<String> folders = new ArrayList<>();
-
-            for (Folder fd:f) {
-                folders.add(fd.getName());
-            }
-
-            folderList.addAll(folders);
-            folderChoiceBox.getItems().addAll(folderList);
-            folderChoiceBox.getSelectionModel().select(0);
-
-            folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> ov,
-                            Number old_val, Number new_val) -> currentFolder = String.valueOf(new_val));
-
             //get all the messages from the specified folder
             Folder emailFolder = store.getFolder(loadFolder);
             emailFolder.open(Folder.READ_ONLY);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            Message[] messages = emailFolder.getMessages();
+            messages = emailFolder.getMessages();
 
             //set how many emails we found
             unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email");
 
             table.getItems().clear();
 
-            //print emails to console and write to emailTable
-            for (int i = 0; i < messages.length; i++) {
+            //Add emails to table
+            for (int i = messages.length - 1; i >= 0 ; i--) {
                 Message message = messages[i];
-
-                System.out.println("\n\nMessage " + i);
-                System.out.println("---------------------------------");
-                System.out.println("from: " + Arrays.toString(message.getFrom()));
-                System.out.println("subject: " + message.getSubject());
-                System.out.println("Receive date: " + message.getReceivedDate());
-                System.out.println("Sent date: " + message.getSentDate());
-                System.out.println("All recipients: " + Arrays.toString(message.getAllRecipients()));
-                System.out.println("From folder: " + message.getFolder());
-
                 String body = getMessageText(message);
-                System.out.println("Body: " + body);
-
                 writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), body);
             }
 
             //good practice to close the folder and javax.mail.store
-            emailFolder.close(false);
+            emailFolder.close();
             store.close();
         }
 
@@ -354,14 +375,53 @@ public class EmailController {
             throw new Exception("Unsupported email host");
     }
 
+    //delete an email and refresh the table (from main screen)
     @FXML
     public void deleteEmail() {
-        System.out.println("todo delete selected email");
+        try {
+            int deleteIndex = messages.length - table.getSelectionModel().getSelectedIndex() - 1;
+
+            StringBuilder passwordBuilder = new StringBuilder();
+            for (int i = 0; i < Controller.password.length; i++)
+                passwordBuilder.append(Controller.password[i]);
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
+            props.put("mail.smtp.port", 587);
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(getEmailAddress(), passwordBuilder.toString());
+                        }
+                    });
+
+            Store store = session.getStore("imaps");
+            store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+
+            Folder emailFolder = store.getFolder(currentFolder);
+            emailFolder.open(Folder.READ_WRITE);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            messages = emailFolder.getMessages();
+
+            messages[deleteIndex].setFlag(Flags.Flag.DELETED, true);
+
+            emailFolder.close(true);
+            store.close();
+
+            fetchEmail(currentFolder);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void close_app(MouseEvent e) {
-        //here you can save user stuff like theme and what not: mallory
         FileWriter file;
         try {
             file = new FileWriter("user.txt");

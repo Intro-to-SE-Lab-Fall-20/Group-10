@@ -48,7 +48,7 @@ public class Controller {
     ObservableList list = FXCollections.observableArrayList();
 
     public static String emailAddress;
-    public static char[] password;
+    public static char[] password ;
     public static String theme;
 
     @FXML
