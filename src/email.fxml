@@ -60,7 +60,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
         </TableView>
-      <TextField layoutX="126.0" layoutY="76.0" prefHeight="25.0" prefWidth="163.0" promptText="Search folder" styleClass="input-field" />
+      <TextField fx:id="searchFolderField" layoutX="126.0" layoutY="76.0" prefHeight="25.0" prefWidth="163.0" promptText="Search folder" styleClass="input-field" />
       <ChoiceBox fx:id="folderChoiceBox" layoutX="297.0" layoutY="77.0" prefHeight="23.0" prefWidth="87.0" />
       <Button fx:id="deleteButton" layoutX="326.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteEmail" styleClass="button-discard" text="Delete">
          <tooltip>

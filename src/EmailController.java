@@ -2,6 +2,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -25,10 +26,13 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Properties;
+import java.util.*;
 
+//todo remove progress bar and tidy up main UI
+//todo mouse hover on row for full information for both tables
+//todo search for emails or subjects containing whats in searchbox, if null || "" display everything in folder
+//todo load folders after UI is showing so we can show progressbar indetermine state to show that we are workong on it
+//todo fix email.fxml error not loading in SB and spam of error on init load
 
 public class EmailController {
     @FXML
@@ -46,10 +50,11 @@ public class EmailController {
     public CheckBox hideOnCloseCheckBox;
     public ChoiceBox<String> folderChoiceBox;
     public ProgressBar loadingProgressBar;
+    public TextField searchFolderField;
 
     //current email folder
     private Message[] messages;
-    private String currentFolder = "INBOX";
+    private String currentFolder = "Inbox";
 
     public ObservableList folderList = FXCollections.observableArrayList();
 
@@ -59,8 +64,6 @@ public class EmailController {
     @FXML
     public void initialize() {
         try {
-            loadingProgressBar.setProgress(69);
-
             //update the email address label
             inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
 
@@ -87,23 +90,20 @@ public class EmailController {
                 }
             });
 
-            //todo search for emails or subjects containing whats in searchbox, if null || "" display everything in folder
-            //todo load folders after UI is showing so we can show progressbar indetermine state to show that we are workong on it
-
             table.setRowFactory( tv -> {
                 TableRow<EmailPreview> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         EmailPreview rowData = row.getItem();
-                        //TODO open up displayer (similar to compose) displays the message [back, delete, foward, reply]
-                        //open same gui if user presses foward or reply when a message is selected so make a method for this display email
+                        //todo open up displayer (similar to compose) displays the message [back, delete, foward, reply]
+                        //todo open same gui if user presses foward or reply when a message is selected so make a method for this display email
                     }
                 });
                 return row ;
             });
 
             initFolders();
-            fetchEmail("INBOX");
+            fetchEmail("Inbox");
 
             folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, n1, n2) -> {
                 String folder = folderChoiceBox.getItems().get((Integer) ov.getValue());
@@ -114,10 +114,40 @@ public class EmailController {
             int matchIndex = 0;
 
             for (int i = 0 ; i < choices.length ; i++)
-                if (choices[i].equalsIgnoreCase("inbox"))
+                if (choices[i].equalsIgnoreCase("Inbox"))
                     matchIndex = i;
 
             folderChoiceBox.getSelectionModel().select(matchIndex);
+
+            searchFolderField.setOnAction(event -> {
+                try {
+                    fetchEmail(currentFolder);
+                    String searchFor = searchFolderField.getText();
+
+                    if (searchFor.isEmpty()) {
+                        fetchEmail(currentFolder);
+                        return;
+                    }
+
+                    List<EmailPreview> previewList = table.getItems();
+                    List<EmailPreview> removes = new LinkedList<>();
+
+                    for (EmailPreview EM : previewList) {
+                        if (!EM.getFullSubject().toLowerCase().contains(searchFor.toLowerCase())
+                        && !EM.getFullMessage().toLowerCase().contains(searchFor.toLowerCase())
+                        && !EM.getFullFrom().toLowerCase().contains(searchFor.toLowerCase())
+                        && !EM.getFullDate().toLowerCase().contains(searchFor.toLowerCase()))
+                            removes.add(EM);
+                    }
+
+                    for (EmailPreview ep : removes)
+                        table.getItems().remove(ep);
+                }
+
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
 
         catch (Exception e) {
@@ -205,12 +235,12 @@ public class EmailController {
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
             //get all the messages from the specified folder
-            Folder emailFolder = store.getFolder(loadFolder);
+            Folder emailFolder = store.getFolder(folderChoiceBox.getItems().get(Integer.parseInt(currentFolder)));
             emailFolder.open(Folder.READ_ONLY);
             messages = emailFolder.getMessages();
 
             //set how many emails we found
-            unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email");
+            Platform.runLater(() -> unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email"));
 
             table.getItems().clear();
 
@@ -225,14 +255,17 @@ public class EmailController {
             emailFolder.close();
             store.close();
 
-            //if we are in the inbox, check for an update every 30 seconds
-            if (loadFolder.equalsIgnoreCase("INBOX")) {
+            //if we are in the inbox, check for an update every 25 seconds
+            if (loadFolder.equalsIgnoreCase("Inbox")) {
                 Task<Void> sleeper = new Task<>() {
                     @Override
                     protected Void call() {
                         try {
-                            Thread.sleep(30000);
-                            fetchEmail("INBOX");
+                            Thread.sleep(25000);
+
+                            //only refresh if we are not searching for something
+                            if (searchFolderField.getText().length() == 0)
+                                fetchEmail("Inbox");
                         }
 
                         catch (Exception ignored) {} return null;
@@ -426,7 +459,7 @@ public class EmailController {
             Store store = session.getStore("imaps");
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
-            Folder emailFolder = store.getFolder(currentFolder);
+            Folder emailFolder = store.getFolder(folderChoiceBox.getItems().get(Integer.parseInt(currentFolder)));
             emailFolder.open(Folder.READ_WRITE);
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

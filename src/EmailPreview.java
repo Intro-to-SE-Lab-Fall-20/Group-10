@@ -18,12 +18,20 @@ public class EmailPreview {
         return this.From.replace("[","").replace("]","");
     }
 
+    public String getFullFrom() {
+        return this.From;
+    }
+
     public void setFrom(String from) {
         this.From = from;
     }
 
     public String getDate() {
         return Date.substring(0,16);
+    }
+
+    public String getFullDate() {
+        return Date;
     }
 
     public void setDate(String date) {
@@ -34,12 +42,20 @@ public class EmailPreview {
         return this.Subject.substring(0,Math.min(Subject.length(), maxSubjectLength));
     }
 
+    public String getFullSubject() {
+        return this.Subject;
+    }
+
     public void setSubject(String subject) {
         this.Subject = subject;
     }
 
     public String getMessage() {
         return this.Message.substring(0,Math.min(Message.length(), maxMessageLength));
+    }
+
+    public String getFullMessage() {
+        return this.Message;
     }
 
     public void setMessage(String message) {
