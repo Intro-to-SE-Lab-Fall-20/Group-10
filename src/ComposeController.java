@@ -8,8 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -26,31 +31,27 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 public class ComposeController {
 
-    private List<File> attachements;
+    private LinkedList<File> attachements;
 
     @FXML
     public Button attachButton;
-    @FXML
     public TextField to;
-    @FXML
     public TextField subject;
-    @FXML
     public TextField carboncopy;
-    @FXML
     public TextField blindcc;
-    @FXML
     public TextArea emailContent;
-    @FXML
     public static AnchorPane parent;
 
     @FXML
@@ -68,20 +69,47 @@ public class ComposeController {
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        //add columns to the emailTable
-        table.getItems().addAll(nameCol, sizeCol, typeCol);
-
         //set how each column will display its data <AttachementPreview, String> means display this object as a string
         name.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("name"));
         size.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("size"));
         type.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("type"));
 
-        //don't let the user rearrange the column ordering
         table.getColumns().addListener((ListChangeListener) change -> {
             change.next();
             if(change.wasReplaced()) {
                 table.getColumns().clear();
-                table.getColumns().addAll(nameCol,sizeCol,typeCol);
+                table.getColumns().addAll(name,size,type);
+            }
+        });
+
+        table.setRowFactory( tv -> {
+            TableRow<AttachementPreview> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    try {
+                        File openMeh = row.getItem().getPointerFile();
+                        Desktop desktop = Desktop.getDesktop();
+
+                        if(openMeh.exists())
+                            desktop.open(openMeh);
+                    }
+
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            return row ;
+        });
+
+        table.setOnKeyPressed(keyEvent -> {
+            AttachementPreview selectedItem = (AttachementPreview) table.getSelectionModel().getSelectedItem();
+            if ( selectedItem != null ) {
+                if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
+                    attachements.remove(0);
+                    table.getItems().remove(table.getSelectionModel().getSelectedIndex());
+                }
             }
         });
     }
@@ -257,7 +285,7 @@ public class ComposeController {
                 seconds -= 60;
             }
 
-            return minutes + ":" + seconds;
+            return (seconds < 10 ? minutes + ":0" + seconds : minutes + ":" + seconds);
         }
 
         catch (Exception e) {
@@ -282,7 +310,14 @@ public class ComposeController {
 
     //will return txt, png, mp3, or whatever the file type is
     private String getFileExtension(File f) {
-        return f.getName().replace(f.getName().substring(0, f.getName().lastIndexOf('.')),"").replace(".","");
+        String extension = "";
+        int i = f.getName().lastIndexOf('.');
+
+        if (i > 0) {
+            extension = f.getName().substring(i + 1);
+        }
+
+        return extension.replace(".","");
     }
 
     //returns a representation if a file in MB or KB with 2 decimal places
@@ -326,8 +361,8 @@ public class ComposeController {
     }
 
     //used to add attachement representations to the table
-    private void addAttachementsToTable(String name, String size, String type) {
-        table.getItems().add(new AttachementPreview(name,size,type));
+    private void addAttachementsToTable(String name, String size, String type, File file) {
+        table.getItems().add(new AttachementPreview(name,size,type, file));
         table.refresh();
     }
 
@@ -336,12 +371,29 @@ public class ComposeController {
         try {
             FileChooser fc = new FileChooser();
             fc.setTitle("Add Attachements");
-            attachements = fc.showOpenMultipleDialog(null);
+            List<File> listAttachements = fc.showOpenMultipleDialog(null);
+            attachements = new LinkedList<>();
+            attachements.addAll(listAttachements);
 
             if (attachements != null) {
                 for (File attachement : attachements) {
-                    addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
-                            getDisplayFileSize(attachement),getFileExtension(attachement));
+                    if (getFileExtension(attachement).equalsIgnoreCase("mp3")) {
+                        addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
+                                getDisplayFileSize(attachement),getSongLength(attachement), attachement);
+                    }
+
+                    else if (getFileExtension(attachement).equalsIgnoreCase("png") ||
+                            getFileExtension(attachement).equalsIgnoreCase("jpg") ||
+                            getFileExtension(attachement).equalsIgnoreCase("jpeg")) {
+                        int[] dim = getImageDimensions(attachement);
+                        addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
+                                getDisplayFileSize(attachement),dim[0] + " x " + dim[1], attachement);
+                    }
+
+                    else {
+                        addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
+                                getDisplayFileSize(attachement),getFileExtension(attachement), attachement);
+                    }
                 }
             }
 

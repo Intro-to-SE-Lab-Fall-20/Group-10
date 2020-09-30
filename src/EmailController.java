@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,8 +31,6 @@ import java.util.Properties;
 
 
 public class EmailController {
-
-    //used for our inbox emailTable, will add more stuff
     @FXML
     public Label inboxLabel;
     public TableView table;
@@ -46,6 +45,7 @@ public class EmailController {
     public Label unreadEmailsLabel;
     public CheckBox hideOnCloseCheckBox;
     public ChoiceBox<String> folderChoiceBox;
+    public ProgressBar loadingProgressBar;
 
     //current email folder
     private Message[] messages;
@@ -59,6 +59,8 @@ public class EmailController {
     @FXML
     public void initialize() {
         try {
+            loadingProgressBar.setProgress(69);
+
             //update the email address label
             inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
 
@@ -85,11 +87,8 @@ public class EmailController {
                 }
             });
 
-            //todo check for new emails every 30 seconds or so
-            //todo forward and reply should be disabled unless a tablerow (email) is focused
-            //todo search for emails or subjects containing whats in searchbox, if null or "" display everything in folder
-            //todo for pictures show dimensions, for mp3 files show song length
-            //todo update currentfolder when user interacts with it
+            //todo search for emails or subjects containing whats in searchbox, if null || "" display everything in folder
+            //todo load folders after UI is showing so we can show progressbar indetermine state to show that we are workong on it
 
             table.setRowFactory( tv -> {
                 TableRow<EmailPreview> row = new TableRow<>();
@@ -97,6 +96,7 @@ public class EmailController {
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         EmailPreview rowData = row.getItem();
                         //TODO open up displayer (similar to compose) displays the message [back, delete, foward, reply]
+                        //open same gui if user presses foward or reply when a message is selected so make a method for this display email
                     }
                 });
                 return row ;
@@ -109,6 +109,15 @@ public class EmailController {
                 String folder = folderChoiceBox.getItems().get((Integer) ov.getValue());
                 fetchEmail(folder);
             });
+
+            String[] choices = folderChoiceBox.getItems().toArray(new String[0]);
+            int matchIndex = 0;
+
+            for (int i = 0 ; i < choices.length ; i++)
+                if (choices[i].equalsIgnoreCase("inbox"))
+                    matchIndex = i;
+
+            folderChoiceBox.getSelectionModel().select(matchIndex);
         }
 
         catch (Exception e) {
@@ -158,7 +167,7 @@ public class EmailController {
             folderChoiceBox.getSelectionModel().select(0);
 
             folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> ov,
-                                                                                     Number old_val, Number new_val) -> currentFolder = String.valueOf(new_val));
+                            Number old_val, Number new_val) -> currentFolder = String.valueOf(new_val));
         }
 
         catch (Exception e) {
@@ -215,6 +224,23 @@ public class EmailController {
             //good practice to close the folder and javax.mail.store
             emailFolder.close();
             store.close();
+
+            //if we are in the inbox, check for an update every 30 seconds
+            if (loadFolder.equalsIgnoreCase("INBOX")) {
+                Task<Void> sleeper = new Task<>() {
+                    @Override
+                    protected Void call() {
+                        try {
+                            Thread.sleep(30000);
+                            fetchEmail("INBOX");
+                        }
+
+                        catch (Exception ignored) {} return null;
+                    }
+                };
+
+                new Thread(sleeper).start();
+            }
         }
 
         catch (Exception e) {

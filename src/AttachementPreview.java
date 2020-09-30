@@ -1,22 +1,25 @@
+import java.io.File;
+
 public class AttachementPreview {
     private String Name;
     private String Size;
     private String Type;
 
-    AttachementPreview(String Name, String Size, String Type) {
+    private File pointerFile;
+
+    AttachementPreview(String Name, String Size, String Type, File pointerFile) {
         this.Name = Name;
         this.Size = Size;
         this.Type = Type;
+        this.pointerFile = pointerFile;
     }
-
-    //todo max lengths for getters like EmailPreview
 
     public void setName(String Name) {
         this.Name = Name;
     }
 
     public String getName() {
-        return this.Name;
+        return this.Name.substring(0, Math.min(20,Name.length()));
     }
 
     public void setSize(String Size) {
@@ -33,6 +36,14 @@ public class AttachementPreview {
 
     public String getType() {
         return (this.Type).replace(".","");
+    }
+
+    public void setPointerFile(File pointerFile) {
+        this.pointerFile = pointerFile;
+    }
+
+    public File getPointerFile() {
+        return this.pointerFile;
     }
 
     @Override

@@ -47,25 +47,15 @@
 .input-field {
     -fx-accent: rgb(204,153,0) ;
     -fx-background-color: #ffffff;
-    background-color: #ffffff;
-
     -fx-font-family: sans-serif;
-    font-family:  sans-serif;
-
     -fx-font-weight: bold;
-    font-weight: bold;
-
     -fx-font-size: 0,8em;
-    font-size: 0,8em;
 }
 
 .input-field:focused {
     -fx-background-color:
         #2196f3,
         #ffffff;
-    background-color: 
-        #2196f3,
-        #ffffff;;
 }
 
 .choice-box {
@@ -141,7 +131,7 @@
 }
 
 .scroll-bar:vertical .track{
-    -fx-background-color :white;
+    -fx-background-color :rgb(252, 251, 227);
     -fx-border-color :black;
     -fx-background-radius : 0.0em;
 }

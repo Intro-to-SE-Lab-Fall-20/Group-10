@@ -14,9 +14,9 @@
     <children>
       <TableView fx:id="table" layoutX="35.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="86.0" prefWidth="329.0" style="-fx-background-color: transparent;">
          <columns>
-            <TableColumn fx:id="name" editable="false" prefWidth="111.0" resizable="false" style="-fx-font-weight: bold;" text="Name" />
-            <TableColumn fx:id="size" editable="false" minWidth="0.0" prefWidth="73.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Size" />
-            <TableColumn fx:id="type" editable="false" minWidth="0.0" prefWidth="143.5" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Type" />
+            <TableColumn fx:id="name" editable="false" prefWidth="153.0" resizable="false" style="-fx-font-weight: bold;" text="Name" />
+            <TableColumn fx:id="size" editable="false" minWidth="0.0" prefWidth="90.0" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Size" />
+            <TableColumn fx:id="type" editable="false" minWidth="0.0" prefWidth="85.0" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Type" />
          </columns>
          <tooltip>
             <Tooltip text="Attachements" />
