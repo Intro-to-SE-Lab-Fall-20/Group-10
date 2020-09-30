@@ -128,12 +128,18 @@
     -fx-background-color :#123368;
     -fx-border-color :transparent;
     -fx-background-radius : 0.0em;
+    -fx-overflow-y: scroll;
+    -fx-overflow-x: hidden;
+
 }
 
 .scroll-bar:vertical .track{
     -fx-background-color :rgb(252, 251, 227);
     -fx-border-color :black;
     -fx-background-radius : 0.0em;
+
+    -fx-overflow-y: scroll;
+    -fx-overflow-x: hidden;
 }
 
 
@@ -211,6 +217,16 @@
     -fx-border-radius: 4px;
     -fx-border-width: 1px;
     -fx-border-color: black;
+}
+
+.table-view .scroll-bar * {
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
 }
 
 .table-view {

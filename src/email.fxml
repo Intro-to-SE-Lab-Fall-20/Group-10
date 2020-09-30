@@ -4,7 +4,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -42,30 +41,25 @@
                 <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <ProgressBar fx:id="loadingProgressBar" layoutX="17.0" layoutY="42.0" prefHeight="18.0" prefWidth="367.0" styleClass="stripes" translateY="2.0">
-            <tooltip>
-                <Tooltip text="Loading/Sending" />
-            </tooltip>
-        </ProgressBar>
-        <CheckBox fx:id="hideOnCloseCheckBox" layoutX="15.0" layoutY="68.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
-        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="90.0" prefHeight="18.0" prefWidth="104.0" style="-fx-background-color: #123368; -fx-text-fill: white;" styleClass="description-label" text="No emails" textFill="WHITE" translateY="1.0" />
+        <CheckBox fx:id="hideOnCloseCheckBox" layoutX="15.0" layoutY="48.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
+        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="342.0" layoutY="25.0" prefHeight="18.0" prefWidth="45.0" style="-fx-background-color: #e2174d; -fx-text-fill: white;" styleClass="description-label" text="0" textFill="WHITE" translateY="1.0" />
         <TableView fx:id="table" layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="380.0" scaleShape="false" style="-fx-background-color: transparent;">
             <columns>
-                <TableColumn fx:id="from" editable="false" maxWidth="114.5" minWidth="80.5" prefWidth="114.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="From" />
-                <TableColumn fx:id="date" editable="false" maxWidth="83.5" minWidth="49.5" prefWidth="80.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Date" />
-                <TableColumn fx:id="subject" editable="false" maxWidth="120.0" minWidth="45.5" prefWidth="63.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Subject" />
-                <TableColumn fx:id="message" editable="false" maxWidth="300.0" minWidth="116.0" prefWidth="120.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Message" />
+                <TableColumn fx:id="from" editable="false" maxWidth="114.5" minWidth="80.5" prefWidth="96.5" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="From" />
+                <TableColumn fx:id="date" editable="false" maxWidth="83.5" minWidth="49.5" prefWidth="77.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Date" />
+                <TableColumn fx:id="subject" editable="false" maxWidth="120.0" minWidth="45.5" prefWidth="84.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Subject" />
+                <TableColumn fx:id="message" editable="false" maxWidth="300.0" minWidth="30.5" prefWidth="123.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Message" />
             </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
         </TableView>
-      <TextField fx:id="searchFolderField" layoutX="126.0" layoutY="76.0" prefHeight="25.0" prefWidth="163.0" promptText="Search folder" styleClass="input-field" />
-      <ChoiceBox fx:id="folderChoiceBox" layoutX="297.0" layoutY="77.0" prefHeight="23.0" prefWidth="87.0" />
-      <Button fx:id="deleteButton" layoutX="326.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteEmail" styleClass="button-discard" text="Delete">
-         <tooltip>
-            <Tooltip text="Take me home (country roads)" />
-         </tooltip>
-      </Button>
+        <TextField fx:id="searchFolderField" layoutX="16.0" layoutY="76.0" prefHeight="25.0" prefWidth="211.0" promptText="Search folder" styleClass="input-field" />
+        <ChoiceBox fx:id="folderChoiceBox" layoutX="237.0" layoutY="77.0" prefHeight="23.0" prefWidth="147.0" />
+        <Button fx:id="deleteButton" layoutX="326.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteEmail" styleClass="button-discard" text="Delete">
+            <tooltip>
+             <Tooltip text="Take me home (country roads)" />
+            </tooltip>
+         </Button>
     </children>
 </AnchorPane>

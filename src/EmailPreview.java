@@ -64,6 +64,6 @@ public class EmailPreview {
 
     @Override
     public String toString() {
-        return this.From + "\n" + this.Date + "\n" + this.Subject + "\n" + this.Message + "\n";
+        return this.getFullFrom() + "\n" + this.getFullDate() + "\n" + this.getFullSubject() + "\n" + this.getFullMessage().replaceAll("(.{90})", "$1\n") + "\n";
     }
 }

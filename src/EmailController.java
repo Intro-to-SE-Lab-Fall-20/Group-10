@@ -18,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 import javax.mail.*;
@@ -27,8 +29,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.function.Function;
 
-//todo remove progress bar and tidy up main UI
+//todo make vertical scrollbar always visible
 //todo mouse hover on row for full information for both tables
 //todo search for emails or subjects containing whats in searchbox, if null || "" display everything in folder
 //todo load folders after UI is showing so we can show progressbar indetermine state to show that we are workong on it
@@ -37,7 +40,7 @@ import java.util.*;
 public class EmailController {
     @FXML
     public Label inboxLabel;
-    public TableView table;
+    public TableView<EmailPreview> table;
     public TableColumn message;
     public TableColumn from;
     public TableColumn date;
@@ -54,7 +57,7 @@ public class EmailController {
 
     //current email folder
     private Message[] messages;
-    private String currentFolder = "Inbox";
+    private String currentFolder = "1";
 
     public ObservableList folderList = FXCollections.observableArrayList();
 
@@ -73,13 +76,13 @@ public class EmailController {
             TableColumn subjectCol = new TableColumn("Subject");
             TableColumn messageCol = new TableColumn("Message");
 
-            table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
             //set how each column will display its data <EmailPreview, String> means display this object as a string
             from.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("from"));
             date.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("date"));
             subject.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("subject"));
             message.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("message"));
+
+            table.setColumnResizePolicy((param) -> true );
 
             //don't let the user rearrange the column ordering
             table.getColumns().addListener((ListChangeListener) change -> {
@@ -87,6 +90,82 @@ public class EmailController {
                 if(change.wasReplaced()) {
                     table.getColumns().clear();
                     table.getColumns().addAll(from,date,subject,message);
+                }
+            });
+
+            from.setCellFactory(new Callback<TableColumn<EmailPreview,String>, TableCell<EmailPreview,String>>() {
+                @Override
+                public TableCell<EmailPreview, String> call( TableColumn<EmailPreview, String> param) {
+                    return new TableCell<>() {
+                        private Text text;
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (!isEmpty()) {
+                                text = new Text(item);
+                                text.setWrappingWidth(80);
+                                setGraphic(text);
+                            }
+                        }
+                    };
+                }
+            });
+
+            date.setCellFactory(new Callback<TableColumn<EmailPreview,String>, TableCell<EmailPreview,String>>() {
+                @Override
+                public TableCell<EmailPreview, String> call( TableColumn<EmailPreview, String> param) {
+                    return new TableCell<>() {
+                        private Text text;
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (!isEmpty()) {
+                                text = new Text(item);
+                                text.setWrappingWidth(100);
+                                setGraphic(text);
+                            }
+                        }
+                    };
+                }
+            });
+
+            subject.setCellFactory(new Callback<TableColumn<EmailPreview,String>, TableCell<EmailPreview,String>>() {
+                @Override
+                public TableCell<EmailPreview, String> call( TableColumn<EmailPreview, String> param) {
+                    return new TableCell<>() {
+                        private Text text;
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (!isEmpty()) {
+                                text = new Text(item);
+                                text.setWrappingWidth(80);
+                                setGraphic(text);
+                            }
+                        }
+                    };
+                }
+            });
+
+            message.setCellFactory(new Callback<TableColumn<EmailPreview,String>, TableCell<EmailPreview,String>>() {
+                @Override
+                public TableCell<EmailPreview, String> call( TableColumn<EmailPreview, String> param) {
+                    return new TableCell<>() {
+                        private Text text;
+
+                        @Override
+                        public void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (!isEmpty()) {
+                                text = new Text(item);
+                                text.setWrappingWidth(100);
+                                setGraphic(text);
+                            }
+                        }
+                    };
                 }
             });
 
@@ -240,7 +319,7 @@ public class EmailController {
             messages = emailFolder.getMessages();
 
             //set how many emails we found
-            Platform.runLater(() -> unreadEmailsLabel.setText(messages.length != 1 ? messages.length + " emails" : " 1 email"));
+            Platform.runLater(() -> unreadEmailsLabel.setText(messages.length + ""));
 
             table.getItems().clear();
 
@@ -254,6 +333,8 @@ public class EmailController {
             //good practice to close the folder and javax.mail.store
             emailFolder.close();
             store.close();
+
+            table.setRowFactory((tableView) -> new TooltipTableRow<>(EmailPreview::toString));
 
             //if we are in the inbox, check for an update every 25 seconds
             if (loadFolder.equalsIgnoreCase("Inbox")) {
@@ -494,5 +575,25 @@ public class EmailController {
             Main.primaryStage.setIconified(true);
         else
             System.exit(0);
+    }
+
+    public class TooltipTableRow<T> extends TableRow<T> {
+
+        private Function<T, String> toolTipStringFunction;
+
+        public TooltipTableRow(Function<T, String> toolTipStringFunction) {
+            this.toolTipStringFunction = toolTipStringFunction;
+        }
+
+        @Override
+        protected void updateItem(T item, boolean empty) {
+            super.updateItem(item, empty);
+            if(item == null) {
+                setTooltip(null);
+            } else {
+                Tooltip tooltip = new Tooltip(toolTipStringFunction.apply(item));
+                setTooltip(tooltip);
+            }
+        }
     }
 }
