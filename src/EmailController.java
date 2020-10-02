@@ -157,19 +157,23 @@ public class EmailController {
                 }
             });
 
-            table.setRowFactory( tv -> {
-                TableRow<EmailPreview> row = new TableRow<>();
-                row.setOnMouseClicked(event -> {
-                    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                        EmailPreview rowData = row.getItem();
-                        Message display = messages[row.getIndex()];
+            table.setOnMouseClicked(event -> {
+                if (event.getClickCount() > 1) {
+                    try {
+                        Message display = messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1];
+                        System.out.println(display.getSubject());
+                        System.out.println("Open view controller");
+
                         //todo open up displayer (similar to compose) displays the message [back, delete, foward, reply]
                         //todo open same gui if user presses foward or reply when a message is selected so make a method for this display email
+
                         //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
                         //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                });
-                return row ;
+                }
             });
 
             initFolders();

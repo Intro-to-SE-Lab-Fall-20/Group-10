@@ -166,10 +166,10 @@ public class Controller {
             this.user = new User(emailField.getText(), theme);
 
             try {
-                this.user.writeUser();
+                //this.user.writeUser(); todo this is commented out, see User.java @Mallory
             }
 
-            catch (IOException ex) {
+            catch (Exception ex) {
                 ex.printStackTrace();
             }
 

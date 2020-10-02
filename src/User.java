@@ -26,10 +26,10 @@ public class User {
         //todo use all the info from the interface to store in a JSON file: mallory
         FileWriter file = new FileWriter("user.txt");
         JSONObject user = new JSONObject();
-        if (checkIfNewUser() == true){
+        if (checkIfNewUser()){
             user.put("username", this.username);
         }
-        if(checkIfNewTheme() == true){
+        if(checkIfNewTheme()){
             user.put("theme", this.theme);
         }
 
@@ -53,37 +53,35 @@ public class User {
 
     //todo pls fix Mal, it gave a parse error after the userfiles have been written to and are not blank
     public boolean checkIfNewUser(){
-//        JSONParser parser = new JSONParser();
-//        String name = "";
-//        try(Reader reader = new FileReader("users.txt")) {
-//            JSONObject object = (JSONObject) parser.parse(reader);
-//            name = String.valueOf(object.get("username"));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return !name.equals(this.username);
-        return false;
+        JSONParser parser = new JSONParser();
+        String name = "";
+        try(Reader reader = new FileReader("users.txt")) {
+            JSONObject object = (JSONObject) parser.parse(reader);
+            name = String.valueOf(object.get("username"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return !name.equals(this.username);
     }
 
     private boolean checkIfNewTheme(){
-//        JSONParser parser = new JSONParser();
-//        String theme1 = "";
-//        try(Reader reader = new FileReader("users.txt")) {
-//            JSONObject object = (JSONObject) parser.parse(reader);
-//            theme1 = String.valueOf(object.get("theme"));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return !theme1.equals(this.theme);
-        return false;
+        JSONParser parser = new JSONParser();
+        String theme1 = "";
+        try(Reader reader = new FileReader("users.txt")) {
+            JSONObject object = (JSONObject) parser.parse(reader);
+            theme1 = String.valueOf(object.get("theme"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return !theme1.equals(this.theme);
     }
 
     private void setThemeValue(String theme){
