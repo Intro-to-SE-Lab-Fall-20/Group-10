@@ -18,9 +18,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -43,7 +45,7 @@ import java.util.Properties;
 
 public class ComposeController {
 
-    private LinkedList<File> attachements;
+    private LinkedList<File> attachments;
 
     @FXML
     public Button attachButton;
@@ -62,17 +64,12 @@ public class ComposeController {
 
     @FXML
     public void initialize() {
-        //init emailTable column names
-        TableColumn nameCol = new TableColumn("Name");
-        TableColumn sizeCol = new TableColumn("Size");
-        TableColumn typeCol = new TableColumn("Type");
+        //set how each column will display its data <AttachmentPreview, String> means display this object as a string
+        name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
+        size.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("size"));
+        type.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("type"));
 
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        //set how each column will display its data <AttachementPreview, String> means display this object as a string
-        name.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("name"));
-        size.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("size"));
-        type.setCellValueFactory(new PropertyValueFactory<AttachementPreview, String>("type"));
+        table.setColumnResizePolicy((param) -> true );
 
         table.getColumns().addListener((ListChangeListener) change -> {
             change.next();
@@ -82,8 +79,66 @@ public class ComposeController {
             }
         });
 
+        //todo tooltips won't show for some reason
+        name.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
+            @Override
+            public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
+                return new TableCell<>() {
+                    private Text text;
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            text = new Text(item);
+                            text.setWrappingWidth(80);
+                            setGraphic(text);
+                        }
+                    }
+                };
+            }
+        });
+
+        size.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
+            @Override
+            public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
+                return new TableCell<>() {
+                    private Text text;
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            text = new Text(item);
+                            text.setWrappingWidth(80);
+                            setGraphic(text);
+                        }
+                    }
+                };
+            }
+        });
+
+        type.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
+            @Override
+            public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
+                return new TableCell<>() {
+                    private Text text;
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            text = new Text(item);
+                            text.setWrappingWidth(80);
+                            setGraphic(text);
+                        }
+                    }
+                };
+            }
+        });
+
         table.setRowFactory( tv -> {
-            TableRow<AttachementPreview> row = new TableRow<>();
+            TableRow<AttachmentPreview> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     try {
@@ -104,10 +159,10 @@ public class ComposeController {
         });
 
         table.setOnKeyPressed(keyEvent -> {
-            AttachementPreview selectedItem = (AttachementPreview) table.getSelectionModel().getSelectedItem();
+            AttachmentPreview selectedItem = (AttachmentPreview) table.getSelectionModel().getSelectedItem();
             if ( selectedItem != null ) {
                 if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
-                    attachements.remove(0);
+                    attachments.remove(0);
                     table.getItems().remove(table.getSelectionModel().getSelectedIndex());
                 }
             }
@@ -252,8 +307,8 @@ public class ComposeController {
 
                 emailContent.addBodyPart(textBodyPart);
 
-                //add attachements to our Multipart if we have any
-                addAttachements(emailContent);
+                //add attachments to our Multipart if we have any
+                addAttachments(emailContent);
 
                 mes.setContent(emailContent);
 
@@ -343,14 +398,14 @@ public class ComposeController {
             throw new IllegalAccessException("Unsupported email host");
     }
 
-    //this method adds attachements to the actual email that we are going to send
-    private void addAttachements(Multipart multipart) {
+    //this method adds attachments to the actual email that we are going to send
+    private void addAttachments(Multipart multipart) {
         try {
-            if (attachements != null && !attachements.isEmpty()) {
-                for (File file : attachements) {
-                    MimeBodyPart attachement = new MimeBodyPart();
-                    attachement.attachFile(file);
-                    multipart.addBodyPart(attachement);
+            if (attachments != null && !attachments.isEmpty()) {
+                for (File file : attachments) {
+                    MimeBodyPart attachment = new MimeBodyPart();
+                    attachment.attachFile(file);
+                    multipart.addBodyPart(attachment);
                 }
             }
         }
@@ -360,9 +415,9 @@ public class ComposeController {
         }
     }
 
-    //used to add attachement representations to the table
-    private void addAttachementsToTable(String name, String size, String type, File file) {
-        table.getItems().add(new AttachementPreview(name,size,type, file));
+    //used to add attachment representations to the table
+    private void addAttachmentsToTable(String name, String size, String type, File file) {
+        table.getItems().add(new AttachmentPreview(name,size,type, file));
         table.refresh();
     }
 
@@ -370,29 +425,29 @@ public class ComposeController {
     private void addFiles(ActionEvent e) {
         try {
             FileChooser fc = new FileChooser();
-            fc.setTitle("Add Attachements");
-            List<File> listAttachements = fc.showOpenMultipleDialog(null);
-            attachements = new LinkedList<>();
-            attachements.addAll(listAttachements);
+            fc.setTitle("Add attachments");
+            List<File> listAttachments = fc.showOpenMultipleDialog(null);
+            attachments = new LinkedList<>();
+            attachments.addAll(listAttachments);
 
-            if (attachements != null) {
-                for (File attachement : attachements) {
-                    if (getFileExtension(attachement).equalsIgnoreCase("mp3")) {
-                        addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
-                                getDisplayFileSize(attachement),getSongLength(attachement), attachement);
+            if (attachments != null) {
+                for (File attachment : attachments) {
+                    if (getFileExtension(attachment).equalsIgnoreCase("mp3")) {
+                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                                getDisplayFileSize(attachment),getSongLength(attachment), attachment);
                     }
 
-                    else if (getFileExtension(attachement).equalsIgnoreCase("png") ||
-                            getFileExtension(attachement).equalsIgnoreCase("jpg") ||
-                            getFileExtension(attachement).equalsIgnoreCase("jpeg")) {
-                        int[] dim = getImageDimensions(attachement);
-                        addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
-                                getDisplayFileSize(attachement),dim[0] + " x " + dim[1], attachement);
+                    else if (getFileExtension(attachment).equalsIgnoreCase("png") ||
+                            getFileExtension(attachment).equalsIgnoreCase("jpg") ||
+                            getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
+                        int[] dim = getImageDimensions(attachment);
+                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                                getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
                     }
 
                     else {
-                        addAttachementsToTable(attachement.getName().replace("." + getFileExtension(attachement),""),
-                                getDisplayFileSize(attachement),getFileExtension(attachement), attachement);
+                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                                getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
                     }
                 }
             }

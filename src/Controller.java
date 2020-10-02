@@ -10,9 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -36,8 +35,6 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class Controller {
-    //do we need this at all? (static since only one user can be logged in at any one time)
-    // yes bc it is used in login method
     public static User user;
 
     @FXML public StackPane masterStack;
@@ -78,7 +75,6 @@ public class Controller {
     }
 
     //finds css files and allows user to select any one
-    //todo be able to set this to the style used for EmailController and ComposeController
     private void loadCSSFiles() {
         list.removeAll();
 

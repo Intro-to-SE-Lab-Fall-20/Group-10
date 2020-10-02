@@ -1,13 +1,13 @@
 import java.io.File;
 
-public class AttachementPreview {
+public class AttachmentPreview {
     private String Name;
     private String Size;
     private String Type;
 
     private File pointerFile;
 
-    AttachementPreview(String Name, String Size, String Type, File pointerFile) {
+    AttachmentPreview(String Name, String Size, String Type, File pointerFile) {
         this.Name = Name;
         this.Size = Size;
         this.Type = Type;
@@ -19,7 +19,7 @@ public class AttachementPreview {
     }
 
     public String getName() {
-        return this.Name.substring(0, Math.min(20,Name.length()));
+        return this.Name.substring(0, Math.min(40,Name.length()));
     }
 
     public void setSize(String Size) {
@@ -48,6 +48,6 @@ public class AttachementPreview {
 
     @Override
     public String toString() {
-        return this.getName() + "\n" + this.getSize() + "\n" + this.getType();
+        return this.Name + "\n" + this.getSize() + "\n" + this.getType();
     }
 }

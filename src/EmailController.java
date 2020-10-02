@@ -31,12 +31,6 @@ import java.io.InputStreamReader;
 import java.util.*;
 import java.util.function.Function;
 
-//todo make vertical scrollbar always visible
-//todo mouse hover on row for full information for both tables
-//todo search for emails or subjects containing whats in searchbox, if null || "" display everything in folder
-//todo load folders after UI is showing so we can show progressbar indetermine state to show that we are workong on it
-//todo fix email.fxml error not loading in SB and spam of error on init load
-
 public class EmailController {
     @FXML
     public Label inboxLabel;
@@ -52,7 +46,7 @@ public class EmailController {
     public Label unreadEmailsLabel;
     public CheckBox hideOnCloseCheckBox;
     public ChoiceBox<String> folderChoiceBox;
-    public ProgressBar loadingProgressBar;
+    public ProgressIndicator loadingProgressIndicator;
     public TextField searchFolderField;
 
     //current email folder
@@ -69,12 +63,6 @@ public class EmailController {
         try {
             //update the email address label
             inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
-
-            //init emailTable column names
-            TableColumn fromCol = new TableColumn("From");
-            TableColumn dateCol = new TableColumn("Date");
-            TableColumn subjectCol = new TableColumn("Subject");
-            TableColumn messageCol = new TableColumn("Message");
 
             //set how each column will display its data <EmailPreview, String> means display this object as a string
             from.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("from"));
@@ -174,15 +162,17 @@ public class EmailController {
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         EmailPreview rowData = row.getItem();
+                        Message display = messages[row.getIndex()];
                         //todo open up displayer (similar to compose) displays the message [back, delete, foward, reply]
                         //todo open same gui if user presses foward or reply when a message is selected so make a method for this display email
+                        //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
+                        //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
                     }
                 });
                 return row ;
             });
 
             initFolders();
-            fetchEmail("Inbox");
 
             folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, n1, n2) -> {
                 String folder = folderChoiceBox.getItems().get((Integer) ov.getValue());
@@ -200,6 +190,8 @@ public class EmailController {
 
             searchFolderField.setOnAction(event -> {
                 try {
+                    Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
+
                     fetchEmail(currentFolder);
                     String searchFor = searchFolderField.getText();
 
@@ -221,12 +213,16 @@ public class EmailController {
 
                     for (EmailPreview ep : removes)
                         table.getItems().remove(ep);
+
+                    Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
                 }
 
                 catch (Exception e) {
                     e.printStackTrace();
                 }
             });
+
+            fetchEmail("Inbox");
         }
 
         catch (Exception e) {
@@ -288,6 +284,8 @@ public class EmailController {
     @FXML
     private void fetchEmail(String loadFolder) {
         try {
+            Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
+
             //first convert char[] holding password to a string builder that we can call toString on
             StringBuilder passwordBuilder = new StringBuilder();
             for (int i = 0; i < Controller.password.length; i++)
@@ -344,9 +342,13 @@ public class EmailController {
                         try {
                             Thread.sleep(25000);
 
+                            Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
+
                             //only refresh if we are not searching for something
                             if (searchFolderField.getText().length() == 0)
                                 fetchEmail("Inbox");
+
+                            Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
                         }
 
                         catch (Exception ignored) {} return null;
@@ -354,6 +356,8 @@ public class EmailController {
                 };
 
                 new Thread(sleeper).start();
+
+                Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
             }
         }
 

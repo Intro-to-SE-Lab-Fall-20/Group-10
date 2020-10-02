@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -42,10 +43,13 @@
             </tooltip>
         </Button>
         <CheckBox fx:id="hideOnCloseCheckBox" layoutX="15.0" layoutY="48.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
-        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="342.0" layoutY="25.0" prefHeight="18.0" prefWidth="45.0" style="-fx-background-color: #e2174d; -fx-text-fill: white;" styleClass="description-label" text="0" textFill="WHITE" translateY="1.0" />
+        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="48.0" prefHeight="18.0" prefWidth="45.0" style="-fx-background-color: #e2174d; -fx-text-fill: white;" styleClass="description-label" text="0" textFill="WHITE" translateY="1.0">
+         <tooltip>
+            <Tooltip text="Emails in current folder" />
+         </tooltip></Label>
         <TableView fx:id="table" layoutX="10.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="280.0" prefWidth="380.0" scaleShape="false" style="-fx-background-color: transparent;">
             <columns>
-                <TableColumn fx:id="from" editable="false" maxWidth="114.5" minWidth="80.5" prefWidth="96.5" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="From" />
+                <TableColumn fx:id="from" editable="false" maxWidth="114.5" minWidth="80.5" prefWidth="96.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="From" />
                 <TableColumn fx:id="date" editable="false" maxWidth="83.5" minWidth="49.5" prefWidth="77.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Date" />
                 <TableColumn fx:id="subject" editable="false" maxWidth="120.0" minWidth="45.5" prefWidth="84.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Subject" />
                 <TableColumn fx:id="message" editable="false" maxWidth="300.0" minWidth="30.5" prefWidth="123.5" resizable="false" sortType="DESCENDING" sortable="false" style="-fx-font-weight: bold;" text="Message" />
@@ -61,5 +65,10 @@
              <Tooltip text="Take me home (country roads)" />
             </tooltip>
          </Button>
+      <ProgressIndicator fx:id="loadingProgressIndicator" layoutX="355.0" layoutY="32.0" prefHeight="35.0" prefWidth="27.0" progress="1.0">
+         <tooltip>
+            <Tooltip text="Refreshing Emails Progress" />
+         </tooltip>
+      </ProgressIndicator>
     </children>
 </AnchorPane>

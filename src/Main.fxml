@@ -21,7 +21,7 @@
                     <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" styleClass="window-label" text="StraightShot" textFill="WHITE" translateX="-15.0" />
                     <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
                 </children></HBox>
-            <Label focusTraversable="false" layoutX="87.0" layoutY="40.0" prefHeight="37.0" prefWidth="211.0" styleClass="description-label" text="An email client designed by Mallory Duke and Nathan Cheshire" textAlignment="CENTER" wrapText="true" />
+            <Label focusTraversable="false" layoutX="115.0" layoutY="35.0" prefHeight="23.0" prefWidth="171.0" styleClass="description-label" text="An email client designed by" textAlignment="CENTER" wrapText="true" />
             <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" />
             <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" styleClass="input-field" text="straightshotmsu@gmail.com">
                 <tooltip>
@@ -54,6 +54,7 @@
             <tooltip>
                <Tooltip text="Click me to learn how to complete these actions!" />
             </tooltip></Label>
+         <Label focusTraversable="false" layoutX="97.0" layoutY="47.0" prefHeight="23.0" prefWidth="213.0" styleClass="description-label" text="Nathan Cheshire and Mallory Duke" textAlignment="CENTER" translateY="5.0" wrapText="true" />
         </children>
     </AnchorPane>
 </StackPane>
