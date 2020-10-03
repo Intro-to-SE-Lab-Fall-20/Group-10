@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 public class Main extends Application {
 
     //stage to pass around to class that wish to add/remove stuff from it such as scenes or components
-    public static Stage primaryStage;
+    static Stage primaryStage;
 
     //offsets used for window dragging
     private double xOffset = 0;

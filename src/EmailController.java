@@ -24,7 +24,6 @@ import javafx.util.Duration;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
-import javax.swing.text.View;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -53,6 +52,8 @@ public class EmailController {
     //current email folder
     private Message[] messages;
     private String currentFolder = "1";
+
+    public static Message currentMessage;
 
     public ObservableList folderList = FXCollections.observableArrayList();
 
@@ -364,7 +365,7 @@ public class EmailController {
     }
 
     //get the body from a Message
-    private String getMessageText(Message message) {
+    public String getMessageText(Message message) {
         try {
             String result = "";
 
@@ -449,6 +450,8 @@ public class EmailController {
     @FXML
     private void gotoViewer(Message view) {
         try {
+            currentMessage = view;
+
             Parent root = FXMLLoader.load(getClass().getResource("view.fxml"));
             Scene currentScene = logoutButton.getScene();
             root.translateYProperty().set(currentScene.getHeight());
@@ -463,19 +466,11 @@ public class EmailController {
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
 
-            ViewController vc = new ViewController();
-            vc.initEmail(view);
         }
 
         catch (Exception e) {
             e.printStackTrace();
         }
-        //todo open up displayer (similar to compose) displays the message [back, delete, foward, reply]
-        //todo open same gui if user presses foward or reply when a message is selected so make a method for this display email
-
-        //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
-        //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
-
     }
 
     @FXML

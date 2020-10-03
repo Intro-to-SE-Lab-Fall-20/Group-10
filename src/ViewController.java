@@ -2,6 +2,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,11 +18,13 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.internet.MimeMultipart;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ViewController {
+public class ViewController  {
 
     @FXML
     private Button backButton;
@@ -30,7 +33,7 @@ public class ViewController {
     @FXML
     public Label fromLabel;
     @FXML
-    public Label subjectLabel;
+    private Label subjectLabel;
     @FXML
     public TextArea emailContent;
     @FXML
@@ -40,19 +43,78 @@ public class ViewController {
 
     @FXML
     public void initialize() {
-        try {
+        Platform.runLater(() -> {
+            try {
+                fromLabel.setText("From: " + EmailController.currentMessage.getFrom()[0]);
+                subjectLabel.setText("Subject: " + EmailController.currentMessage.getSubject());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                //todo folder closed exception trying to get content, will also need established folder to get attachments and reply/forward
+                emailContent.setText(getMessageText(EmailController.currentMessage));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
-    public void initEmail(Message view) {
+    //get the body from a Message
+    public String getMessageText(Message message) {
         try {
-            subjectLabel.setText("Subject: " + view);
-        } catch (Exception e) {
+            String result = "";
+
+            if (message.isMimeType("text/plain"))
+                result = message.getContent().toString();
+
+            else if (message.isMimeType("multipart/*")) {
+                MimeMultipart mimeMultipart = (MimeMultipart) message.getContent();
+                result = MMText(mimeMultipart);
+            }
+
+            return result;
+        }
+
+        catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+
+    //gets the email body of a MimeMultipart message
+    private String MMText(MimeMultipart mimeMulti)  {
+        try {
+            StringBuilder result = new StringBuilder();
+
+            int count = mimeMulti.getCount();
+
+            for (int i = 0; i < count; i++) {
+                BodyPart bodyPart = mimeMulti.getBodyPart(i);
+
+                if (bodyPart.isMimeType("text/plain")) {
+                    result.append("\n").append(bodyPart.getContent());
+
+                    break; //this is necessary, do not remove
+                }
+
+                else if (bodyPart.getContent() instanceof MimeMultipart)
+                    result.append(MMText((MimeMultipart) bodyPart.getContent()));
+            }
+
+            return result.toString();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private void forwardEmail() {
+        //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
+    }
+
+    private void replyEmail() {
+        //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
     }
 
     @FXML
