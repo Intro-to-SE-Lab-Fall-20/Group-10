@@ -24,6 +24,7 @@ import javafx.util.Duration;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
+import javax.swing.text.View;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -161,15 +162,7 @@ public class EmailController {
                 if (event.getClickCount() > 1) {
                     try {
                         Message display = messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1];
-                        System.out.println(display.getSubject());
-                        System.out.println("Open view controller");
-
-                        //todo open up displayer (similar to compose) displays the message [back, delete, foward, reply]
-                        //todo open same gui if user presses foward or reply when a message is selected so make a method for this display email
-
-                        //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
-                        //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
-
+                        gotoViewer(display);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -451,6 +444,38 @@ public class EmailController {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void gotoViewer(Message view) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("view.fxml"));
+            Scene currentScene = logoutButton.getScene();
+            root.translateYProperty().set(currentScene.getHeight());
+
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
+
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+            tim.play();
+
+            ViewController vc = new ViewController();
+            vc.initEmail(view);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        //todo open up displayer (similar to compose) displays the message [back, delete, foward, reply]
+        //todo open same gui if user presses foward or reply when a message is selected so make a method for this display email
+
+        //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
+        //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
+
     }
 
     @FXML
