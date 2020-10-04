@@ -41,15 +41,25 @@ public class ViewController  {
     @FXML
     public Button forwardButton;
 
+    private EmailPreview thisPrev;
+
     @FXML
     public void initialize() {
         Platform.runLater(() -> {
             try {
-                fromLabel.setText("From: " + EmailController.currentMessage.getFrom()[0]);
-                subjectLabel.setText("Subject: " + EmailController.currentMessage.getSubject());
+                thisPrev = new EmailPreview("","","","");
 
-                //todo folder closed exception trying to get content, will also need established folder to get attachments and reply/forward
-                emailContent.setText(getMessageText(EmailController.currentMessage));
+                thisPrev.setDate(String.valueOf(EmailController.currentMessage.getSentDate()));
+                thisPrev.setFrom(String.valueOf(EmailController.currentMessage.getFrom()[0]));
+                thisPrev.setSubject(EmailController.currentMessage.getSubject());
+                thisPrev.setMessage(getMessageText(EmailController.currentMessage));
+
+                fromLabel.setText("From: " + thisPrev.getFrom());
+                subjectLabel.setText("Subject: " + thisPrev.getSubject());
+                emailContent.setText(thisPrev.getFullMessage());
+
+                //todo add attachments to table, do not let them delete but let them download it
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

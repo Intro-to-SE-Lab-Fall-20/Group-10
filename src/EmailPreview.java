@@ -15,7 +15,7 @@ public class EmailPreview {
     }
 
     public String getFrom() {
-        return this.From.replace("[","").replace("]","");
+        return this.From.replace("[","").replace("]","").replace("<","").replace(">","");
     }
 
     public String getFullFrom() {

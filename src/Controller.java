@@ -34,6 +34,13 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 
+//---------------------------------------
+//todo add tooltips for all tables
+//todo fix double refresh glitch
+//todo be able to add more attachments when replying or forwarding
+//todo fix song length error
+//---------------------------------------
+
 public class Controller {
     public static User user;
 

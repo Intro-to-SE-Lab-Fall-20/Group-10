@@ -31,8 +31,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioSystem;
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -40,7 +38,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 public class ComposeController {
@@ -79,7 +76,6 @@ public class ComposeController {
             }
         });
 
-        //todo tooltips won't show for some reason
         name.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
             @Override
             public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
@@ -326,30 +322,6 @@ public class ComposeController {
         }
     }
 
-    //must pass in a file that holds audio and this will return min:sec format of song length
-    public static String getSongLength(File f) {
-        try {
-            AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(f);
-            Map properties = baseFileFormat.properties();
-            Long duration = (Long) properties.get("duration");
-            int seconds = (int) Math.round(duration / 1000.0 / 1000.0);
-            int minutes = 0;
-
-            while (seconds - 60 > 0) {
-                minutes++;
-                seconds -= 60;
-            }
-
-            return (seconds < 10 ? minutes + ":0" + seconds : minutes + ":" + seconds);
-        }
-
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
     //must pass in a file that is an iamge and will return [xDim, yDim] of the image
     private int[] getImageDimensions(File imageFile) {
         try {
@@ -432,12 +404,7 @@ public class ComposeController {
 
             if (attachments != null) {
                 for (File attachment : attachments) {
-                    if (getFileExtension(attachment).equalsIgnoreCase("mp3")) {
-                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                                getDisplayFileSize(attachment),getSongLength(attachment), attachment);
-                    }
-
-                    else if (getFileExtension(attachment).equalsIgnoreCase("png") ||
+                    if (getFileExtension(attachment).equalsIgnoreCase("png") ||
                             getFileExtension(attachment).equalsIgnoreCase("jpg") ||
                             getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
                         int[] dim = getImageDimensions(attachment);

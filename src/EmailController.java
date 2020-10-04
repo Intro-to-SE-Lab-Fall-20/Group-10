@@ -271,6 +271,8 @@ public class EmailController {
 
             folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ObservableValue<? extends Number> ov,
                             Number old_val, Number new_val) -> currentFolder = String.valueOf(new_val));
+
+            store.close();
         }
 
         catch (Exception e) {
@@ -326,7 +328,6 @@ public class EmailController {
                 writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), body);
             }
 
-            //good practice to close the folder and javax.mail.store
             emailFolder.close();
             store.close();
 
@@ -577,8 +578,7 @@ public class EmailController {
 
             messages[deleteIndex].setFlag(Flags.Flag.DELETED, true);
 
-            emailFolder.close(true);
-            store.close();
+
 
             fetchEmail(currentFolder);
         }
