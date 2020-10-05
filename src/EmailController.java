@@ -51,14 +51,18 @@ public class EmailController {
 
     //current email folder
     private Message[] messages;
-    private String currentFolder = "1";
+    public String currentFolder = "0"; //todo this might not necessarliy be the inbox
 
     public static Message currentMessage;
 
     public ObservableList folderList = FXCollections.observableArrayList();
 
+    public static String currentFolderName;
+
     @FXML
-    public void toggleHideOnClose() {}
+    public void toggleHideOnClose() {} //todo still nate
+
+    //todo fix double refresh glitch
 
     @FXML
     public void initialize() {
@@ -313,6 +317,9 @@ public class EmailController {
 
             //get all the messages from the specified folder
             Folder emailFolder = store.getFolder(folderChoiceBox.getItems().get(Integer.parseInt(currentFolder)));
+
+            currentFolderName = folderChoiceBox.getItems().get(Integer.parseInt(currentFolder));
+
             emailFolder.open(Folder.READ_ONLY);
             messages = emailFolder.getMessages();
 
