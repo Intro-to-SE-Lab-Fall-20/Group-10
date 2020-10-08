@@ -7,7 +7,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,10 +62,14 @@ public class EmailController {
 
     public static String currentFolderName;
 
+    private Store store;
+    private Folder emailFolder;
+
     @FXML
-    public void toggleHideOnClose() {} //todo still nate
+    public void toggleHideOnClose() {}
 
     //todo fix double refresh glitch
+    //todo make popups disappear after a set amount of time
 
     @FXML
     public void initialize() {
@@ -315,11 +318,11 @@ public class EmailController {
 
             //imaps is simply a protocol (Internet Message Access Protocol)
             //create an imaps session using our emailAddress host, email, and password
-            Store store = session.getStore("imaps");
+            store = session.getStore("imaps");
             store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
             //get all the messages from the specified folder
-            Folder emailFolder = store.getFolder(folderChoiceBox.getItems().get(Integer.parseInt(currentFolder)));
+            emailFolder = store.getFolder(folderChoiceBox.getItems().get(Integer.parseInt(currentFolder)));
 
             currentFolderName = folderChoiceBox.getItems().get(Integer.parseInt(currentFolder));
 
@@ -338,33 +341,24 @@ public class EmailController {
                 writePart(Arrays.toString(message.getFrom()), message.getReceivedDate().toString(), message.getSubject(), body);
             }
 
-            emailFolder.close();
-            store.close();
-
             table.setRowFactory((tableView) -> new TooltipTableRow<>(EmailPreview::toString));
 
-            //if we are in the inbox, check for an update every 25 seconds
+            //todo called on refresh button press
             if (loadFolder.equalsIgnoreCase("Inbox")) {
-                Task<Void> sleeper = new Task<>() {
-                    @Override
-                    protected Void call() {
-                        try {
-                            Thread.sleep(25000);
+                    try {
+                        Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
 
-                            Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
-
-                            //only refresh if we are not searching for something
-                            if (searchFolderField.getText().length() == 0)
-                                fetchEmail("Inbox");
-
-                            Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
+                        //only refresh if we are not searching for something
+                        if (searchFolderField.getText().length() == 0) {
+                            //todo close folders and all call load on current inbox
                         }
 
-                        catch (Exception ignored) {} return null;
+                        Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
                     }
-                };
 
-                new Thread(sleeper).start();
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
             }
@@ -458,11 +452,10 @@ public class EmailController {
         }
     }
 
+    //when we go to viewer for the first time, it fails but after that it works.
     @FXML
     private void gotoViewer(Message view) {
         try {
-            //todo open folder
-
             currentMessage = view;
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
@@ -481,7 +474,10 @@ public class EmailController {
                 InputStream is = bodyPart.getInputStream();
 
                 //this is the temp folder we will completely delete on exit
-                File f = new File("/sstemp/" + bodyPart.getFileName());
+                File dir = new File("sstemp");
+
+                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
+                if (!dir.exists()) dir.mkdir();
 
                 FileOutputStream fos = new FileOutputStream(f);
 
@@ -495,7 +491,6 @@ public class EmailController {
                 fos.close();
                 currentMessageAttachments.add(f);
             }
-
 
             Parent root = FXMLLoader.load(getClass().getResource("view.fxml"));
             Scene currentScene = logoutButton.getScene();
@@ -511,7 +506,8 @@ public class EmailController {
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
 
-            //todo close folder
+            emailFolder.close();
+            store.close();
         }
 
         catch (Exception e) {

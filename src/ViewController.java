@@ -63,7 +63,18 @@ public class ViewController  {
     @FXML
     public void initialize() {
         try {
-//set how each column will display its data <AttachmentPreview, String> means display this object as a string
+            System.out.println(EmailController.currentMessageSubject);
+            System.out.println(EmailController.currentMessageFrom);
+            System.out.println(EmailController.currentMessageDate);
+            System.out.println(EmailController.currentMessageBody);
+            System.out.println("num attachments: " + EmailController.currentMessageAttachments.size());
+
+            for (File f: EmailController.currentMessageAttachments)
+                System.out.println(f.getAbsolutePath());
+
+            //todo now all information is here and available. Now display it.
+
+            //set how each column will display its data <AttachmentPreview, String> means display this object as a string
             name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
             size.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("size"));
             type.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("type"));
@@ -140,7 +151,7 @@ public class ViewController  {
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         try {
-                            //todo download to location specified by FileChooser
+                            //todo copy file to location specified by FileChooser
                         }
 
                         catch (Exception e) {
@@ -184,7 +195,8 @@ public class ViewController  {
             ex.printStackTrace();
         }
 
-        //todo delete temp folder
+        File dir = new File("sstemp");
+        rmDir(dir);
 
         System.exit(0);
     }
@@ -215,7 +227,8 @@ public class ViewController  {
     @FXML
     private void goBack(ActionEvent event) {
         try {
-            //todo delete temp folder
+            File dir = new File("sstemp");
+            rmDir(dir);
 
             Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
             Scene currentScene = backButton.getScene();
@@ -234,6 +247,19 @@ public class ViewController  {
 
         catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void rmDir(File f) {
+        if (f.isDirectory()) {
+            for (File file: f.listFiles())
+                rmDir(file);
+
+            f.delete();
+        }
+
+        else {
+            f.delete();
         }
     }
 
