@@ -24,10 +24,7 @@ import javafx.util.Duration;
 
 import javax.mail.*;
 import javax.mail.internet.MimeMultipart;
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
@@ -51,9 +48,16 @@ public class EmailController {
 
     //current email folder
     private Message[] messages;
-    public String currentFolder = "0"; //todo this might not necessarliy be the inbox
+    public String currentFolder = "0";
 
+    //viewing message content
+    public static Multipart currentMessageMultipart;
     public static Message currentMessage;
+    public static String currentMessageFrom;
+    public static String currentMessageSubject;
+    public static String currentMessageBody;
+    public static LinkedList<File> currentMessageAttachments;
+    public static String currentMessageDate;
 
     public ObservableList folderList = FXCollections.observableArrayList();
 
@@ -166,8 +170,7 @@ public class EmailController {
             table.setOnMouseClicked(event -> {
                 if (event.getClickCount() > 1) {
                     try {
-                        Message display = messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1];
-                        gotoViewer(display);
+                        gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -458,7 +461,41 @@ public class EmailController {
     @FXML
     private void gotoViewer(Message view) {
         try {
+            //todo open folder
+
             currentMessage = view;
+            currentMessageMultipart = (Multipart) currentMessage.getContent();
+            currentMessageSubject = currentMessage.getSubject();
+            currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
+            currentMessageDate = String.valueOf(currentMessage.getSentDate());
+            currentMessageBody = getMessageText(currentMessage);
+            currentMessageAttachments = new LinkedList<>();
+
+            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
+                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
+
+                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
+                    continue;
+                }
+
+                InputStream is = bodyPart.getInputStream();
+
+                //this is the temp folder we will completely delete on exit
+                File f = new File("/sstemp/" + bodyPart.getFileName());
+
+                FileOutputStream fos = new FileOutputStream(f);
+
+                byte[] buf = new byte[4096];
+
+                int bytesRead;
+                while((bytesRead = is.read(buf))!=-1) {
+                    fos.write(buf, 0, bytesRead);
+                }
+
+                fos.close();
+                currentMessageAttachments.add(f);
+            }
+
 
             Parent root = FXMLLoader.load(getClass().getResource("view.fxml"));
             Scene currentScene = logoutButton.getScene();
@@ -474,6 +511,7 @@ public class EmailController {
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
 
+            //todo close folder
         }
 
         catch (Exception e) {
