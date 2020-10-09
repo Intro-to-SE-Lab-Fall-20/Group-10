@@ -70,5 +70,6 @@
             <Tooltip text="Refreshing Emails Progress" />
          </tooltip>
       </ProgressIndicator>
+      <Button fx:id="refreshButton" layoutX="243.0" layoutY="45.0" mnemonicParsing="false" onAction="#refreshFolder" prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Refresh" />
     </children>
 </AnchorPane>

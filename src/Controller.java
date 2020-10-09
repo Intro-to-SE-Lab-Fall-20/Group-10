@@ -156,7 +156,11 @@ public class Controller {
         }
 
         catch (Exception e) {
-            System.out.println("Account DNE");
+            showPopupMessage("Sorry, " + System.getProperty("user.name") + ", but I couldn't validate\nthe email: " +
+                    emailAddress, Main.primaryStage);
+
+            emailField.setText("");
+            passField.setText("");
         }
 
         return false;

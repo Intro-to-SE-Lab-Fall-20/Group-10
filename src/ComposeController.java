@@ -418,9 +418,6 @@ public class ComposeController {
                     }
                 }
             }
-
-            else
-                System.out.println("Invalid file");
         }
 
         catch (Exception ex) {

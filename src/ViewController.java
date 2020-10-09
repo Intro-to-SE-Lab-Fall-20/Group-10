@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -26,6 +27,9 @@ import javax.mail.Store;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 
@@ -39,6 +43,8 @@ public class ViewController  {
     public Label fromLabel;
     @FXML
     private Label subjectLabel;
+    @FXML
+    private Label dateLabel;
     @FXML
     public TextArea emailContent;
     @FXML
@@ -63,16 +69,10 @@ public class ViewController  {
     @FXML
     public void initialize() {
         try {
-            System.out.println(EmailController.currentMessageSubject);
-            System.out.println(EmailController.currentMessageFrom);
-            System.out.println(EmailController.currentMessageDate);
-            System.out.println(EmailController.currentMessageBody);
-            System.out.println("num attachments: " + EmailController.currentMessageAttachments.size());
-
-            for (File f: EmailController.currentMessageAttachments)
-                System.out.println(f.getAbsolutePath());
-
-            //todo now all information is here and available. Now display it.
+            subjectLabel.setText("Subject: " + EmailController.currentMessageSubject);
+            fromLabel.setText("From: " + EmailController.currentMessageFrom);
+            dateLabel.setText("Date: " + EmailController.currentMessageDate);
+            emailContent.setText(EmailController.currentMessageBody);
 
             //set how each column will display its data <AttachmentPreview, String> means display this object as a string
             name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
@@ -151,7 +151,20 @@ public class ViewController  {
                 row.setOnMouseClicked(event -> {
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         try {
-                            //todo copy file to location specified by FileChooser
+                            File copyMe = row.getItem().getPointerFile().getAbsoluteFile();
+                            Path from = Paths.get(copyMe.toURI());
+
+                            DirectoryChooser directoryChooser = new DirectoryChooser();
+                            directoryChooser.setTitle("Select location to download " + copyMe.getName() + " to");
+                            File selectedDirectory = directoryChooser.showDialog(Main.primaryStage);
+
+                            Path to = Paths.get((selectedDirectory + System.getProperty("file.separator") + copyMe.getName()));
+
+                            if (selectedDirectory != null && selectedDirectory.isDirectory())
+                                Files.copy(from, to);
+
+                            showPopupMessage("Successfully saved " + copyMe.getName() + " to " + selectedDirectory.getName(), Main.primaryStage);
+
                         }
 
                         catch (Exception e) {
@@ -162,6 +175,8 @@ public class ViewController  {
 
                 return row ;
             });
+
+            initAttachments();
         }
 
         catch (Exception e) {
@@ -263,9 +278,33 @@ public class ViewController  {
         }
     }
 
+    private void initAttachments() {
+        try {
+            for (File attachment : EmailController.currentMessageAttachments) {
+                if (getFileExtension(attachment).equalsIgnoreCase("png") ||
+                        getFileExtension(attachment).equalsIgnoreCase("jpg") ||
+                        getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
+                    int[] dim = getImageDimensions(attachment);
+                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                            getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
+                }
+
+                else {
+                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                            getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
+                }
+            }
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     //used to add attachment representations to the table
     private void addAttachmentsToTable(String name, String size, String type, File file) {
-
+        table.getItems().add(new AttachmentPreview(name,size,type,file));
+        table.refresh();
     }
 
     //must pass in a file that is an iamge and will return [xDim, yDim] of the image
@@ -279,16 +318,6 @@ public class ViewController  {
         }
 
         return new int[]{0,0};
-    }
-
-    private void initAttachments() {
-        try {
-
-        }
-
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     //will return txt, png, mp3, or whatever the file type is

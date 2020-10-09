@@ -44,6 +44,7 @@ public class EmailController {
     public ChoiceBox<String> folderChoiceBox;
     public ProgressIndicator loadingProgressIndicator;
     public TextField searchFolderField;
+    public Button refreshButton;
 
     //current email folder
     private Message[] messages;
@@ -68,8 +69,8 @@ public class EmailController {
     @FXML
     public void toggleHideOnClose() {}
 
-    //todo fix double refresh glitch
     //todo make popups disappear after a set amount of time
+    //todo if message has no content inform user you cannot open it (single embedded image)
 
     @FXML
     public void initialize() {
@@ -343,25 +344,7 @@ public class EmailController {
 
             table.setRowFactory((tableView) -> new TooltipTableRow<>(EmailPreview::toString));
 
-            //todo called on refresh button press
-            if (loadFolder.equalsIgnoreCase("Inbox")) {
-                    try {
-                        Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
-
-                        //only refresh if we are not searching for something
-                        if (searchFolderField.getText().length() == 0) {
-                            //todo close folders and all call load on current inbox
-                        }
-
-                        Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
-                    }
-
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
-            }
+            Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
         }
 
         catch (Exception e) {
@@ -426,6 +409,14 @@ public class EmailController {
     private void writePart(String from, String date, String subject, String message) {
         table.getItems().add(new EmailPreview(from,date,subject,message));
         table.refresh();
+    }
+
+    @FXML
+    private void refreshFolder(ActionEvent event) {
+        Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
+
+        if (searchFolderField.getText().length() == 0)
+            fetchEmail(currentFolder);
     }
 
     //animation for going to compose screen
@@ -518,7 +509,8 @@ public class EmailController {
     @FXML
     private void gotoReply(ActionEvent event) {
         try {
-            System.out.println("TODO");
+            //todo goto sep gui
+            //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
         }
 
         catch (Exception e) {
@@ -529,7 +521,8 @@ public class EmailController {
     @FXML
     private void gotoForward(ActionEvent event) {
         try {
-            System.out.println("TODO");
+            //todo goto sep gui
+            //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
         }
 
         catch (Exception e) {
