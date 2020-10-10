@@ -51,7 +51,7 @@
          </tooltip></TextArea>
       <Button fx:id="attachButton" layoutX="49.0" layoutY="405.0" mnemonicParsing="false" onAction="#addFiles" styleClass="button-login" text="Attach Files">
          <tooltip>
-            <Tooltip text="Add files to your email" />
+            <Tooltip text="Typically servers only support 25MB of attachments" />
          </tooltip></Button>
       <Button layoutX="157.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" styleClass="button-discard" text="Discard">
          <tooltip>

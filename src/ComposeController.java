@@ -42,7 +42,7 @@ import java.util.Properties;
 
 public class ComposeController {
 
-    private LinkedList<File> attachments;
+    private LinkedList<File> attachments = new LinkedList<>();
 
     @FXML
     public Button attachButton;
@@ -303,23 +303,38 @@ public class ComposeController {
 
                 emailContent.addBodyPart(textBodyPart);
 
-                //add attachments to our Multipart if we have any
-                addAttachments(emailContent);
+                if (tooManyAttachments()) {
+                    showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. Please remove some files", Main.primaryStage);
+                }
 
-                mes.setContent(emailContent);
+                else {
+                    //add attachments to our Multipart if we have any
+                    addAttachments(emailContent);
 
-                //attempt to send and if successful, inform user and go back to inbox screen
-                Transport.send(mes);
+                    mes.setContent(emailContent);
 
-                showPopupMessage("Sent messaage", Main.primaryStage);
+                    //attempt to send and if successful, inform user and go back to inbox screen
+                    Transport.send(mes);
 
-                goBack(null);
+                    showPopupMessage("Sent messaage", Main.primaryStage);
+
+                    goBack(null);
+                }
             }
         }
 
         catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private boolean tooManyAttachments() {
+        double megaBytes = 0;
+
+        for (File attachment : attachments)
+            megaBytes += attachment.length() / 1024.0 / 1024.0;
+
+        return megaBytes >= 25;
     }
 
     //must pass in a file that is an iamge and will return [xDim, yDim] of the image
@@ -399,7 +414,6 @@ public class ComposeController {
             FileChooser fc = new FileChooser();
             fc.setTitle("Add attachments");
             List<File> listAttachments = fc.showOpenMultipleDialog(null);
-            attachments = new LinkedList<>();
             attachments.addAll(listAttachments);
 
             if (attachments != null) {

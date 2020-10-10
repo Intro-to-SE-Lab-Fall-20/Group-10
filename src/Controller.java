@@ -35,10 +35,8 @@ import java.util.Properties;
 import java.util.UUID;
 
 //---------------------------------------
-//todo add tooltips for all tables
-//todo fix double refresh glitch
-//todo be able to add more attachments when replying or forwarding
-//todo fix song length error
+//todo add tooltips to viewcontroller and composecontroller, also for forward and reply ones when made
+//todo be able to add or remove attachments when forwarding or replying
 //---------------------------------------
 
 public class Controller {
@@ -177,7 +175,7 @@ public class Controller {
             this.user = new User(emailField.getText(), theme);
 
             try {
-                //this.user.writeUser(); todo this is commented out, see User.java @Mallory
+                //this.user.writeUser(); this is commented out, see User.java @Mallory
             }
 
             catch (Exception ex) {
