@@ -1,7 +1,4 @@
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -184,14 +181,18 @@ public class ViewController  {
         }
     }
 
+    @FXML
     private void forwardEmail() {
-        //todo goto sep gui
+        System.out.println("Open forward fxml");
         //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
+        //after we forwarded the email, call clearlocalattachments from this class and then go back to emailcontroller
     }
 
+    @FXML
     private void replyEmail() {
-        //todo goto sep gui
+        System.out.println("Open reply fxml");
         //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
+        //after we have replied to the email, call clearlocalattachments from this class and then go back to emailcontroller
     }
 
     @FXML
@@ -210,8 +211,7 @@ public class ViewController  {
             ex.printStackTrace();
         }
 
-        File dir = new File("sstemp");
-        rmDir(dir);
+        clearLocalAttachments();
 
         System.exit(0);
     }
@@ -237,13 +237,26 @@ public class ViewController  {
             popup.setY(stage.getY() + 25);
         });
         popup.show(stage);
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(e -> popup.hide());
+        delay.play();
+    }
+
+    public static void clearLocalAttachments() {
+        try {
+            File dir = new File("sstemp");
+            rmDir(dir);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void goBack(ActionEvent event) {
         try {
-            File dir = new File("sstemp");
-            rmDir(dir);
+            clearLocalAttachments();
 
             Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
             Scene currentScene = backButton.getScene();
@@ -265,7 +278,7 @@ public class ViewController  {
         }
     }
 
-    private void rmDir(File f) {
+    private static void rmDir(File f) {
         if (f.isDirectory()) {
             for (File file: f.listFiles())
                 rmDir(file);

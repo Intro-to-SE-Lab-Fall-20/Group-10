@@ -12,6 +12,9 @@ public class EmailPreview {
         this.Date = Date;
         this.Subject = Subject;
         this.Message = Message;
+
+        if (Message.length() == 0 || Message == null)
+            Message = "[Null content; perhaps the email is an embedded image]";
     }
 
     public String getFrom() {
@@ -51,15 +54,21 @@ public class EmailPreview {
     }
 
     public String getMessage() {
+        if (Message.length() == 0 || Message == null)
+            return "[Null content; perhaps the email is an embedded image]";
         return this.Message.substring(0,Math.min(Message.length(), maxMessageLength));
     }
 
     public String getFullMessage() {
+        if (Message.length() == 0 || Message == null)
+            return "[Null content; perhaps the email is an embedded image]";
         return this.Message;
     }
 
     public void setMessage(String message) {
         this.Message = message;
+        if (Message.length() == 0 || Message == null)
+            Message = "[Null content; perhaps the email is an embedded image]";
     }
 
     @Override

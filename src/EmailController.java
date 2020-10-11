@@ -67,12 +67,6 @@ public class EmailController {
     private Folder emailFolder;
 
     @FXML
-    public void toggleHideOnClose() {}
-
-    //todo make popups disappear after a set amount of time
-    //todo if message has no content inform user you cannot open it (single embedded image)
-
-    @FXML
     public void initialize() {
         try {
             //update the email address label
@@ -509,7 +503,15 @@ public class EmailController {
     @FXML
     private void gotoReply(ActionEvent event) {
         try {
-            //todo goto sep gui
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                System.out.println(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
+                System.out.println("Open reply fxml");
+            }
+
+            else {
+                System.out.println("Must selected a message to reply to");
+            }
+
             //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
         }
 
@@ -521,7 +523,15 @@ public class EmailController {
     @FXML
     private void gotoForward(ActionEvent event) {
         try {
-            //todo goto sep gui
+            if (table.getSelectionModel().getSelectedItem() != null) {
+                System.out.println(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
+                System.out.println("Open forward fxml");
+            }
+
+            else {
+                System.out.println("Must selected a message to forward");
+            }
+
             //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
         }
 

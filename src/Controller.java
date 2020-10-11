@@ -1,7 +1,4 @@
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,7 +32,6 @@ import java.util.Properties;
 import java.util.UUID;
 
 //---------------------------------------
-//todo add tooltips to viewcontroller and composecontroller, also for forward and reply ones when made
 //todo be able to add or remove attachments when forwarding or replying
 //---------------------------------------
 
@@ -283,7 +279,6 @@ public class Controller {
         return popup;
     }
 
-    //show a popup message
     private void showPopupMessage(final String message, final Stage stage) {
         final Popup popup = createPopup(message);
         popup.setOnShown(e -> {
@@ -291,6 +286,9 @@ public class Controller {
             popup.setY(stage.getY() + 25);
         });
         popup.show(stage);
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(e -> popup.hide());
+        delay.play();
     }
 
     //open up a URL

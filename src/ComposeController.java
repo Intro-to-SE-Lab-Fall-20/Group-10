@@ -1,7 +1,4 @@
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -303,12 +300,13 @@ public class ComposeController {
 
                 emailContent.addBodyPart(textBodyPart);
 
-                if (tooManyAttachments()) {
-                    showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. Please remove some files", Main.primaryStage);
+                if (attachmentsSize() >= 25) {
+                    showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. " +
+                            "Please remove some files. Currently at " + String.format("%.2f", attachmentsSize()) + "MB", Main.primaryStage);
                 }
 
                 else {
-                    //add attachments to our Multipart if we have any
+                    //add attachments to our Multipart
                     addAttachments(emailContent);
 
                     mes.setContent(emailContent);
@@ -328,13 +326,13 @@ public class ComposeController {
         }
     }
 
-    private boolean tooManyAttachments() {
+    private double attachmentsSize() {
         double megaBytes = 0;
 
         for (File attachment : attachments)
             megaBytes += attachment.length() / 1024.0 / 1024.0;
 
-        return megaBytes >= 25;
+        return megaBytes;
     }
 
     //must pass in a file that is an iamge and will return [xDim, yDim] of the image
@@ -479,5 +477,8 @@ public class ComposeController {
             popup.setY(stage.getY() + 25);
         });
         popup.show(stage);
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(e -> popup.hide());
+        delay.play();
     }
 }
