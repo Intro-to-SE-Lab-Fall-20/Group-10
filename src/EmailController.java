@@ -39,6 +39,8 @@ public class EmailController {
     public Button composeButton;
     public Button logoutButton;
     public Button deleteButton;
+    public Button forwardButton;
+    public Button replyButton;
     public Label unreadEmailsLabel;
     public CheckBox hideOnCloseCheckBox;
     public ChoiceBox<String> folderChoiceBox;
@@ -166,6 +168,15 @@ public class EmailController {
             });
 
             table.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1) {
+                    try {
+                        currentMessage = messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1];
+                        currentMessageMultipart = (MimeMultipart) messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1].getContent();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 if (event.getClickCount() > 1) {
                     try {
                         gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
@@ -501,18 +512,59 @@ public class EmailController {
     }
 
     @FXML
-    private void gotoReply(ActionEvent event) {
+    public void gotoReply(ActionEvent event) {
         try {
-            if (table.getSelectionModel().getSelectedItem() != null) {
-                System.out.println(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
-                System.out.println("Open reply fxml");
+            currentMessageMultipart = (Multipart) currentMessage.getContent();
+            currentMessageSubject = currentMessage.getSubject();
+            currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
+            currentMessageDate = String.valueOf(currentMessage.getSentDate());
+            currentMessageBody = getMessageText(currentMessage);
+            currentMessageAttachments = new LinkedList<>();
+
+            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
+                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
+
+                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
+                    continue;
+                }
+
+                InputStream is = bodyPart.getInputStream();
+
+                //this is the temp folder we will completely delete on exit
+                File dir = new File("sstemp");
+
+                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
+                if (!dir.exists()) dir.mkdir();
+
+                FileOutputStream fos = new FileOutputStream(f);
+
+                byte[] buf = new byte[4096];
+
+                int bytesRead;
+                while((bytesRead = is.read(buf))!=-1) {
+                    fos.write(buf, 0, bytesRead);
+                }
+
+                fos.close();
+                currentMessageAttachments.add(f);
             }
 
-            else {
-                System.out.println("Must selected a message to reply to");
-            }
+            if (currentMessageMultipart != null) {
+                Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
+                Scene currentScene = composeButton.getScene();
+                root.translateXProperty().set(currentScene.getWidth());
 
-            //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
+                StackPane pc = (StackPane) currentScene.getRoot();
+                pc.getChildren().add(root);
+
+                Timeline tim = new Timeline();
+                KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+
+                tim.getKeyFrames().add(kf);
+                tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+                tim.play();
+            }
         }
 
         catch (Exception e) {
@@ -520,19 +572,63 @@ public class EmailController {
         }
     }
 
+
     @FXML
-    private void gotoForward(ActionEvent event) {
+    public void gotoForward(ActionEvent event) {
         try {
-            if (table.getSelectionModel().getSelectedItem() != null) {
-                System.out.println(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
-                System.out.println("Open forward fxml");
+            currentMessageMultipart = (Multipart) currentMessage.getContent();
+            currentMessageSubject = currentMessage.getSubject();
+            currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
+            currentMessageDate = String.valueOf(currentMessage.getSentDate());
+            currentMessageBody = getMessageText(currentMessage);
+            currentMessageAttachments = new LinkedList<>();
+
+            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
+                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
+
+                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
+                    continue;
+                }
+
+                InputStream is = bodyPart.getInputStream();
+
+                //this is the temp folder we will completely delete on exit
+                File dir = new File("sstemp");
+
+                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
+                if (!dir.exists()) dir.mkdir();
+
+                FileOutputStream fos = new FileOutputStream(f);
+
+                byte[] buf = new byte[4096];
+
+                int bytesRead;
+                while((bytesRead = is.read(buf))!=-1) {
+                    fos.write(buf, 0, bytesRead);
+                }
+
+                fos.close();
+                currentMessageAttachments.add(f);
             }
 
-            else {
-                System.out.println("Must selected a message to forward");
-            }
+            if (currentMessageMultipart != null) {
+                System.out.println("Working on it");
 
-            //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
+//                Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
+//                Scene currentScene = composeButton.getScene();
+//                root.translateXProperty().set(currentScene.getWidth());
+//
+//                StackPane pc = (StackPane) currentScene.getRoot();
+//                pc.getChildren().add(root);
+//
+//                Timeline tim = new Timeline();
+//                KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+//                KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+//
+//                tim.getKeyFrames().add(kf);
+//                tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+//                tim.play();
+            }
         }
 
         catch (Exception e) {
@@ -621,8 +717,6 @@ public class EmailController {
             messages = emailFolder.getMessages();
 
             messages[deleteIndex].setFlag(Flags.Flag.DELETED, true);
-
-
 
             fetchEmail(currentFolder);
         }

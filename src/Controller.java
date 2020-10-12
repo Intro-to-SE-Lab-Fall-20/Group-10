@@ -31,10 +31,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 
-//---------------------------------------
-//todo be able to add or remove attachments when forwarding or replying
-//---------------------------------------
-
 public class Controller {
     public static User user;
 
