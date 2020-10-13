@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -26,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
+import java.util.List;
 
 public class ReplyController {
 
@@ -52,13 +54,15 @@ public class ReplyController {
     @FXML
     private Button replyButton;
 
-    private LinkedList<File> additionalAttachments;
+    private LinkedList<File> additionalAttachments = new LinkedList<>();
 
     @FXML
     public void initialize() {
         try {
             replySubject.setText("RE: " + EmailController.currentMessageSubject);
             emailContent.setText(EmailController.currentMessageBody);
+
+            additionalAttachments = EmailController.currentMessageAttachments;
 
             //set how each column will display its data <AttachmentPreview, String> means display this object as a string
             name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
@@ -175,8 +179,11 @@ public class ReplyController {
 
     @FXML
     private void sendReply(ActionEvent event) {
+        String replyingSubject = replySubject.getText();
+        String additionalSubjects = replyTo.getText();
+        String emailCont = emailContent.getText();
+
         //todo send reply email
-        System.out.println("here");
         //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
 
         //get fields and attachments and old attachments and reply to the email
@@ -185,8 +192,27 @@ public class ReplyController {
 
     @FXML
     private void addFiles(ActionEvent event) {
-        //todo attach additional files if they want so the email reply
-        System.out.println("here");
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Add attachments");
+        List<File> listAttachments = fc.showOpenMultipleDialog(null);
+        additionalAttachments.addAll(listAttachments);
+
+        if (additionalAttachments != null) {
+            for (File attachment : additionalAttachments) {
+                if (getFileExtension(attachment).equalsIgnoreCase("png") ||
+                        getFileExtension(attachment).equalsIgnoreCase("jpg") ||
+                        getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
+                    int[] dim = getImageDimensions(attachment);
+                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                            getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
+                }
+
+                else {
+                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                            getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
+                }
+            }
+        }
     }
 
     @FXML
