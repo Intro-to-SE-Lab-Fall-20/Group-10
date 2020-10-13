@@ -268,7 +268,7 @@ public class ViewController  {
 
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateYProperty(), 0 , Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();

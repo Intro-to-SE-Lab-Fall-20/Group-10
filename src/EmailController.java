@@ -172,7 +172,13 @@ public class EmailController {
                     try {
                         currentMessage = messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1];
                         currentMessageMultipart = (MimeMultipart) messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1].getContent();
-                    } catch (Exception e) {
+                    }
+
+                    catch (ClassCastException cce) {
+                        System.out.println("Message had no content so we couldn't make a current multipart");
+                    }
+
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -437,7 +443,7 @@ public class EmailController {
 
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
@@ -497,7 +503,7 @@ public class EmailController {
 
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
@@ -559,7 +565,7 @@ public class EmailController {
 
                 Timeline tim = new Timeline();
                 KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-                KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
 
                 tim.getKeyFrames().add(kf);
                 tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
@@ -613,21 +619,6 @@ public class EmailController {
 
             if (currentMessageMultipart != null) {
                 System.out.println("Working on it");
-
-//                Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
-//                Scene currentScene = composeButton.getScene();
-//                root.translateXProperty().set(currentScene.getWidth());
-//
-//                StackPane pc = (StackPane) currentScene.getRoot();
-//                pc.getChildren().add(root);
-//
-//                Timeline tim = new Timeline();
-//                KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-//                KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-//
-//                tim.getKeyFrames().add(kf);
-//                tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
-//                tim.play();
             }
         }
 
@@ -652,7 +643,7 @@ public class EmailController {
             //animate the scene in
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
 
             //play animation and when done, remove the old scene
             tim.getKeyFrames().add(kf);

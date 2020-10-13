@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -19,6 +20,10 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,7 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Properties;
 
 public class ReplyController {
 
@@ -54,15 +59,13 @@ public class ReplyController {
     @FXML
     private Button replyButton;
 
-    private LinkedList<File> additionalAttachments = new LinkedList<>();
+    private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
 
     @FXML
     public void initialize() {
         try {
             replySubject.setText("RE: " + EmailController.currentMessageSubject);
-            emailContent.setText(EmailController.currentMessageBody);
-
-            additionalAttachments = EmailController.currentMessageAttachments;
+            emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
 
             //set how each column will display its data <AttachmentPreview, String> means display this object as a string
             name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
@@ -169,6 +172,16 @@ public class ReplyController {
                 return row ;
             });
 
+            table.setOnKeyPressed(keyEvent -> {
+                AttachmentPreview selectedItem = table.getSelectionModel().getSelectedItem();
+                if ( selectedItem != null ) {
+                    if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
+                        additionalAttachments.remove(0);
+                        table.getItems().remove(table.getSelectionModel().getSelectedIndex());
+                    }
+                }
+            });
+
             initAttachments();
         }
 
@@ -180,38 +193,151 @@ public class ReplyController {
     @FXML
     private void sendReply(ActionEvent event) {
         String replyingSubject = replySubject.getText();
-        String additionalSubjects = replyTo.getText();
+        String additionalRecipients = replyTo.getText();
         String emailCont = emailContent.getText();
 
-        //todo send reply email
-        //https://www.tutorialspoint.com/javamail_api/javamail_api_replying_emails.htm
+        if (!validEmailAddr(additionalRecipients)) {
+            showPopupMessage("Please check your additional recipients email addresses", Main.primaryStage);
+        }
 
-        //get fields and attachments and old attachments and reply to the email
-        //remember the original stuff is in EmailController still
+        try {
+            if (replyingSubject.length() == 0) {
+                showPopupMessage("Please note there is no subject", Main.primaryStage);
+            }
+
+            if (emailCont.length() == 0) {
+                showPopupMessage("Please note there is no message body", Main.primaryStage);
+            }
+
+            //init email and password
+            String ourEmail = Controller.emailAddress;
+            StringBuilder passwordBuilder = new StringBuilder();
+            for (int i = 0 ; i < Controller.password.length ; i++)
+                passwordBuilder.append(Controller.password[i]);
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", true);
+            props.put("mail.smtp.starttls.enable", true);
+            props.put("mail.smtp.host", getEmailHost(ourEmail));
+            props.put("mail.smtp.port", 587);
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(ourEmail, passwordBuilder.toString()); }
+                    });
+
+            Message message = EmailController.currentMessage;
+            Message replyingMessage = message.reply(false); //not replying to all
+
+            replyingMessage.setSubject(replyingSubject);
+
+            InternetAddress[] addresses = InternetAddress.parse(additionalRecipients);
+            replyingMessage.addRecipients(Message.RecipientType.TO, addresses);
+
+            Multipart emailContent = new MimeMultipart();
+
+            MimeBodyPart textBodyPart = new MimeBodyPart();
+            textBodyPart.setText(emailCont);
+
+            emailContent.addBodyPart(textBodyPart);
+
+            if (attachmentsSize() >= 25) {
+                showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. " +
+                        "Please remove some files. Currently at " + String.format("%.2f", attachmentsSize()) + "MB", Main.primaryStage);
+            }
+
+            else {
+                addAttachments(emailContent);
+                replyingMessage.setContent(emailContent);
+                Transport.send(replyingMessage);
+                showPopupMessage("Email reply sent successfully", Main.primaryStage);
+                goBack(null);
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private double attachmentsSize() {
+        double megaBytes = 0;
+
+        for (File attachment : additionalAttachments)
+            megaBytes += attachment.length() / 1024.0 / 1024.0;
+
+        return megaBytes;
+    }
+
+    //this method adds attachments to the actual email that we are going to send
+    private void addAttachments(Multipart multipart) {
+        try {
+            if (additionalAttachments != null && !additionalAttachments.isEmpty()) {
+                for (File file : additionalAttachments) {
+                    MimeBodyPart attachment = new MimeBodyPart();
+                    attachment.attachFile(file);
+                    multipart.addBodyPart(attachment);
+                }
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //validate a email address
+    private boolean validEmailAddr(String addr) {
+        String[] ccs = addr.split(",");
+
+        for (String email: ccs) {
+            if (!email.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
+                    "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])" +
+                    "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])" +
+                    "|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-" +
+                    "\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"))
+                return false;
+        }
+
+        return true;
     }
 
     @FXML
-    private void addFiles(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Add attachments");
-        List<File> listAttachments = fc.showOpenMultipleDialog(null);
-        additionalAttachments.addAll(listAttachments);
+    private void addFiles(ActionEvent e) {
+        try {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("Add attachments");
+            LinkedList<File> listAttachments = new LinkedList<>(fc.showOpenMultipleDialog(null));
 
-        if (additionalAttachments != null) {
-            for (File attachment : additionalAttachments) {
-                if (getFileExtension(attachment).equalsIgnoreCase("png") ||
-                        getFileExtension(attachment).equalsIgnoreCase("jpg") ||
-                        getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
-                    int[] dim = getImageDimensions(attachment);
-                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                            getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
+            if (listAttachments != null) {
+                for (File f : listAttachments) {
+                    if (!additionalAttachments.contains(f)) {
+                        additionalAttachments.add(f);
+                    }
                 }
 
-                else {
-                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                            getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
+                table.getItems().clear();
+
+                for (File attachment : additionalAttachments) {
+                    if (getFileExtension(attachment).equalsIgnoreCase("png") ||
+                            getFileExtension(attachment).equalsIgnoreCase("jpg") ||
+                            getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
+                        int[] dim = getImageDimensions(attachment);
+                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                                getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
+                    }
+
+                    else {
+                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
+                                getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
+                    }
                 }
             }
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -221,8 +347,8 @@ public class ReplyController {
             ViewController.clearLocalAttachments();
 
             //load new parent and scene
-            Parent root = FXMLLoader.load(getClass().getResource("EmailController.fxml"));
-            Scene currentScene = discardButton.getScene();
+            Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
+            Scene currentScene = replyButton.getScene();
             root.translateXProperty().set(-currentScene.getWidth()); //new scene starts off current scene
 
             //add the new scene
@@ -232,7 +358,7 @@ public class ReplyController {
             //animate the scene in
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
 
             //play animation and when done, remove the old scene
             tim.getKeyFrames().add(kf);
@@ -268,7 +394,7 @@ public class ReplyController {
 
     private void initAttachments() {
         try {
-            for (File attachment : EmailController.currentMessageAttachments) {
+            for (File attachment : additionalAttachments) {
                 if (getFileExtension(attachment).equalsIgnoreCase("png") ||
                         getFileExtension(attachment).equalsIgnoreCase("jpg") ||
                         getFileExtension(attachment).equalsIgnoreCase("jpeg")) {

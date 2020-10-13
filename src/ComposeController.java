@@ -34,8 +34,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Properties;
+
+//todo removing attachments from tables results in a rendering issue when only one attachment is left it looks like there is a duplicate
 
 public class ComposeController {
 
@@ -174,7 +175,7 @@ public class ComposeController {
 
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateYProperty(), 0 , Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
@@ -411,10 +412,17 @@ public class ComposeController {
         try {
             FileChooser fc = new FileChooser();
             fc.setTitle("Add attachments");
-            List<File> listAttachments = fc.showOpenMultipleDialog(null);
-            attachments.addAll(listAttachments);
+            LinkedList<File> listAttachments = new LinkedList<>(fc.showOpenMultipleDialog(null));
 
-            if (attachments != null) {
+            if (listAttachments != null) {
+                for (File f : listAttachments) {
+                    if (!attachments.contains(f)) {
+                        attachments.add(f);
+                    }
+                }
+
+                table.getItems().clear();
+
                 for (File attachment : attachments) {
                     if (getFileExtension(attachment).equalsIgnoreCase("png") ||
                             getFileExtension(attachment).equalsIgnoreCase("jpg") ||
