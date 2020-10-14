@@ -186,14 +186,50 @@ public class ViewController  {
 
     @FXML
     private void forwardEmail() {
-        //todo here we will actually have to load the stuff but the current email is still in memory from emailcontroller so it's fine
-        System.out.println("here");
+        try {
+            Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
+            Scene currentScene = backButton.getScene();
+            root.translateXProperty().set(currentScene.getWidth());
+
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
+
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+            tim.play();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void replyEmail() {
-        //https://www.tutorialspoint.com/javamail_api/javamail_api_forwarding_emails.htm
-        System.out.println("here");
+        try {
+            Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
+            Scene currentScene = backButton.getScene();
+            root.translateXProperty().set(currentScene.getWidth());
+
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
+
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+            tim.play();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -259,19 +295,18 @@ public class ViewController  {
         try {
             clearLocalAttachments();
 
-            Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
-            Scene currentScene = backButton.getScene();
-            root.translateYProperty().set(-currentScene.getHeight());
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
+                Scene currentScene = backButton.getScene();
 
-            StackPane pc = (StackPane) currentScene.getRoot();
-            pc.getChildren().add(root);
+                StackPane pc = (StackPane) currentScene.getRoot();
+                pc.getChildren().add(root);
+                pc.getChildren().remove(currentScene);
+            }
 
-            Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(root.translateYProperty(), 0 , Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
-            tim.getKeyFrames().add(kf);
-            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
-            tim.play();
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         catch (Exception e) {

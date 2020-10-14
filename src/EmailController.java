@@ -193,6 +193,10 @@ public class EmailController {
                 }
             });
 
+            if (store != null) {
+                System.out.println("already been here");
+            }
+
             initFolders();
 
             folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, n1, n2) -> {
@@ -518,9 +522,6 @@ public class EmailController {
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
-
-            emailFolder.close();
-            store.close();
         }
 
         catch (Exception e) {
@@ -589,7 +590,6 @@ public class EmailController {
         }
     }
 
-
     @FXML
     public void gotoForward(ActionEvent event) {
         try {
@@ -629,7 +629,20 @@ public class EmailController {
             }
 
             if (currentMessageMultipart != null) {
-                System.out.println("Working on it");
+                Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
+                Scene currentScene = composeButton.getScene();
+                root.translateXProperty().set(currentScene.getWidth());
+
+                StackPane pc = (StackPane) currentScene.getRoot();
+                pc.getChildren().add(root);
+
+                Timeline tim = new Timeline();
+                KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+
+                tim.getKeyFrames().add(kf);
+                tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+                tim.play();
             }
         }
 
@@ -660,6 +673,9 @@ public class EmailController {
             tim.getKeyFrames().add(kf);
             tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
+
+            emailFolder.close();
+            store.close();
         }
 
         catch (Exception e) {
@@ -739,10 +755,15 @@ public class EmailController {
             ex.printStackTrace();
         }
 
-        if (hideOnCloseCheckBox.isSelected())
+        if (hideOnCloseCheckBox.isSelected()) {
             Main.primaryStage.setIconified(true);
-        else
+        }
+
+        else {
+            ViewController.clearLocalAttachments();
             System.exit(0);
+        }
+
     }
 
     public class TooltipTableRow<T> extends TableRow<T> {

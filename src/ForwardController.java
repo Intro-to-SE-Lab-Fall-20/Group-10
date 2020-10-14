@@ -1,4 +1,4 @@
-import javafx.animation.*;
+import javafx.animation.PauseTransition;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,10 +20,8 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
+import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,16 +30,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
-import java.util.Properties;
 
-public class ReplyController {
+public class ForwardController {
 
     @FXML
     public static AnchorPane parent;
     @FXML
-    private TextField replyTo;
+    private TextField forwardTo;
     @FXML
-    private TextField replySubject;
+    private TextField forwardSubject;
     @FXML
     private TextArea emailContent;
     @FXML
@@ -57,15 +54,15 @@ public class ReplyController {
     @FXML
     private Button discardButton;
     @FXML
-    private Button replyButton;
+    private Button forwardButton;
 
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
 
     @FXML
     public void initialize() {
         try {
-            replySubject.setText("RE: " + EmailController.currentMessageSubject);
-            emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
+            forwardSubject.setText("");
+            emailContent.setText(EmailController.currentMessageBody);
 
             //set how each column will display its data <AttachmentPreview, String> means display this object as a string
             name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
@@ -192,77 +189,34 @@ public class ReplyController {
     }
 
     @FXML
-    private void sendReply(ActionEvent event) {
-        String replyingSubject = replySubject.getText();
-        String additionalRecipients = replyTo.getText();
-        String emailCont = emailContent.getText();
+    private void sendForward(ActionEvent event) {
+        try {
+            //todo send forward
+            //get recipient emails
+            //get forwarding text
+            //get forwarding subject
+            //validate forwarding emails
 
-        if (!validEmailAddr(additionalRecipients) && additionalRecipients.trim().length() > 0) {
-            showPopupMessage("Please check your additional recipients email addresses", Main.primaryStage);
+            //if valid, attach attachments to forwarding message and send
+
+
+
+//            if (attachmentsSize() >= 25) {
+//                showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. " +
+//                        "Please remove some files. Currently at " + String.format("%.2f", attachmentsSize()) + "MB", Main.primaryStage);
+//            }
+//
+//            else {
+//                addAttachments(emailContent);
+//                replyingMessage.setContent(emailContent);
+//                Transport.send(replyingMessage);
+//                showPopupMessage("Email reply sent successfully", Main.primaryStage);
+//                goBack(null);
+//            }
         }
 
-        else {
-            try {
-                if (replyingSubject.length() == 0) {
-                    showPopupMessage("Please note there is no subject", Main.primaryStage);
-                }
-
-                if (emailCont.length() == 0) {
-                    showPopupMessage("Please note there is no message body", Main.primaryStage);
-                }
-
-                //init email and password
-                String ourEmail = Controller.emailAddress;
-                StringBuilder passwordBuilder = new StringBuilder();
-                for (int i = 0 ; i < Controller.password.length ; i++)
-                    passwordBuilder.append(Controller.password[i]);
-
-                Properties props = new Properties();
-                props.put("mail.smtp.auth", true);
-                props.put("mail.smtp.starttls.enable", true);
-                props.put("mail.smtp.host", getEmailHost(ourEmail));
-                props.put("mail.smtp.port", 587);
-
-                Session session = Session.getInstance(props,
-                        new javax.mail.Authenticator() {
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication(ourEmail, passwordBuilder.toString()); }
-                        });
-
-                Message message = EmailController.currentMessage;
-                Message replyingMessage = message.reply(false); //todo open folder and such here,
-                                                                // closedfolderexception was thrown
-                                                                // folder closed when coming from view's reply button
-
-                replyingMessage.setSubject(replyingSubject);
-
-                InternetAddress[] addresses = InternetAddress.parse(additionalRecipients);
-                replyingMessage.addRecipients(Message.RecipientType.TO, addresses);
-
-                Multipart emailContent = new MimeMultipart();
-
-                MimeBodyPart textBodyPart = new MimeBodyPart();
-                textBodyPart.setText(emailCont);
-
-                emailContent.addBodyPart(textBodyPart);
-
-                if (attachmentsSize() >= 25) {
-                    showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. " +
-                            "Please remove some files. Currently at " + String.format("%.2f", attachmentsSize()) + "MB", Main.primaryStage);
-                }
-
-                else {
-                    addAttachments(emailContent);
-                    replyingMessage.setContent(emailContent);
-                    Transport.send(replyingMessage);
-                    showPopupMessage("Email reply sent successfully", Main.primaryStage);
-                    goBack(null);
-                }
-            }
-
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

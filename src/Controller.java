@@ -68,6 +68,8 @@ public class Controller {
             ex.printStackTrace();
         }
 
+        ViewController.clearLocalAttachments();
+
         System.exit(0);
     }
 
@@ -174,7 +176,7 @@ public class Controller {
                 ex.printStackTrace();
             }
 
-            loadCompose(e);
+            loadEmail(e);
         }
 
         else {
@@ -241,7 +243,7 @@ public class Controller {
 
     //method explenation in EmailController
     @FXML
-    private void loadCompose(ActionEvent event) {
+    private void loadEmail(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
             Scene currentScene = emailField.getScene();
