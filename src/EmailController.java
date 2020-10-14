@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -239,6 +240,16 @@ public class EmailController {
 
                 catch (Exception e) {
                     e.printStackTrace();
+                }
+            });
+
+            table.setOnKeyPressed(keyEvent -> {
+                EmailPreview selectedItem = table.getSelectionModel().getSelectedItem();
+                if ( selectedItem != null ) {
+                    if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
+                        deleteEmail();
+                        table.refresh();
+                    }
                 }
             });
 

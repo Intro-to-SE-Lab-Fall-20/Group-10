@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ComposeController">
     <children>
-      <TableView fx:id="table" layoutX="35.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="86.0" prefWidth="329.0" scaleShape="false" style="-fx-background-color: transparent;">
+      <TableView fx:id="table" layoutX="35.0" layoutY="286.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="329.0" scaleShape="false" style="-fx-background-color: transparent;">
          <columns>
             <TableColumn fx:id="name" editable="false" prefWidth="153.0" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Name" />
             <TableColumn fx:id="size" editable="false" minWidth="0.0" prefWidth="90.0" resizable="false" sortable="false" style="-fx-font-weight: bold;" text="Size" />
@@ -45,7 +45,7 @@
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip></TextField>
-      <TextArea fx:id="emailContent" layoutX="36.0" layoutY="123.0" prefHeight="183.0" prefWidth="329.0" styleClass="input-field">
+      <TextArea fx:id="emailContent" layoutX="36.0" layoutY="123.0" prefHeight="160.0" prefWidth="329.0" styleClass="input-field">
          <tooltip>
             <Tooltip text="HTML supported" />
          </tooltip></TextArea>

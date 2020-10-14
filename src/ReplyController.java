@@ -178,6 +178,7 @@ public class ReplyController {
                     if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
                         additionalAttachments.remove(0);
                         table.getItems().remove(table.getSelectionModel().getSelectedIndex());
+                        table.refresh();
                     }
                 }
             });

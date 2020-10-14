@@ -158,6 +158,7 @@ public class ComposeController {
                 if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
                     attachments.remove(0);
                     table.getItems().remove(table.getSelectionModel().getSelectedIndex());
+                    table.refresh();
                 }
             }
         });
