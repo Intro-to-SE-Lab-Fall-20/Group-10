@@ -6,6 +6,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 public class Main extends Application {
 
     //stage to pass around to class that wish to add/remove stuff from it such as scenes or components
@@ -45,5 +49,37 @@ public class Main extends Application {
         root.setOnMouseReleased((event -> Main.primaryStage.setOpacity(1.0f)));
 
         primaryStage.show();
+
+        System.out.println("Compiled " + totalCodeLines(new File(System.getProperty("user.dir"))) + " lines of java code");
+    }
+
+    public int totalCodeLines(File startDir) {
+        int ret = 0;
+
+        if (startDir.isDirectory()) {
+            File[] files = startDir.listFiles();
+
+            for (File f : files)
+                ret += totalCodeLines(f);
+        }
+
+        else if (startDir.getName().endsWith(".java") || startDir.getName().endsWith(".fxml")) {
+            try {
+                BufferedReader lineReader = new BufferedReader(new FileReader(startDir));
+                String line = "";
+                int localRet = 0;
+
+                while ((line = lineReader.readLine()) != null)
+                    localRet++;
+
+                return localRet;
+            }
+
+            catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return ret;
     }
 }
