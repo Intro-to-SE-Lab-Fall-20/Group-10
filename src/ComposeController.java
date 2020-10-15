@@ -36,8 +36,6 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.Properties;
 
-//todo removing attachments from tables results in a rendering issue when only one attachment is left it looks like there is a duplicate
-
 public class ComposeController {
 
     private LinkedList<File> attachments = new LinkedList<>();

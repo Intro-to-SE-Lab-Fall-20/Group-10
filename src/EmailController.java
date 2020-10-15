@@ -171,13 +171,17 @@ public class EmailController {
             table.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
                     try {
-                        //todo exception out of bounds here
-                        currentMessage = messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1];
-                        currentMessageMultipart = (MimeMultipart) messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1].getContent();
+                        int index = messages.length - table.getSelectionModel().getSelectedIndex() - 1;
+
+                        if (index >= 0 && index < messages.length) {
+                            currentMessage = messages[index];
+                            currentMessageMultipart = (MimeMultipart) currentMessage.getContent();
+                        }
                     }
 
                     catch (ClassCastException cce) {
-                        System.out.println("Message had no content so we couldn't make a current multipart");
+                        cce.printStackTrace();
+                        System.out.println("Message had no content so we couldn't make a current multipart\n\n");
                     }
 
                     catch (Exception e) {
@@ -193,10 +197,6 @@ public class EmailController {
                     }
                 }
             });
-
-            if (store != null) {
-                System.out.println("already been here");
-            }
 
             initFolders();
 
