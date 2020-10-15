@@ -20,8 +20,10 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
-import javax.mail.Multipart;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
+import java.util.Properties;
 
 public class ForwardController {
 
@@ -62,6 +65,7 @@ public class ForwardController {
     public void initialize() {
         try {
             forwardSubject.setText("");
+            forwardTo.setText("");
             emailContent.setText(EmailController.currentMessageBody);
 
             //set how each column will display its data <AttachmentPreview, String> means display this object as a string
@@ -190,33 +194,74 @@ public class ForwardController {
 
     @FXML
     private void sendForward(ActionEvent event) {
-        try {
-            //todo send forward
-            //get recipient emails
-            //get forwarding text
-            //get forwarding subject
-            //validate forwarding emails
+        String forwardingSubject = forwardSubject.getText();
+        String forwardingRecipients = forwardTo.getText();
+        String emailCont = emailContent.getText();
 
-            //if valid, attach attachments to forwarding message and send
-
-
-
-//            if (attachmentsSize() >= 25) {
-//                showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. " +
-//                        "Please remove some files. Currently at " + String.format("%.2f", attachmentsSize()) + "MB", Main.primaryStage);
-//            }
-//
-//            else {
-//                addAttachments(emailContent);
-//                replyingMessage.setContent(emailContent);
-//                Transport.send(replyingMessage);
-//                showPopupMessage("Email reply sent successfully", Main.primaryStage);
-//                goBack(null);
-//            }
+        if (!validEmailAddr(forwardingRecipients)) {
+            showPopupMessage("Please check your recipients email addresses", Main.primaryStage);
         }
 
-        catch (Exception e) {
-            e.printStackTrace();
+        else {
+            try {
+                if (forwardingSubject.length() == 0) {
+                    showPopupMessage("Please note there is no subject", Main.primaryStage);
+                }
+
+                if (emailCont.length() == 0) {
+                    showPopupMessage("Please note there is no message body", Main.primaryStage);
+                }
+
+                //init email and password
+                String ourEmail = Controller.emailAddress;
+                StringBuilder passwordBuilder = new StringBuilder();
+                for (int i = 0 ; i < Controller.password.length ; i++)
+                    passwordBuilder.append(Controller.password[i]);
+
+                Properties props = new Properties();
+                props.put("mail.smtp.auth", true);
+                props.put("mail.smtp.starttls.enable", true);
+                props.put("mail.smtp.host", getEmailHost(ourEmail));
+                props.put("mail.smtp.port", 587);
+
+                Session session = Session.getInstance(props,
+                        new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(ourEmail, passwordBuilder.toString()); }
+                        });
+
+                Message message = EmailController.currentMessage;
+                Message forwardingMessage = message.reply(false);
+
+                forwardingMessage.setSubject(forwardingSubject);
+
+                InternetAddress[] addresses = InternetAddress.parse(forwardingRecipients);
+                forwardingMessage.addRecipients(Message.RecipientType.TO, addresses);
+
+                Multipart emailContent = new MimeMultipart();
+
+                MimeBodyPart textBodyPart = new MimeBodyPart();
+                textBodyPart.setText(emailCont);
+
+                emailContent.addBodyPart(textBodyPart);
+
+                if (attachmentsSize() >= 25) {
+                    showPopupMessage("Sorry, but your attachments exceed the limit of 25MB. " +
+                            "Please remove some files. Currently at " + String.format("%.2f", attachmentsSize()) + "MB", Main.primaryStage);
+                }
+
+                else {
+                    addAttachments(emailContent);
+                    forwardingMessage.setContent(emailContent);
+                    Transport.send(forwardingMessage);
+                    showPopupMessage("Email forwarded successfully", Main.primaryStage);
+                    goBack(null);
+                }
+            }
+
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

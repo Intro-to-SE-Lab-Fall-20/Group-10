@@ -230,9 +230,7 @@ public class ReplyController {
                         });
 
                 Message message = EmailController.currentMessage;
-                Message replyingMessage = message.reply(false); //todo open folder and such here,
-                                                                // closedfolderexception was thrown
-                                                                // folder closed when coming from view's reply button
+                Message replyingMessage = message.reply(false);
 
                 replyingMessage.setSubject(replyingSubject);
 

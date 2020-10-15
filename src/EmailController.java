@@ -171,6 +171,7 @@ public class EmailController {
             table.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
                     try {
+                        //todo exception out of bounds here
                         currentMessage = messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1];
                         currentMessageMultipart = (MimeMultipart) messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1].getContent();
                     }
