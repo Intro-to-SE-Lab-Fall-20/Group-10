@@ -5,12 +5,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.util.Iterator;
 
 // doing this for pull request
 public class User {
     private String username;
     private String theme;
     private JSONArray jsonArray = new JSONArray();
+    private boolean firstUser;
 
     public User() {
         this.username = "";
@@ -24,20 +26,23 @@ public class User {
 
     public void writeUser() throws IOException {
         //todo use all the info from the interface to store in a JSON file: mallory
-        FileWriter file = new FileWriter("user.txt");
-        JSONObject user = new JSONObject();
-        if (checkIfNewUser()){
-            user.put("username", this.username);
-        }
-        if(checkIfNewTheme()){
-            user.put("theme", this.theme);
-        }
+        FileWriter file = new FileWriter("users.txt");
+        JSONObject users = new JSONObject();
 
-        jsonArray.add(user);
+        JSONObject newUser = checkIfNewUser();
+        if (this.firstUser){
+            JSONObject user = new JSONObject();
+            user.put("username", this.username);
+            user.put("theme", this.theme);
+            jsonArray.add(user);
+        }
+        if (!(newUser.isEmpty())){
+            jsonArray.add(newUser);
+        }
+        users.put("users", jsonArray);
         try {
             file = new FileWriter("users.txt");
-            file.write(jsonArray.toJSONString());
-
+            file.write(users.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -52,28 +57,58 @@ public class User {
     }
 
     //todo pls fix Mal, it gave a parse error after the userfiles have been written to and are not blank
-    public boolean checkIfNewUser(){
+    public JSONObject checkIfNewUser(){
         JSONParser parser = new JSONParser();
-        String name = "";
+        String name;
+        JSONObject newUser = new JSONObject();
+
         try(Reader reader = new FileReader("users.txt")) {
-            JSONObject object = (JSONObject) parser.parse(reader);
-            name = String.valueOf(object.get("username"));
+            JSONObject users = (JSONObject) parser.parse(reader);
+            JSONArray array = (JSONArray) users.get("users");
+            for (Object o : array) {
+                JSONObject user = (JSONObject) o;
+                name = String.valueOf(user.get("username"));
+                if (name.equals(this.username)) {
+                    if (checkIfNewTheme()){
+                        // if not new user but has a new theme
+                        array.remove(user);
+                        newUser.put("username", name);
+                        newUser.put("theme", user.get("theme"));
+                    }
+                    break;
+                } else {
+                    newUser.put("username", name);
+                    newUser.put("theme", user.get("theme"));
+                }
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
-            e.printStackTrace();
+            this.firstUser = true;
+            //e.printStackTrace();
         }
-        return !name.equals(this.username);
+        return newUser;
     }
 
     private boolean checkIfNewTheme(){
         JSONParser parser = new JSONParser();
-        String theme1 = "";
+        String theme;
+        boolean newTheme = false;
         try(Reader reader = new FileReader("users.txt")) {
-            JSONObject object = (JSONObject) parser.parse(reader);
-            theme1 = String.valueOf(object.get("theme"));
+            JSONObject users = (JSONObject) parser.parse(reader);
+            JSONArray array = (JSONArray) users.get("users");
+            for (Object o : array) {
+                JSONObject user = (JSONObject) o;
+                theme = String.valueOf(user.get("theme"));
+                if (theme.equals(this.theme)) {
+                    newTheme = false;
+                    break;
+                } else {
+                    newTheme = true;
+                }
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -81,7 +116,7 @@ public class User {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return !theme1.equals(this.theme);
+        return newTheme;
     }
 
     private void setThemeValue(String theme){

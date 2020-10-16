@@ -375,15 +375,6 @@ public class ReplyController {
 
     @FXML
     private void close_app(MouseEvent e) {
-        FileWriter file;
-        try {
-            file = new FileWriter("user.txt");
-            file.write("");
-            file.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
         ViewController.clearLocalAttachments();
 
         System.exit(0);

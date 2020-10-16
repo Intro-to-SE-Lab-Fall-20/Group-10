@@ -57,17 +57,6 @@ public class Controller {
 
     @FXML
     private void close_app(MouseEvent e) {
-        FileWriter file;
-        try {
-            file = new FileWriter("user.txt");
-            file.write("");
-            file.close();
-        }
-
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
         ViewController.clearLocalAttachments();
 
         System.exit(0);
@@ -169,7 +158,7 @@ public class Controller {
             this.user = new User(emailField.getText(), theme);
 
             try {
-                //this.user.writeUser(); this is commented out, see User.java @Mallory
+                this.user.writeUser(); //this is commented out, see User.java @Mallory
             }
 
             catch (Exception ex) {
