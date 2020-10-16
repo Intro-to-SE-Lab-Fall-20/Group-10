@@ -7,8 +7,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,8 +22,6 @@ import javax.mail.Session;
 import javax.mail.Store;
 import java.awt.*;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -160,7 +159,7 @@ public class Controller {
             this.user = new User(emailField.getText(), theme);
 
             try {
-                this.user.writeUser(); //this is commented out, see User.java @Mallory
+                this.user.writeUser();
             }
 
             catch (Exception ex) {
