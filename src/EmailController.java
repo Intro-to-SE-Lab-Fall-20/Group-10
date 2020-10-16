@@ -175,7 +175,9 @@ public class EmailController {
 
                         if (index >= 0 && index < messages.length) {
                             currentMessage = messages[index];
-                            currentMessageMultipart = (MimeMultipart) currentMessage.getContent();
+
+                            if (getMessageText(currentMessage).length() > 0)
+                                currentMessageMultipart = (MimeMultipart) currentMessage.getContent();
                         }
                     }
 
@@ -189,7 +191,7 @@ public class EmailController {
                     }
                 }
 
-                if (event.getClickCount() > 1) {
+                if (event.getClickCount() > 1 && getMessageText(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]).length() > 0) {
                     try {
                         gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
                     } catch (Exception e) {
