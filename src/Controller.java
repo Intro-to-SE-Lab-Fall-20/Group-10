@@ -24,7 +24,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -235,6 +237,7 @@ public class Controller {
     private void loadEmail(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
+            // possible place to change style to user's chosen style
             Scene currentScene = emailField.getScene();
             root.translateXProperty().set(currentScene.getWidth());
             masterStack.getChildren().add(root);

@@ -5,12 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 
 public class Main extends Application {
+    // boolean value to determine if this is the first user or is a first time user
+    private boolean firstUser;
 
     //stage to pass around to class that wish to add/remove stuff from it such as scenes or components
     static Stage primaryStage;
@@ -25,6 +28,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //loader.getNamespace().put("theme", "@userStyles/pinkStyle.css");
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("StraightShot");
@@ -61,9 +65,7 @@ public class Main extends Application {
 
             for (File f : files)
                 ret += totalCodeLines(f);
-        }
-
-        else if (startDir.getName().endsWith(".java") || startDir.getName().endsWith(".fxml")) {
+        } else if (startDir.getName().endsWith(".java") || startDir.getName().endsWith(".fxml")) {
             try {
                 BufferedReader lineReader = new BufferedReader(new FileReader(startDir));
                 String line = "";
@@ -73,13 +75,28 @@ public class Main extends Application {
                     localRet++;
 
                 return localRet;
-            }
-
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
 
         return ret;
+    }
+
+    private boolean isFirstUser() {
+        this.firstUser = true;
+        JSONParser parser = new JSONParser();
+        try (Reader reader = new FileReader("users.txt")) {
+            JSONObject users = (JSONObject) parser.parse(reader);
+            this.firstUser = false;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            this.firstUser = true;
+            e.printStackTrace();
+        }
+        return firstUser;
     }
 }
