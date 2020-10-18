@@ -272,7 +272,7 @@ public class ViewController  {
 
     public static void clearLocalAttachments() {
         try {
-            File dir = new File("sstemp");
+            File dir = new File("tmp");
             rmDir(dir);
         }
 

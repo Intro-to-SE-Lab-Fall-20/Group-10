@@ -1,7 +1,4 @@
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,6 +16,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
@@ -27,6 +26,12 @@ import javax.mail.internet.MimeMultipart;
 import java.io.*;
 import java.util.*;
 import java.util.function.Function;
+
+//todo add loading email popups so the user doesn't think it froze
+//todo go back to folder you were in instead of inbox every time
+//todo remove invalid folders that are displayed
+//todo comment code
+//todo clean up syntax to std jfx
 
 public class EmailController {
     @FXML
@@ -193,6 +198,7 @@ public class EmailController {
 
                 if (event.getClickCount() > 1 && getMessageText(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]).length() > 0) {
                     try {
+                        showPopupMessage("Loading email",Main.primaryStage);
                         gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -494,7 +500,7 @@ public class EmailController {
                 InputStream is = bodyPart.getInputStream();
 
                 //this is the temp folder we will completely delete on exit
-                File dir = new File("sstemp");
+                File dir = new File("tmp");
 
                 File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
                 if (!dir.exists()) dir.mkdir();
@@ -535,6 +541,8 @@ public class EmailController {
     @FXML
     public void gotoReply(ActionEvent event) {
         try {
+            showPopupMessage("Loading reply",Main.primaryStage); //todo make sure these show, threading issue, popup like cyder?
+
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
@@ -552,7 +560,7 @@ public class EmailController {
                 InputStream is = bodyPart.getInputStream();
 
                 //this is the temp folder we will completely delete on exit
-                File dir = new File("sstemp");
+                File dir = new File("tmp");
 
                 File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
                 if (!dir.exists()) dir.mkdir();
@@ -596,6 +604,8 @@ public class EmailController {
     @FXML
     public void gotoForward(ActionEvent event) {
         try {
+            showPopupMessage("Loading forward",Main.primaryStage);
+
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
@@ -613,7 +623,7 @@ public class EmailController {
                 InputStream is = bodyPart.getInputStream();
 
                 //this is the temp folder we will completely delete on exit
-                File dir = new File("sstemp");
+                File dir = new File("tmp");
 
                 File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
                 if (!dir.exists()) dir.mkdir();
@@ -778,5 +788,31 @@ public class EmailController {
                 setTooltip(tooltip);
             }
         }
+    }
+
+    //popup messages, can customize look based on the style sheet selected
+    private Popup createPopup(final String message) {
+        final Popup popup = new Popup();
+        popup.setAutoFix(true);
+        popup.setAutoHide(true);
+        popup.setHideOnEscape(true);
+        Label label = new Label(message);
+        label.setOnMouseReleased(e -> popup.hide());
+        label.getStylesheets().add("DefaultStyle.css");
+        label.getStyleClass().add("popup");
+        popup.getContent().add(label);
+        return popup;
+    }
+
+    private void showPopupMessage(final String message, final Stage stage) {
+        final Popup popup = createPopup(message);
+        popup.setOnShown(e -> {
+            popup.setX(stage.getX() + stage.getWidth() / 2 - popup.getWidth() / 2);
+            popup.setY(stage.getY() + 25);
+        });
+        popup.show(stage);
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(e -> popup.hide());
+        delay.play();
     }
 }
