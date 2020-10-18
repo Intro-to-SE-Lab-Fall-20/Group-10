@@ -68,7 +68,7 @@
 }
 
 .choice-box {
-    -fx-background-color: #e2174d;
+    -fx-background-color: #a64d79;
    -fx-mark-color: white;
    -fx-font-family: sans-serif;
     -fx-font-weight: bold;
@@ -107,7 +107,7 @@
 
 .button-discard:hover {
     -fx-background-color: white;
-    -fx-text-fill: #e2174d;
+    -fx-text-fill: #a64d79;
 }
 
 
@@ -126,7 +126,7 @@
 }
 
 .tooltip {
-    -fx-background-color: rgb(39, 40, 34);
+    -fx-background-color: #a64d79;
     -fx-text-fill: rgb(85,85,255);
     -fx-font-family: tahoma;
      -fx-font-weight: bold;
@@ -204,4 +204,130 @@
     -fx-border-color: transparent;
     -fx-border-radius :1.0em;
     -fx-font-size: 12;
+}
+.table-view .column-header-background {
+    -fx-background-color: #d5a6bd ;
+    -fx-background-radius: 20;
+    -fx-background-insets: 0 0 10 0;
+    -fx-padding: 0 0 10 0;
+    -fx-fill: white;
+}
+
+.table-view .column-header, .table-view .filter {
+    -fix-size: 20;
+    -fix-border-width: 0 0 10 0;
+    -fix-background-color: transparent;
+    -fx-fill: white;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: #741b47;
+}
+
+.table-view .cell{
+    fx-cell-size: 30;
+   -fx-alignment: center-left;
+   -fx-background-color: transparent;
+   -fx-text-fill: white;
+   -fx-alignment: CENTER_LEFT;
+   -fx-font-weight: bold;
+   -fx-border-color: white;
+ }
+
+ .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+}
+
+ .table-row-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0px;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 1px;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-radius: 16 16 16 16;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-background-radius: 16 16 16 16;
+    -fx-text-fill: white;
+}
+
+.table-view *.scroll-bar:horizontal *.increment-button,
+.table-view *.scroll-bar:horizontal *.decrement-button {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+
+.table-view *.scroll-bar:horizontal *.increment-arrow,
+.table-view *.scroll-bar:horizontal *.decrement-arrow {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+  -fx-shape: null;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #a64d79;
+    -fx-border-color:#e2174d;
+    -fx-border-radius:4px;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #e2174d;
+}
+
+.check-box:selected .box:hover {
+    -fx-background-color: white;
+    -fx-border-color:white;
+    -fx-border-radius:4px;
+}
+
+.check-box:selected .mark:hover {
+    -fx-background-color: #e2174d;
+}
+
+.check-box:selected .box:hover {
+    -fx-background-color: white;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color:white;
+    -fx-border-radius:4px;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+}
+
+.check-box .box:hover {
+    -fx-background-color: white;
+    -fx-border-color:white;
+    -fx-border-radius:4px;
+}
+
+.check-box .mark:hover {
+    -fx-background-color: #e2174d;
+}
+
+.check-box .box:hover {
+    -fx-background-color: white;
 }

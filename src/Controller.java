@@ -238,6 +238,8 @@ public class Controller {
             Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
             // possible place to change style to user's chosen style
             Scene currentScene = emailField.getScene();
+            currentScene.getStylesheets().remove(getClass().getResource("DefaultStyle.css").toExternalForm());
+            currentScene.getStylesheets().add(getClass().getResource("pinkStyle.css").toExternalForm());
             root.translateXProperty().set(currentScene.getWidth());
             masterStack.getChildren().add(root);
 
