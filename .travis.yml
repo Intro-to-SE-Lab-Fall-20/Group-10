@@ -1,5 +1,5 @@
 language: java
-jk:
-  - "openjdk8"
+jdk:
+  - openjdk8
 notifications:
   email: straightshotmsu@gmail.com
