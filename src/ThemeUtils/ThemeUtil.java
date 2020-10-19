@@ -3,20 +3,14 @@ package ThemeUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
 
 public class ThemeUtil {
 
-    public ThemeUtil() {
-    }
-
     public static String getUserTheme(String username) {
-        String theme = "defaultStyle";
+        String theme = "DefaultStyle";
         JSONParser parser = new JSONParser();
         String name;
 
@@ -31,22 +25,19 @@ public class ThemeUtil {
                     break;
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            //e.printStackTrace();
         }
+
         return theme;
     }
 
     private static String getThemeFileString(String theme) {
         switch (theme) {
-            case "pinkStyle":
-                return "pinkStyle.css";
-            case "blueStyle":
-                return "blueStyle.css";
+            case "PinkStyle":
+                return "PinkStyle.css";
+            case "BlueStyle":
+                return "BlueStyle.css";
             default:
                     return "DefaultStyle.css";
         }

@@ -65,7 +65,7 @@ public class Controller {
     private void loadCSSFiles() {
         list.removeAll();
 
-        File[] files = new File("src\\userStyles").listFiles();
+        File[] files = new File("src").listFiles();
         ArrayList<String> cssFiles = new ArrayList<>();
 
         for (File f : files) {
@@ -79,7 +79,7 @@ public class Controller {
         switchCSS.getSelectionModel().select(0);
         switchCSS.getSelectionModel().selectedIndexProperty().addListener(
                 (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> theme = String.valueOf(new_val));
-        if(theme == null) theme = "default";
+        if(theme == null) theme = "DefaultStyle.css";
     }
 
 

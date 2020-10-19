@@ -1,11 +1,11 @@
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.*;
-import java.util.Iterator;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
 
 // doing this for pull request
 public class User {
@@ -81,14 +81,10 @@ public class User {
                     newUser.put("theme", user.get("theme"));
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            this.firstUser = true;
-            //e.printStackTrace();
         }
+
         return newUser;
     }
 
@@ -109,26 +105,25 @@ public class User {
                     newTheme = true;
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        }
+
+        catch (Exception e) {
             e.printStackTrace();
         }
+
         return newTheme;
     }
 
     private void setThemeValue(String theme){
         switch (theme) {
             case "0":
-                this.theme = "blueStyle";
+                this.theme = "BlueStyle";
                 break;
             case "1":
-                this.theme = "pinkStyle";
+                this.theme = "PinkStyle";
                 break;
             default:
-                this.theme = "defaultStyle";
+                this.theme = "DefaultStyle";
         }
     }
 

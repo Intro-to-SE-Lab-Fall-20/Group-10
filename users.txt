@@ -1,1 +1,1 @@
-{"users":[{"theme":"defaultStyle","username":"straightshotmsu@gmail.com"}]}
+{"users":[]}
