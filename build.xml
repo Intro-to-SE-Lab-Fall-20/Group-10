@@ -223,14 +223,6 @@
     <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
     <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
   </target>
-
-  <taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
-    <classpath>
-      <pathelement location="${lib}/ant-junit.jar"/>
-      <pathelement location="${lib}/ant-junit4.jar"/>
-      <pathelement location="${junit}/junit-4.13.1.jar"/>
-    </classpath>
-  </taskdef>
   
   <!-- Modules -->
   
