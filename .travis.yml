@@ -1,3 +1,9 @@
 language: java
 jdk:
-  - openjdk12
+  - oraclejdk12
+addons:
+  apt:
+    packages:
+      - ant
+install: ant deps
+script: ant test
