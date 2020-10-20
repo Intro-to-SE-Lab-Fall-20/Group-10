@@ -3,6 +3,8 @@
   
   
   <property file="group-10.properties"/>
+  <property name="lib" value="C:\Program Files\apache-ant-1.9.15\lib" />
+  <property name="junit" value="C:\Program Files\junit4"/>
   <!-- Uncomment the following property if no tests compilation is needed -->
   <!-- 
   <property name="skip.tests" value="true"/>
@@ -221,6 +223,14 @@
     <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
     <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
   </target>
+
+  <taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
+    <classpath>
+      <pathelement location="${lib}/ant-junit.jar"/>
+      <pathelement location="${lib}/ant-junit4.jar"/>
+      <pathelement location="${junit}/junit-4.13.1.jar"/>
+    </classpath>
+  </taskdef>
   
   <!-- Modules -->
   
@@ -365,10 +375,14 @@
   <target name="clean" depends="clean.module.group-10" description="cleanup all"/>
   
   <target name="build.modules" depends="init, clean, compile.module.group-10" description="build all modules"/>
-  
+
   <target name="all" depends="build.modules" description="build all"/>
-  <target name="test">
+
+  <target name="test" >
     <junit fork="true">
+      <classpath>
+        <path location="C:\Program Files\junit4\junit-4.13.1.jar"/>
+      </classpath>
       <batchtest todir="tests">
         <fileset dir="tests" includes="**/*.java"/>
       </batchtest>
