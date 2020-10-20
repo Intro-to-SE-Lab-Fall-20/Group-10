@@ -3,7 +3,6 @@ jdk: openjdk11
 before_install:
   - sudo apt install openjfx
   - sudo apt-get install ant-optional
-  - sudo apt install ant-junit
 dist: xenial
 addons:
   apt:
