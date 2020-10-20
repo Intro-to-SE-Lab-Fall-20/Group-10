@@ -1,2 +1,11 @@
 language: java
 jdk: openjdk11
+before_install:
+  - sudo apt install openjfx
+dist: xenial
+addons:
+  apt:
+    packages:
+      - ant
+install: ant deps
+script: ant test
