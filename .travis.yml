@@ -3,10 +3,11 @@ jdk: openjdk11
 before_install:
   - sudo apt install openjfx
   - sudo apt-get install ant-optional
+  - sudo apt install ant-junit
 dist: xenial
 addons:
   apt:
     packages:
       - ant
 install: true
-script: ant test
+script: ant -lib C:\Program Files\apache-ant-1.9.15\lib\ant-unit.jar test
