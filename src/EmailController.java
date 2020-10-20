@@ -27,13 +27,10 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
-//todo inform user running in background since it might take a while
-//todo method for start work and end work, set title to title + "working" and put orange rectangle around logo
-
-//todo remove invalid folders that are displayed
 //todo comment code
 //todo clean up syntax to std jfx
-//todo does deleting attachments actually work for compose,forward, and reply (removing ones you added but now don't want to send)
+//todo does deleting attachments from compose, forward, and reply actually work?
+//todo display inbox in lowercase
 
 public class EmailController {
     @FXML
@@ -80,7 +77,7 @@ public class EmailController {
     public void initialize() {
         try {
             //update the email address label
-            inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
+            inboxLabel.setText("Viewing inbox of: " + getEmailAddress()); //todo blue text? like comments here
 
             //set how each column will display its data <EmailPreview, String> means display this object as a string
             from.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("from"));
@@ -200,7 +197,6 @@ public class EmailController {
 
                 if (event.getClickCount() > 1 && getMessageText(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]).length() > 0) {
                     try {
-                        Main.startWorking();
                         gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
 
                     } catch (Exception e) {
@@ -309,7 +305,9 @@ public class EmailController {
 
             ArrayList<String> folders = new ArrayList<>();
 
-            for (Folder fd:f) {
+            for (Folder fd : f) {
+                if (fd.getName().startsWith("[") && fd.getName().endsWith("]"))
+                    continue;
                 folders.add(fd.getName());
             }
 
@@ -451,6 +449,7 @@ public class EmailController {
 
     @FXML
     private void refreshFolder(ActionEvent event) {
+        Main.startWorking("Refreshing folder");
         Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
 
         if (searchFolderField.getText().length() == 0)
@@ -485,6 +484,8 @@ public class EmailController {
     @FXML
     private void gotoViewer(Message view) {
         try {
+            Main.startWorking("Loading email");
+
             currentMessage = view;
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
@@ -544,7 +545,7 @@ public class EmailController {
     @FXML
     public void gotoReply(ActionEvent event) {
         try {
-            showPopupMessage("Loading reply",Main.primaryStage); //todo make sure these show, threading issue, popup like cyder?
+            Main.startWorking("Preparing reply");
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
@@ -607,7 +608,7 @@ public class EmailController {
     @FXML
     public void gotoForward(ActionEvent event) {
         try {
-            showPopupMessage("Loading forward",Main.primaryStage);
+            Main.startWorking("Preparing forward");
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();

@@ -345,6 +345,8 @@ public class ReplyController {
     @FXML
     private void goBack(ActionEvent event) {
         try {
+            Main.startWorking("Loading emails");
+
             ViewController.clearLocalAttachments();
 
             try {

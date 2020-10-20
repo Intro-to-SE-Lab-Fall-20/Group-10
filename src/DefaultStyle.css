@@ -60,15 +60,32 @@
 
 .choice-box {
     -fx-background-color: #e2174d;
-   -fx-mark-color: white; 
-   -fx-font-family: sans-serif;
+    -fx-arrow
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
+    -fx-background-radius: 4;
     -fx-font-weight: bold;
+    -fx-font-size: 13;
 }
 
-.choice-box > .label { 
+.choice-box .arrow{
+    -fx-background-color:#ffffff;
+}
+
+.choice-box:hover .label {
     -fx-text-fill: white; 
-    -fx-font-family: sans-serif;
-    -fx-font-weight: bold;
+}
+
+.choice-box .label {
+    -fx-text-fill: white; 
+}
+
+.button-login:hover {
+    -fx-background-color: #1c7dcc;
+}
+
+.choice-box:hover { 
+    -fx-background-color: #ba113e;
 }
 
 .choice-box .context-menu { 
@@ -97,8 +114,7 @@
 }
 
 .button-discard:hover {
-    -fx-background-color: white;
-    -fx-text-fill: #e2174d;
+    -fx-background-color: #ba113e;
 }
 
 
@@ -112,8 +128,7 @@
 }
 
 .button-login:hover {
-    -fx-background-color: white;
-    -fx-text-fill: #2196f3;
+    -fx-background-color: #1c7dcc;
 }
 
 .tooltip {
