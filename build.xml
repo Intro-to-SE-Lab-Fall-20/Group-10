@@ -367,4 +367,11 @@
   <target name="build.modules" depends="init, clean, compile.module.group-10" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
+  <target name="test">
+    <junit fork="true">
+      <batchtest todir="tests">
+        <fileset dir="tests" includes="**/*.java"/>
+      </batchtest>
+    </junit>
+  </target>
 </project>
