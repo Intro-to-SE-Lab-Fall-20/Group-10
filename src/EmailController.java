@@ -28,9 +28,8 @@ import java.util.*;
 import java.util.function.Function;
 
 //todo comment code
-//todo clean up syntax to std jfx
-//todo does deleting attachments from compose, forward, and reply actually work?
-//todo display inbox in lowercase
+//todo cache inbox so that no lag spike when going back to inbox screen
+//todo load message and add attachments later to reduce lag
 
 public class EmailController {
     @FXML
@@ -77,7 +76,8 @@ public class EmailController {
     public void initialize() {
         try {
             //update the email address label
-            inboxLabel.setText("Viewing inbox of: " + getEmailAddress()); //todo blue text? like comments here
+
+            inboxLabel.setText("Viewing inbox of: " + getEmailAddress());
 
             //set how each column will display its data <EmailPreview, String> means display this object as a string
             from.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("from"));

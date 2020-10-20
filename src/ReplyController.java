@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 public class ReplyController {
@@ -309,7 +310,13 @@ public class ReplyController {
         try {
             FileChooser fc = new FileChooser();
             fc.setTitle("Add attachments");
-            LinkedList<File> listAttachments = new LinkedList<>(fc.showOpenMultipleDialog(null));
+
+            List<File> attachmentList = fc.showOpenMultipleDialog(null);
+
+            if (attachmentList == null)
+                return;
+
+            LinkedList<File> listAttachments = new LinkedList<>(attachmentList);
 
             if (listAttachments != null) {
                 for (File f : listAttachments) {
