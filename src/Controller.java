@@ -1,13 +1,9 @@
 import javafx.animation.*;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -21,33 +17,22 @@ import javafx.util.Duration;
 import javax.mail.Session;
 import javax.mail.Store;
 import java.awt.*;
-import java.io.File;
 import java.math.BigInteger;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.util.ArrayList;
 import java.util.Properties;
 import java.util.UUID;
 
 public class Controller {
-    public static User user;
-
     @FXML public StackPane masterStack;
     @FXML public AnchorPane parent;
     @FXML public TextField emailField;
     @FXML public PasswordField passField;
-    @FXML public ChoiceBox<String> switchCSS;
-    ObservableList list = FXCollections.observableArrayList();
 
     public static String emailAddress;
     public static char[] password ;
     public static String theme;
-
-    @FXML
-    public void initialize() {
-        loadCSSFiles();
-    }
 
     @FXML
     private void minimize_stage(MouseEvent e) {
@@ -60,28 +45,6 @@ public class Controller {
 
         System.exit(0);
     }
-
-    //finds css files and allows user to select any one
-    private void loadCSSFiles() {
-        list.removeAll();
-
-        File[] files = new File("src").listFiles();
-        ArrayList<String> cssFiles = new ArrayList<>();
-
-        for (File f : files) {
-            if (f.getName().endsWith(".css")) {
-                cssFiles.add(f.getName().replace(".css", ""));
-            }
-        }
-
-        list.addAll(cssFiles);
-        switchCSS.getItems().addAll(list);
-        switchCSS.getSelectionModel().select(0);
-        switchCSS.getSelectionModel().selectedIndexProperty().addListener(
-                (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> theme = String.valueOf(new_val));
-        if(theme == null) theme = "DefaultStyle.css";
-    }
-
 
     //return false if it is not formatted like an email should be
     //examples: mnd199@msu.edu, nvc29@msstate.edu, Bryan.jones@cpe.msstate.edu, nathan@gmail.com
@@ -154,19 +117,7 @@ public class Controller {
 
         //make sure we can load stuff from the email and make sure it is formatted correctly using a regex
         if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
-            this.user = new User(emailField.getText(), theme);
-
-            try {
-                this.user.writeUser();
-            }
-
-            catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-            System.out.println("Associate this user with " + switchCSS.getValue()); //so it gets correct value so now use this when loading all other fxml files
-            //todo asociate this with a user in users.txt, on load up, set it to the default value in switchCSS if not new user
-
+            Main.startWorking();
             loadEmail(e);
         }
 
@@ -239,8 +190,6 @@ public class Controller {
             Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
             // possible place to change style to user's chosen style
             Scene currentScene = emailField.getScene();
-            currentScene.getStylesheets().remove(getClass().getResource("DefaultStyle.css").toExternalForm());
-            currentScene.getStylesheets().add(getClass().getResource("pinkStyle.css").toExternalForm());
             root.translateXProperty().set(currentScene.getWidth());
             masterStack.getChildren().add(root);
 
@@ -290,7 +239,7 @@ public class Controller {
             if (Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().browse(new URI(url));
             } else {
-                //Ubuntu/Linux dist
+                //Ubuntu/Linux/Unix like distribution
                 Runtime runtime = Runtime.getRuntime();
                 runtime.exec("/usr/bin/firefox -new-window " + url);
             }

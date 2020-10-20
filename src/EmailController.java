@@ -27,11 +27,13 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
-//todo add loading email popups so the user doesn't think it froze
-//todo go back to folder you were in instead of inbox every time
+//todo inform user running in background since it might take a while
+//todo method for start work and end work, set title to title + "working" and put orange rectangle around logo
+
 //todo remove invalid folders that are displayed
 //todo comment code
 //todo clean up syntax to std jfx
+//todo does deleting attachments actually work for compose,forward, and reply (removing ones you added but now don't want to send)
 
 public class EmailController {
     @FXML
@@ -198,8 +200,9 @@ public class EmailController {
 
                 if (event.getClickCount() > 1 && getMessageText(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]).length() > 0) {
                     try {
-                        showPopupMessage("Loading email",Main.primaryStage);
+                        Main.startWorking();
                         gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

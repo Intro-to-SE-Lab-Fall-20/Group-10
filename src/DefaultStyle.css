@@ -142,7 +142,7 @@
 }
 
 .scroll-bar:vertical .track{
-    -fx-background-color :rgb(252, 251, 227);
+    -fx-background-color :transparent;
     -fx-border-color :black;
     -fx-background-radius : 0.0em;
 
@@ -151,7 +151,7 @@
 }
 
 .scroll-bar:horizontal .track{
-    -fx-background-color :rgb(252, 251, 227);
+    -fx-background-color :transparent;
     -fx-border-color :black;
     -fx-background-radius : 0.0em;
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -23,7 +22,7 @@
                 </children></HBox>
             <Label focusTraversable="false" layoutX="115.0" layoutY="35.0" prefHeight="23.0" prefWidth="171.0" styleClass="description-label" text="An email client designed by" textAlignment="CENTER" wrapText="true" />
             <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" />
-            <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" styleClass="input-field" text="straightshotmsu@gmail.com">
+            <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" styleClass="input-field">
                 <tooltip>
                     <Tooltip text="Complete email (ex: Straight@Shot.com)" />
                 </tooltip>
@@ -33,16 +32,11 @@
                     <Tooltip text="Password" />
                 </tooltip>
             </PasswordField>
-            <Button fx:id="login" layoutX="128.0" layoutY="342.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="63.0" styleClass="button-login" text="Login">
+            <Button fx:id="login" layoutX="160.0" layoutY="344.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="87.0" styleClass="button-login" text="Login">
                 <tooltip>
                     <Tooltip text="Login" />
                 </tooltip>
             </Button>
-            <ChoiceBox fx:id="switchCSS" layoutX="195.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="79.0">
-                <tooltip>
-                    <Tooltip text="Switch between css styles" />
-                </tooltip>
-            </ChoiceBox>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="119.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@IO/Logo.png" />
