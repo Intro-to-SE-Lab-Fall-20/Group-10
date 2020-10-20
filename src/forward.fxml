@@ -42,7 +42,7 @@
       </TextField>
       <TextArea fx:id="emailContent" layoutX="36.0" layoutY="92.0" prefHeight="160.0" prefWidth="329.0" styleClass="input-field">
          <tooltip>
-            <Tooltip text="HTML supported" />
+            <Tooltip text="Email Content" />
          </tooltip>
       </TextArea>
       <Button fx:id="attachButton" layoutX="41.0" layoutY="405.0" mnemonicParsing="false" onAction="#addFiles" prefHeight="26.0" prefWidth="159.0" styleClass="button-login" text="Attach Additional Files">

@@ -30,7 +30,7 @@
       </HBox>
       <TextArea fx:id="emailContent" editable="false" layoutX="39.0" layoutY="79.0" prefHeight="160.0" prefWidth="329.0" styleClass="input-field">
          <tooltip>
-            <Tooltip text="HTML supported" />
+            <Tooltip text="Email Content" />
          </tooltip>
       </TextArea>
       <Button fx:id="replyButton" layoutX="38.0" layoutY="405.0" mnemonicParsing="false" onAction="#replyEmail" prefHeight="26.0" prefWidth="109.0" styleClass="button-login" text="Reply">

@@ -31,7 +31,7 @@
                 <Tooltip text="Take me home (country roads)" />
             </tooltip>
         </Button>
-        <Label fx:id="inboxLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0" styleClass="description-label" text="Viewing inbox of:" textFill="WHITE" />
+        <Label fx:id="inboxLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0" style="-fx-text-fill: #3063A5;" styleClass="description-label" text="Viewing inbox of:" textFill="WHITE" />
         <Button fx:id="replyButton" layoutX="251.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoReply" prefHeight="26.0" prefWidth="63.0" styleClass="button-login" text="Reply">
             <tooltip>
                 <Tooltip text="Write an email" />
