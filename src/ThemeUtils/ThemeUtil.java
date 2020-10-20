@@ -9,7 +9,7 @@ import java.io.Reader;
 
 public class ThemeUtil {
 
-    public static String getUserTheme(String username) {
+    public  String getUserTheme(String username) {
         String theme = "DefaultStyle";
         JSONParser parser = new JSONParser();
         String name;
@@ -32,7 +32,7 @@ public class ThemeUtil {
         return theme;
     }
 
-    private static String getThemeFileString(String theme) {
+    private String getThemeFileString(String theme) {
         switch (theme) {
             case "PinkStyle":
                 return "PinkStyle.css";

@@ -8,8 +8,6 @@ import javafx.stage.StageStyle;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
 
@@ -30,7 +28,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //loader.getNamespace().put("theme", "@userStyles/pinkStyle.css");
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("StraightShot");
@@ -55,38 +52,6 @@ public class Main extends Application {
         root.setOnMouseReleased((event -> Main.primaryStage.setOpacity(1.0f)));
 
         primaryStage.show();
-
-        System.out.println("Compiled " + totalCodeLines(new File(System.getProperty("user.dir"))) + " lines of java code");
-    }
-
-    public int totalCodeLines(File startDir) {
-        int ret = 0;
-
-        if (startDir.isDirectory()) {
-            File[] files = startDir.listFiles();
-
-            for (File f : files)
-                ret += totalCodeLines(f);
-        }
-
-        else if (startDir.getName().endsWith(".java") || startDir.getName().endsWith(".fxml")) {
-            try {
-                BufferedReader lineReader = new BufferedReader(new FileReader(startDir));
-                String line = "";
-                int localRet = 0;
-
-                while ((line = lineReader.readLine()) != null)
-                    localRet++;
-
-                return localRet;
-            }
-
-            catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        return ret;
     }
 
     private boolean isFirstUser() {
@@ -99,7 +64,7 @@ public class Main extends Application {
         }
 
         catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
 
         return firstUser;

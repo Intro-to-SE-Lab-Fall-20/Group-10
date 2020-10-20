@@ -9,6 +9,7 @@ import java.io.Reader;
 
 // doing this for pull request
 public class User {
+
     private String username;
     private String theme;
     private JSONArray jsonArray = new JSONArray();
@@ -24,39 +25,37 @@ public class User {
         setThemeValue(theme);
     }
 
-    public void writeUser() throws IOException {
-        //todo use all the info from the interface to store in a JSON file: mallory
-        FileWriter file = new FileWriter("users.txt");
-        JSONObject users = new JSONObject();
-
-        JSONObject newUser = checkIfNewUser();
-        if (this.firstUser){
-            JSONObject user = new JSONObject();
-            user.put("username", this.username);
-            user.put("theme", this.theme);
-            jsonArray.add(user);
-        }
-        if (!(newUser.isEmpty())){
-            jsonArray.add(newUser);
-        }
-        users.put("users", jsonArray);
+    public void writeUser() {
         try {
+            FileWriter file = new FileWriter("users.txt");
+            JSONObject users = new JSONObject();
+
+            JSONObject newUser = checkIfNewUser();
+
+            if (this.firstUser){
+                JSONObject user = new JSONObject();
+                user.put("username", this.username);
+                user.put("theme", this.theme);
+                jsonArray.add(user);
+            }
+
+            if (!(newUser.isEmpty())){
+                jsonArray.add(newUser);
+            }
+            users.put("users", jsonArray);
+
             file = new FileWriter("users.txt");
             file.write(users.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
 
-        } finally {
-            try {
-                file.flush();
-                file.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            file.flush();
+            file.close();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    //todo pls fix Mal, it gave a parse error after the userfiles have been written to and are not blank
     public JSONObject checkIfNewUser(){
         JSONParser parser = new JSONParser();
         String name;
@@ -65,9 +64,11 @@ public class User {
         try(Reader reader = new FileReader("users.txt")) {
             JSONObject users = (JSONObject) parser.parse(reader);
             JSONArray array = (JSONArray) users.get("users");
+
             for (Object o : array) {
                 JSONObject user = (JSONObject) o;
                 name = String.valueOf(user.get("username"));
+
                 if (name.equals(this.username)) {
                     if (checkIfNewTheme()){
                         // if not new user but has a new theme
@@ -75,12 +76,15 @@ public class User {
                         newUser.put("username", name);
                         newUser.put("theme", user.get("theme"));
                     }
+
                     break;
+
                 } else {
                     newUser.put("username", name);
                     newUser.put("theme", user.get("theme"));
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,12 +96,15 @@ public class User {
         JSONParser parser = new JSONParser();
         String theme;
         boolean newTheme = false;
+
         try(Reader reader = new FileReader("users.txt")) {
             JSONObject users = (JSONObject) parser.parse(reader);
             JSONArray array = (JSONArray) users.get("users");
+
             for (Object o : array) {
                 JSONObject user = (JSONObject) o;
                 theme = String.valueOf(user.get("theme"));
+
                 if (theme.equals(this.theme)) {
                     newTheme = false;
                     break;

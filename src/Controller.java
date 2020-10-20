@@ -164,6 +164,9 @@ public class Controller {
                 ex.printStackTrace();
             }
 
+            System.out.println("Associate this user with " + switchCSS.getValue()); //so it gets correct value so now use this when loading all other fxml files
+            //todo asociate this with a user in users.txt, on load up, set it to the default value in switchCSS if not new user
+
             loadEmail(e);
         }
 
