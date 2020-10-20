@@ -1,4 +1,4 @@
 language: java
-jdk:
-  - oraclejdk12
-  - openjdk12
+jdk: openjdk12
+install: jdk.sh
+os: windows
