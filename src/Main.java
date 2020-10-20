@@ -9,7 +9,6 @@ import javafx.stage.StageStyle;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Main extends Application {
     //stage to pass around to class that wish to add/remove stuff from it such as scenes or components
@@ -56,16 +55,14 @@ public class Main extends Application {
     }
 
 
-    public static void startWorking() {
+    public static void startWorking(String message) {
         try {
-            String message = "Processing request";
-            String title = "Working in background";
             int width = 150;
-            int height = 100;
+            int height = 45;
 
             JFrame informFrame = new JFrame();
             informFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            informFrame.setTitle(title);
+            informFrame.setTitle("Working in background");
             informFrame.setSize(width, height);
             informFrame.setUndecorated(true);
             informFrame.setBackground(new Color(52,70,84));
@@ -73,84 +70,21 @@ public class Main extends Application {
             JLabel consoleLabel = new JLabel();
             informFrame.setContentPane(consoleLabel);
 
-            informFrame.addMouseMotionListener(new MouseMotionListener() {
-                @Override
-                public void mouseDragged(MouseEvent e) {
-                    int x = e.getXOnScreen();
-                    int y = e.getYOnScreen();
-
-                    if (informFrame != null && informFrame.isFocused()) {
-                        informFrame.setLocation(x - xMouse, y - yMouse);
-                    }
-                }
-
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    xMouse = e.getX();
-                    yMouse = e.getY();
-                }
-            });
-
-            JLabel desc = new JLabel("<html><div style='text-align: center;'>" + message + "</div></html>");
-
-            desc.setHorizontalAlignment(JLabel.CENTER);
-            desc.setVerticalAlignment(JLabel.CENTER);
-
+            JLabel desc = new JLabel(message, SwingConstants.CENTER);
             desc.setForeground(new Color(252, 251, 227));
-
             desc.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
+            desc.setBounds(5, 10, width - 10, 25);
 
-            desc.setBounds(15, 10, width - 20, 40);
-
-            JLabel dismiss = new JLabel("Dismiss");
-
-            dismiss.setHorizontalAlignment(JLabel.CENTER);
-            dismiss.setVerticalAlignment(JLabel.CENTER);
-
-            dismiss.setForeground(new Color(252, 251, 227));
-
-            dismiss.setFont(new Font("Segoe UI Black", Font.BOLD, 15));
-
-            dismiss.setBounds(10, height - 70, width - 20, height - 10);
-
-            dismiss.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    informFrame.dispose();
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    dismiss.setForeground(new Color(223,85,83));
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    dismiss.setForeground(new Color(252, 251, 227));
-                }
-            });
-
-            consoleLabel.add(desc);
-            consoleLabel.add(dismiss);
+            consoleLabel.add(desc, SwingConstants.CENTER);
             consoleLabel.setBorder(new LineBorder(new Color(26, 32, 51),2,false));
             informFrame.setVisible(true);
-            informFrame.setLocationRelativeTo(null);
+            informFrame.setLocation((int) (primaryStage.getX() + primaryStage.getWidth() / 2.0 - informFrame.getWidth() / 2.0),(int) primaryStage.getY() + 20);
 
             informFrame.setAlwaysOnTop(true);
             informFrame.setResizable(false);
             informFrame.setIconImage(new ImageIcon("src/IO/Logo.png").getImage());
 
-            Timer t = new Timer(3000, null);
+            Timer t = new Timer(2500, null);
             t.addActionListener(e -> {
                 informFrame.setVisible(false);
                 informFrame.dispose();
