@@ -472,4 +472,16 @@ public class ComposeController {
         delay.setOnFinished(e -> popup.hide());
         delay.play();
     }
+
+    public TextField getTo() {
+        return to;
+    }
+
+    public TextField getSubject() {
+        return subject;
+    }
+
+    public TextArea getEmailContent() {
+        return emailContent;
+    }
 }

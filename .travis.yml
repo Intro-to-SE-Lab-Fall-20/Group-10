@@ -1,5 +1,11 @@
 language: java
-jk:
-  - "openjdk8"
-notifications:
-  email: straightshotmsu@gmail.com
+jdk: openjdk11
+before_install:
+  - sudo apt install openjfx
+dist: xenial
+addons:
+  apt:
+    packages:
+      - ant
+install: true
+script: ant test
