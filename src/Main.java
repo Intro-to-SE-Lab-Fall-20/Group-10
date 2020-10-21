@@ -14,10 +14,6 @@ public class Main extends Application {
     //stage to pass around to class that wish to add/remove stuff from it such as scenes or components
     static Stage primaryStage;
 
-    //used for inform movement
-    private static int xMouse;
-    private static int yMouse;
-
     //offsets used for window dragging
     private double xOffset = 0;
     private double yOffset = 0;
@@ -58,25 +54,25 @@ public class Main extends Application {
     public static void startWorking(String message) {
         try {
             int width = 150;
-            int height = 45;
+            int height = 30;
 
             JFrame informFrame = new JFrame();
             informFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             informFrame.setTitle("Working in background");
             informFrame.setSize(width, height);
             informFrame.setUndecorated(true);
-            informFrame.setBackground(new Color(52,70,84));
+            informFrame.setBackground(new Color(226, 40, 102));
 
             JLabel consoleLabel = new JLabel();
             informFrame.setContentPane(consoleLabel);
 
             JLabel desc = new JLabel(message, SwingConstants.CENTER);
-            desc.setForeground(new Color(252, 251, 227));
+            desc.setForeground(Color.BLACK);
             desc.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
-            desc.setBounds(5, 10, width - 10, 25);
+            desc.setBounds(5, 5, width - 10, 20);
 
             consoleLabel.add(desc, SwingConstants.CENTER);
-            consoleLabel.setBorder(new LineBorder(new Color(26, 32, 51),2,false));
+            consoleLabel.setBorder(new LineBorder(Color.BLACK,2,false));
             informFrame.setVisible(true);
             informFrame.setLocation((int) (primaryStage.getX() + primaryStage.getWidth() / 2.0 - informFrame.getWidth() / 2.0),(int) primaryStage.getY() + 20);
 

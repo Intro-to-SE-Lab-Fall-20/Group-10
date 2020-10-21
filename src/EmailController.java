@@ -28,8 +28,7 @@ import java.util.*;
 import java.util.function.Function;
 
 //todo comment code
-//todo cache inbox so that no lag spike when going back to inbox screen
-//todo load message and add attachments later to reduce lag
+//todo make autologin so that you and mal can bypass login when debugging
 
 public class EmailController {
     @FXML
@@ -51,6 +50,10 @@ public class EmailController {
     public ProgressIndicator loadingProgressIndicator;
     public TextField searchFolderField;
     public Button refreshButton;
+
+    //used so that we don't have to load emailcontroller evertime we come back here
+    public static Parent root;
+    public static Parent viewRoot;
 
     //current email folder
     private Message[] messages;
@@ -460,7 +463,7 @@ public class EmailController {
     @FXML
     private void gotoCompose(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("compose.fxml"));
+            root = FXMLLoader.load(getClass().getResource("compose.fxml"));
             Scene currentScene = logoutButton.getScene();
             root.translateYProperty().set(currentScene.getHeight());
 
@@ -468,10 +471,9 @@ public class EmailController {
             pc.getChildren().add(root);
 
             Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+            KeyValue kv = new KeyValue(root.translateYProperty(), 10, Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
-            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
         }
 
@@ -509,6 +511,7 @@ public class EmailController {
                 File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
                 if (!dir.exists()) dir.mkdir();
 
+
                 FileOutputStream fos = new FileOutputStream(f);
 
                 byte[] buf = new byte[4096];
@@ -522,7 +525,8 @@ public class EmailController {
                 currentMessageAttachments.add(f);
             }
 
-            Parent root = FXMLLoader.load(getClass().getResource("view.fxml"));
+            root = FXMLLoader.load(getClass().getResource("view.fxml"));
+            viewRoot  = root;
             Scene currentScene = logoutButton.getScene();
             root.translateYProperty().set(currentScene.getHeight());
 
@@ -533,7 +537,6 @@ public class EmailController {
             KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
-            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
         }
 
@@ -583,7 +586,7 @@ public class EmailController {
             }
 
             if (currentMessageMultipart != null) {
-                Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
+                root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
                 Scene currentScene = composeButton.getScene();
                 root.translateXProperty().set(currentScene.getWidth());
 
@@ -595,7 +598,6 @@ public class EmailController {
                 KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
 
                 tim.getKeyFrames().add(kf);
-                tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
                 tim.play();
             }
         }
@@ -646,7 +648,7 @@ public class EmailController {
             }
 
             if (currentMessageMultipart != null) {
-                Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
+                root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
                 Scene currentScene = composeButton.getScene();
                 root.translateXProperty().set(currentScene.getWidth());
 
@@ -658,7 +660,6 @@ public class EmailController {
                 KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
 
                 tim.getKeyFrames().add(kf);
-                tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
                 tim.play();
             }
         }

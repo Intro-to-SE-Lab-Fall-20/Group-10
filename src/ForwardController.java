@@ -2,8 +2,6 @@ import javafx.animation.PauseTransition;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -353,22 +351,13 @@ public class ForwardController {
     @FXML
     private void goBack(ActionEvent event) {
         try {
-            Main.startWorking("Loading emails");
-
             ViewController.clearLocalAttachments();
 
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
-                Scene currentScene = attachButton.getScene();
+            Scene currentScene = attachButton.getScene();
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().remove(EmailController.root);
 
-                StackPane pc = (StackPane) currentScene.getRoot();
-                pc.getChildren().add(root);
-                pc.getChildren().remove(currentScene);
-            }
-
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+            //todo set view's root to emailcontroller's root
         }
 
         catch (Exception e) {

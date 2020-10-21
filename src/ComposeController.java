@@ -2,8 +2,6 @@ import javafx.animation.PauseTransition;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -164,12 +162,9 @@ public class ComposeController {
     @FXML
     private void goBack(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
             Scene currentScene = attachButton.getScene();
-
             StackPane pc = (StackPane) currentScene.getRoot();
-            pc.getChildren().add(root);
-            pc.getChildren().remove(currentScene);
+            pc.getChildren().remove(EmailController.root);
         }
 
         catch (Exception e) {

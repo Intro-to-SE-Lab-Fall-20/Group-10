@@ -188,6 +188,7 @@ public class ViewController  {
             Main.startWorking("Preparing forward");
 
             Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
+            EmailController.root = root;
             Scene currentScene = backButton.getScene();
             root.translateXProperty().set(currentScene.getWidth());
 
@@ -214,6 +215,7 @@ public class ViewController  {
             Main.startWorking("Preparing reply");
 
             Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
+            EmailController.root = root;
             Scene currentScene = backButton.getScene();
             root.translateXProperty().set(currentScene.getWidth());
 
@@ -286,22 +288,12 @@ public class ViewController  {
     @FXML
     private void goBack(ActionEvent event) {
         try {
-            Main.startWorking("Loading emails");
-
             clearLocalAttachments();
 
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
-                Scene currentScene = backButton.getScene();
-
-                StackPane pc = (StackPane) currentScene.getRoot();
-                pc.getChildren().add(root);
-                pc.getChildren().remove(currentScene);
-            }
-
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+            Scene currentScene = forwardButton.getScene();
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().remove(EmailController.root);
+            pc.getChildren().remove(EmailController.viewRoot);
         }
 
         catch (Exception e) {
