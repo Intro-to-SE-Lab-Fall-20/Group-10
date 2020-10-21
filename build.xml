@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="group-10" default="all">
+<project name="group-10" default="all" basedir=".">
 
 
     <property file="group-10.properties"/>
