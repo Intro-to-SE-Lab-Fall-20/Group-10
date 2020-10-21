@@ -9,4 +9,4 @@ addons:
     packages:
       - ant
 install: true
-script: ant -lib /C:\Program Files\apache-ant-1.9.15\lib\ant-unit.jar test
+script: ant test
