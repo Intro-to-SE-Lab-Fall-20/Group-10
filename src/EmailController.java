@@ -27,8 +27,12 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
-//todo comment code
-//todo make autologin so that you and mal can bypass login when debugging
+//todo comment code [Good Java practice for points for spring 3]
+//todo don't download attachments unless user wants them in a specific dir, this will reduce lag
+//todo sort out yahoo.com email
+//todo put animations back in when using goBack()s
+//todo don't download attachments, only download names and file sizes I guess
+//todo try song length method again
 
 public class EmailController {
     @FXML
