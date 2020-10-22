@@ -322,19 +322,6 @@ public class ComposeController {
         return megaBytes;
     }
 
-    private String getSongLengh(File file)  {
-        try {
-            //todo get this working
-            return "3:14";
-        }
-
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "Unknown Length";
-    }
-
     //must pass in a file that is an iamge and will return [xDim, yDim] of the image
     private int[] getImageDimensions(File imageFile) {
         try {
@@ -435,11 +422,6 @@ public class ComposeController {
                         int[] dim = getImageDimensions(attachment);
                         addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
                                 getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
-                    }
-
-                    else if (getFileExtension(attachment).equalsIgnoreCase("mp3")) {
-                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                                getDisplayFileSize(attachment),getSongLengh(attachment), attachment);
                     }
 
                     else {
