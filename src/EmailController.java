@@ -33,6 +33,7 @@ import java.util.function.Function;
 //todo put animations back in when using goBack()s
 //todo don't download attachments, only download names and file sizes I guess
 //todo try song length method again
+//mess
 
 public class EmailController {
     @FXML
