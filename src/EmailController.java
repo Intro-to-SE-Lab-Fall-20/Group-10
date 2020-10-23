@@ -28,8 +28,14 @@ import java.util.*;
 import java.util.function.Function;
 
 //todo sort out yahoo.com and outlook.com email
-//todo put animations back in when using goBack()s
 //todo don't download attachments, only download names and file and then download if they actually want to
+//todo make popups consistent and slide up and down from dragLabel
+//todo tell user email was authenticated before saying loading inbox
+//todo tell user when downloading attachments
+//todo choicebox for email @s so all you type in is straightshotmsu and choose @gmail.com, @outlook.com, @yahoo.com
+//todo tooltips are inconsistent for copied uis
+//todo buttons more rounded
+//todo if text is cut off in tableview, add a ...
 
 public class EmailController {
     //all gui elements
@@ -49,7 +55,6 @@ public class EmailController {
     public Label unreadEmailsLabel;
     public CheckBox hideOnCloseCheckBox;
     public ChoiceBox<String> folderChoiceBox;
-    public ProgressIndicator loadingProgressIndicator;
     public TextField searchFolderField;
     public Button refreshButton;
 
@@ -232,8 +237,6 @@ public class EmailController {
             //prepare the textfield used for searching through emails
             searchFolderField.setOnAction(event -> {
                 try {
-                    Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
-
                     fetchEmail(currentFolder);
                     String searchFor = searchFolderField.getText();
 
@@ -255,8 +258,6 @@ public class EmailController {
 
                     for (EmailPreview ep : removes)
                         table.getItems().remove(ep);
-
-                    Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
                 }
 
                 catch (Exception e) {
@@ -342,8 +343,6 @@ public class EmailController {
     @FXML
     private void fetchEmail(String loadFolder) {
         try {
-            Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
-
             //first convert char[] holding password to a string builder that we can call toString on
             StringBuilder passwordBuilder = new StringBuilder();
             for (int i = 0; i < Controller.password.length; i++)
@@ -390,8 +389,6 @@ public class EmailController {
             }
 
             table.setRowFactory((tableView) -> new TooltipTableRow<>(EmailPreview::toString));
-
-            Platform.runLater(() -> loadingProgressIndicator.setProgress(100));
         }
 
         catch (Exception e) {
@@ -461,7 +458,6 @@ public class EmailController {
     @FXML
     private void refreshFolder(ActionEvent event) {
         Main.startWorking("Refreshing folder");
-        Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
 
         if (searchFolderField.getText().length() == 0)
             fetchEmail(currentFolder);
@@ -479,7 +475,7 @@ public class EmailController {
             pc.getChildren().add(root);
 
             Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(root.translateYProperty(), 10, Interpolator.EASE_IN);
+            KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
             tim.play();
@@ -557,7 +553,7 @@ public class EmailController {
     @FXML
     public void gotoReply(ActionEvent event) {
         try {
-            Main.startWorking("Preparing reply");
+            Main.startWorking("Preparing reply"); //todo only go to reply or forward if there is a mesasge selected
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();

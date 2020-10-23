@@ -20,19 +20,19 @@
                     <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" styleClass="window-label" text="StraightShot" textFill="WHITE" translateX="-15.0" />
                     <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
                 </children></HBox>
-            <Label focusTraversable="false" layoutX="115.0" layoutY="35.0" prefHeight="23.0" prefWidth="171.0" styleClass="description-label" text="An email client designed by" textAlignment="CENTER" wrapText="true" />
+            <Label focusTraversable="false" layoutX="115.0" layoutY="36.0" prefHeight="23.0" prefWidth="171.0" styleClass="description-label" text="An email client designed by" textAlignment="CENTER" wrapText="true" />
             <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" />
-            <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" styleClass="input-field">
+            <TextField fx:id="emailField" layoutX="128.0" layoutY="252.0" style="-fx-background-radius: 20;" styleClass="input-field">
                 <tooltip>
                     <Tooltip text="Complete email (ex: Straight@Shot.com)" />
                 </tooltip>
             </TextField>
-            <PasswordField fx:id="passField" layoutX="128.0" layoutY="307.0" onAction="#login" styleClass="input-field">
+            <PasswordField fx:id="passField" layoutX="128.0" layoutY="307.0" onAction="#login" style="-fx-background-radius: 20;" styleClass="input-field">
                 <tooltip>
                     <Tooltip text="Password" />
                 </tooltip>
             </PasswordField>
-            <Button fx:id="login" layoutX="160.0" layoutY="344.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="87.0" styleClass="button-login" text="Login">
+            <Button fx:id="login" layoutX="160.0" layoutY="344.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="87.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Login">
                 <tooltip>
                     <Tooltip text="Login" />
                 </tooltip>
@@ -44,11 +44,11 @@
             </ImageView>
             <Label focusTraversable="false" layoutX="183.0" layoutY="227.0" styleClass="description-label" text="Email:" />
             <Label focusTraversable="false" layoutX="171.0" layoutY="285.0" styleClass="description-label" text="Password:" />
-         <Label focusTraversable="false" layoutX="84.0" layoutY="389.0" onMouseClicked="#enableIMAP" prefHeight="37.0" prefWidth="233.0" style="-fx-font-size: 10;" styleClass="description-label" text="Supports Gmail, Outlook, and Yahoo accounts that do not use 2FA. Make sure to have IMAP/POP3 enabled" textAlignment="CENTER" wrapText="true">
+         <Label focusTraversable="false" layoutX="88.0" layoutY="389.0" onMouseClicked="#enableIMAP" prefHeight="37.0" prefWidth="233.0" style="-fx-font-size: 10;" styleClass="description-label" text="Supports Gmail, Outlook, and Yahoo accounts that do not use 2FA. Make sure to have IMAP/POP3 enabled" textAlignment="CENTER" wrapText="true">
             <tooltip>
                <Tooltip text="Click me to learn how to complete these actions!" />
             </tooltip></Label>
-         <Label focusTraversable="false" layoutX="97.0" layoutY="47.0" prefHeight="23.0" prefWidth="213.0" styleClass="description-label" text="Nathan Cheshire and Mallory Duke" textAlignment="CENTER" translateY="5.0" wrapText="true" />
+         <Label focusTraversable="false" layoutX="95.0" layoutY="62.0" prefHeight="23.0" prefWidth="211.0" style="-fx-text-fill: #0070BB;" styleClass="description-label" text="Nathan Cheshire and Mallory Duke" textAlignment="CENTER" translateY="-10.0" wrapText="true" />
         </children>
     </AnchorPane>
 </StackPane>

@@ -299,8 +299,22 @@ public class ViewController  {
 
             Scene currentScene = forwardButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();
-            pc.getChildren().remove(EmailController.root);
-            pc.getChildren().remove(EmailController.viewRoot);
+
+            EmailController.root.translateYProperty().set(0);
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(EmailController.root.translateYProperty(), currentScene.getHeight(), Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(e -> pc.getChildren().remove(EmailController.root));
+            tim.play();
+
+            EmailController.viewRoot.translateYProperty().set(0);
+            Timeline tim1 = new Timeline();
+            KeyValue kv1 = new KeyValue(EmailController.viewRoot.translateYProperty(), currentScene.getHeight(), Interpolator.EASE_IN);
+            KeyFrame kf1 = new KeyFrame(Duration.seconds(0.5), kv1);
+            tim1.getKeyFrames().add(kf1);
+            tim1.setOnFinished(e -> pc.getChildren().remove(EmailController.viewRoot));
+            tim1.play();
         }
 
         catch (Exception e) {

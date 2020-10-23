@@ -17,6 +17,9 @@ import javafx.util.Duration;
 import javax.mail.Session;
 import javax.mail.Store;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.math.BigInteger;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -33,6 +36,39 @@ public class Controller {
     public static String emailAddress;
     public static char[] password ;
     public static String theme;
+
+    @FXML
+    public void initialize() {
+        //what this does is logs in for me basically so that I don't have to type in the password everytime
+        //it checks for a file and if it exists, grabs username and password from it
+        //if it doesn't exist it just proceeds as normal, this is what we call a code hook
+        try {
+            File debugLogin = new File("../auto-login-straight-shot.txt");
+
+            if (debugLogin.exists() && !Main.autoLoggedIn) {
+                BufferedReader ac = new BufferedReader(new FileReader(debugLogin));
+
+                String line = ac.readLine();
+                String[] parts = line.split(":");
+
+                if (parts.length == 2 && !parts[0].equals("") && !parts[1].equals("")) {
+                    if (silentValidateCredentials(parts[0], parts[1].toCharArray())) {
+                        Main.autoLoggedIn = true;
+                        emailAddress = parts[0];
+                        password = parts[1].toCharArray();
+
+                        Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
+                        Scene currentScene = emailField.getScene();
+                        masterStack.getChildren().add(root);
+                    }
+                }
+            }
+        }
+
+        catch (Exception ignored) {}
+    }
+
+
 
     @FXML
     private void minimize_stage(MouseEvent e) {
@@ -75,6 +111,29 @@ public class Controller {
             return "imap-mail.outlook.com";
         else
             return null;
+    }
+
+    //used for autologin for debugging
+    private boolean silentValidateCredentials(String user, char[] pass) {
+        StringBuilder passBuild = new StringBuilder();
+        for (char c : pass) passBuild.append(c);
+
+        Properties props = System.getProperties();
+        props.setProperty("mail.store.protocol", "imaps");
+
+        try {
+            Session session = Session.getDefaultInstance(props, null);
+            Store store = session.getStore("imaps");
+            store.connect(getIMAPServer(user), user, passBuild.toString());
+            return true;
+        }
+
+        catch (Exception ignored) {
+            emailField.setText("");
+            passField.setText("");
+        }
+
+        return false;
     }
 
     //see if we can access stuff from the email, if it's denied then it exists, if invalid then an error is thrown

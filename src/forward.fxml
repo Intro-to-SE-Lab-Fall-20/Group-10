@@ -30,12 +30,12 @@
          </children>
       </HBox>
       <Label layoutX="16.0" layoutY="32.0" prefHeight="3.0" prefWidth="20.0" styleClass="description-label" text="To:" translateX="5.0" />
-      <TextField fx:id="forwardTo" layoutX="48.0" layoutY="27.0" prefHeight="25.0" prefWidth="338.0" promptText="Forward recipient(s)" styleClass="input-field">
+      <TextField fx:id="forwardTo" layoutX="48.0" layoutY="27.0" prefHeight="25.0" prefWidth="338.0" promptText="Forward recipient(s)" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip>
       </TextField>
-      <TextField fx:id="forwardSubject" layoutX="76.0" layoutY="59.0" prefHeight="25.0" prefWidth="309.0" promptText="Forwarding subject" styleClass="input-field">
+      <TextField fx:id="forwardSubject" layoutX="76.0" layoutY="59.0" prefHeight="25.0" prefWidth="309.0" promptText="Forwarding subject" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Email Subject" />
          </tooltip>
@@ -45,17 +45,17 @@
             <Tooltip text="Email Content" />
          </tooltip>
       </TextArea>
-      <Button fx:id="attachButton" layoutX="41.0" layoutY="405.0" mnemonicParsing="false" onAction="#addFiles" prefHeight="26.0" prefWidth="159.0" styleClass="button-login" text="Attach Additional Files">
+      <Button fx:id="attachButton" layoutX="41.0" layoutY="405.0" mnemonicParsing="false" onAction="#addFiles" prefHeight="26.0" prefWidth="159.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Attach Additional Files">
          <tooltip>
             <Tooltip text="Typically servers only support 25MB of attachments" />
          </tooltip>
       </Button>
-      <Button fx:id="discardButton" layoutX="208.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" styleClass="button-discard" text="Discard">
+      <Button fx:id="discardButton" layoutX="208.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Discard">
          <tooltip>
             <Tooltip text="Discard Draft and leave compose screen" />
          </tooltip>
       </Button>
-      <Button fx:id="forwardButton" layoutX="292.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendForward" prefHeight="26.0" prefWidth="72.0" styleClass="button-login" text="Send">
+      <Button fx:id="forwardButton" layoutX="292.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendForward" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Send">
          <tooltip>
             <Tooltip text="Send Email (Unreversable action)" />
          </tooltip>

@@ -116,9 +116,23 @@
     -fx-background-color: #ba113e;
 }
 
+.button-compose{
+    -fx-background-color: #4567a7;
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+}
+
+.button-compose:hover {
+    -fx-background-color: #32518a;
+}
+
 
 .button-login{
     -fx-background-color: #2196f3;
+    -fx-background-radius: 20;
     -fx-text-fill: white;
     -fx-font-family: sans-serif;
     -fx-background-radius: 4;
@@ -140,16 +154,16 @@
 
 .scroll-bar:vertical .thumb{
     -fx-background-color :#123368;
+    -fx-background-radius: 20;
     -fx-border-color :transparent;
-    -fx-background-radius : 0.0em;
     -fx-overflow-y: scroll;
     -fx-overflow-x: hidden;
 }
 
 .scroll-bar:horizontal .thumb{
     -fx-background-color :#123368;
+    -fx-background-radius: 20;
     -fx-border-color :transparent;
-    -fx-background-radius : 0.0em;
     -fx-overflow-y: scroll;
     -fx-overflow-x: hidden;
 
@@ -158,7 +172,7 @@
 .scroll-bar:vertical .track{
     -fx-background-color :transparent;
     -fx-border-color :black;
-    -fx-background-radius : 0.0em;
+    -fx-background-radius: 20;
 
     -fx-overflow-y: scroll;
     -fx-overflow-x: hidden;
@@ -166,8 +180,8 @@
 
 .scroll-bar:horizontal .track{
     -fx-background-color :transparent;
-    -fx-border-color :black;
-    -fx-background-radius : 0.0em;
+    -fx-border-color: black;
+    -fx-background-radius: 20;
 
     -fx-overflow-y: scroll;
     -fx-overflow-x: hidden;
@@ -207,45 +221,6 @@
     -fx-padding :0.0 0.15em;
 }
 
-.progress-bar {
-    -fx-background-color: transparent;
-    -fx-indeterminate-bar-length: 169;
-}
-.progress-bar > .bar {
-    -fx-background-color: linear-gradient(
-        from 0px .75em to .75em 0px,
-        repeat,
-        -fx-accent 0%,
-        -fx-accent 49%,
-        derive(-fx-accent, 30%) 50%,
-        derive(-fx-accent, 30%) 99%
-    );
-    -fx-background-insets: 3 3 4 3;
-    -fx-background-radius: 3em;
-    -fx-border-radius: 30px;
-    -fx-padding: 0.75em;
-    
-}
-.progress-bar:indeterminate > .bar {
-    -fx-background-color: linear-gradient(
-        from 0px .75em to .75em 0px,
-        repeat,
-        -fx-accent 0%,
-        -fx-accent 49%,
-        -fx-background-color,
-        derive(-fx-accent, 30%) 50%,
-        derive(-fx-accent, 30%) 99%
-    );
-
-
-}
-.progress-bar > .track {
-    -fx-background-color: transparent;
-    -fx-border-color: black;
-    -fx-border-width: 2;
-    -fx-border-radius: 25px;
-}
-
 .popup {
     -fx-text-fill: rgb(0, 0, 0); 
     -fx-font-weight: bold;
@@ -261,6 +236,10 @@
     -fx-border-radius: 4px;
     -fx-border-width: 1px;
     -fx-border-color: black;
+}
+
+.table-view {
+    -fx-hbar-policy: never;
 }
 
 .table-view .column-header-background {

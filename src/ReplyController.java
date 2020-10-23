@@ -1,4 +1,4 @@
-import javafx.animation.PauseTransition;
+import javafx.animation.*;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -364,7 +364,13 @@ public class ReplyController {
 
             Scene currentScene = attachButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();
-            pc.getChildren().remove(EmailController.root);
+            EmailController.root.translateXProperty().set(0);
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(EmailController.root.translateXProperty(), currentScene.getWidth(), Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(e -> pc.getChildren().remove(EmailController.root));
+            tim.play();
         }
 
         catch (Exception e) {

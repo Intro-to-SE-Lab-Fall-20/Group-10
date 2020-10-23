@@ -33,17 +33,17 @@
             <Tooltip text="Email Content" />
          </tooltip>
       </TextArea>
-      <Button fx:id="replyButton" layoutX="38.0" layoutY="405.0" mnemonicParsing="false" onAction="#replyEmail" prefHeight="26.0" prefWidth="109.0" styleClass="button-login" text="Reply">
+      <Button fx:id="replyButton" layoutX="38.0" layoutY="405.0" mnemonicParsing="false" onAction="#replyEmail" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Reply">
          <tooltip>
             <Tooltip text="Add files to your email" />
          </tooltip>
       </Button>
-      <Button fx:id="backButton" layoutX="165.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" styleClass="button-discard" text="Back">
+      <Button fx:id="backButton" layoutX="165.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Back">
          <tooltip>
             <Tooltip text="Discard Draft and leave compose screen" />
          </tooltip>
       </Button>
-      <Button fx:id="forwardButton" layoutX="256.0" layoutY="405.0" mnemonicParsing="false" onAction="#forwardEmail" prefHeight="26.0" prefWidth="109.0" styleClass="button-login" text="Forward">
+      <Button fx:id="forwardButton" layoutX="256.0" layoutY="405.0" mnemonicParsing="false" onAction="#forwardEmail" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Forward">
          <tooltip>
             <Tooltip text="Send Email (Unreversable action)" />
          </tooltip>
