@@ -4,7 +4,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -21,29 +20,29 @@
                 <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
             </children>
         </HBox>
-        <Button fx:id="composeButton" layoutX="87.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Compose">
+        <Button fx:id="composeButton" layoutX="161.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoCompose" prefHeight="26.0" prefWidth="78.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Compose">
             <tooltip>
                 <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <Button fx:id="logoutButton" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#goBack" styleClass="button-discard" text="Logout">
+        <Button fx:id="logoutButton" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 20;" styleClass="button-discard" text="Logout">
             <tooltip>
                 <Tooltip text="Take me home (country roads)" />
             </tooltip>
         </Button>
-        <Label fx:id="inboxLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0" style="-fx-text-fill: #3063A5;" styleClass="description-label" text="Viewing inbox of:" textFill="WHITE" />
-        <Button fx:id="replyButton" layoutX="251.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoReply" prefHeight="26.0" prefWidth="63.0" styleClass="button-login" text="Reply">
+        <Label fx:id="inboxLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0" prefHeight="15.0" prefWidth="380.0" style="-fx-text-fill: black;" styleClass="description-label" text="Viewing inbox of:" textAlignment="CENTER" textFill="WHITE" />
+        <Button fx:id="replyButton" layoutX="88.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoReply" prefHeight="26.0" prefWidth="63.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Reply">
             <tooltip>
                 <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <Button fx:id="forwardButton" layoutX="173.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoForward" prefHeight="26.0" prefWidth="70.0" styleClass="button-login" text="Forward">
+        <Button fx:id="forwardButton" layoutX="247.0" layoutY="410.0" mnemonicParsing="false" onAction="#gotoForward" prefHeight="26.0" prefWidth="70.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Forward">
             <tooltip>
                 <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <CheckBox fx:id="hideOnCloseCheckBox" layoutX="15.0" layoutY="48.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
-        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="48.0" prefHeight="18.0" prefWidth="45.0" style="-fx-background-color: #e2174d; -fx-text-fill: white;" styleClass="description-label" text="0" textFill="WHITE" translateY="1.0">
+        <CheckBox fx:id="hideOnCloseCheckBox" layoutX="68.0" layoutY="48.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
+        <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="48.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: #e2174d; -fx-text-fill: white; -fx-background-radius: 20;" styleClass="description-label" text="0" textFill="WHITE" translateY="1.0">
          <tooltip>
             <Tooltip text="Emails in current folder" />
          </tooltip></Label>
@@ -58,18 +57,13 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
         </TableView>
-        <TextField fx:id="searchFolderField" layoutX="16.0" layoutY="76.0" prefHeight="25.0" prefWidth="211.0" promptText="Search folder" styleClass="input-field" />
-        <ChoiceBox fx:id="folderChoiceBox" layoutX="237.0" layoutY="77.0" prefHeight="23.0" prefWidth="147.0" />
-        <Button fx:id="deleteButton" layoutX="326.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteEmail" styleClass="button-discard" text="Delete">
+        <TextField fx:id="searchFolderField" layoutX="16.0" layoutY="76.0" prefHeight="25.0" prefWidth="211.0" promptText="Search folder" style="-fx-background-radius: 20;" styleClass="input-field" />
+        <ChoiceBox fx:id="folderChoiceBox" layoutX="237.0" layoutY="77.0" prefHeight="23.0" prefWidth="147.0" style="-fx-font-size: 10; -fx-background-radius: 20;" />
+        <Button fx:id="deleteButton" layoutX="326.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteEmail" style="-fx-background-radius: 20;" styleClass="button-discard" text="Delete">
             <tooltip>
              <Tooltip text="Take me home (country roads)" />
             </tooltip>
          </Button>
-      <ProgressIndicator fx:id="loadingProgressIndicator" layoutX="355.0" layoutY="32.0" prefHeight="35.0" prefWidth="27.0" progress="1.0">
-         <tooltip>
-            <Tooltip text="Refreshing Emails Progress" />
-         </tooltip>
-      </ProgressIndicator>
-      <Button fx:id="refreshButton" layoutX="243.0" layoutY="45.0" mnemonicParsing="false" onAction="#refreshFolder" prefHeight="26.0" prefWidth="78.0" styleClass="button-login" text="Refresh" />
+      <Button fx:id="refreshButton" layoutX="296.0" layoutY="45.0" mnemonicParsing="false" onAction="#refreshFolder" prefHeight="26.0" prefWidth="78.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Refresh" />
     </children>
 </AnchorPane>

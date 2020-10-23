@@ -1,4 +1,4 @@
-import javafx.animation.PauseTransition;
+import javafx.animation.*;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -163,13 +163,21 @@ public class ComposeController {
         });
     }
 
-    //snappy animation to go back
+    //slide down animation to go back to emailcontroller
     @FXML
     private void goBack(ActionEvent event) {
         try {
             Scene currentScene = attachButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();
-            pc.getChildren().remove(EmailController.root);
+
+            EmailController.root.translateYProperty().set(0);
+
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(EmailController.root.translateYProperty(), currentScene.getHeight(), Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(e -> pc.getChildren().remove(EmailController.root));
+            tim.play();
         }
 
         catch (Exception e) {

@@ -35,6 +35,13 @@ public class Controller {
     public static String theme;
 
     @FXML
+    public void initialize() {
+        //todo if auto-login.ss exists and first line is 1,
+        //attempt to login with username and password
+        //else just proceed as usual and don't inform the user of anything
+    }
+
+    @FXML
     private void minimize_stage(MouseEvent e) {
         Main.primaryStage.setIconified(true);
     }

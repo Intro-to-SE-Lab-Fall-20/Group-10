@@ -29,19 +29,19 @@
                 <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="252.0" />
             </children></HBox>
         <Label layoutX="16.0" layoutY="32.0" prefHeight="3.0" prefWidth="20.0" styleClass="description-label" text="To:" translateX="5.0" />
-      <TextField fx:id="to" layoutX="48.0" layoutY="27.0" prefHeight="25.0" prefWidth="338.0" promptText="Recipient(s) email address" styleClass="input-field">
+      <TextField fx:id="to" layoutX="48.0" layoutY="27.0" prefHeight="25.0" prefWidth="338.0" promptText="Recipient(s) email address" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip></TextField>
-      <TextField fx:id="subject" layoutX="76.0" layoutY="59.0" prefHeight="25.0" prefWidth="309.0" promptText="Subject Line" styleClass="input-field">
+      <TextField fx:id="subject" layoutX="76.0" layoutY="59.0" prefHeight="25.0" prefWidth="309.0" promptText="Subject Line" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Email Subject" />
          </tooltip></TextField>
-      <TextField fx:id="carboncopy" layoutX="49.0" layoutY="91.0" prefHeight="25.0" prefWidth="117.0" promptText="Carbon Copy" styleClass="input-field">
+      <TextField fx:id="carboncopy" layoutX="49.0" layoutY="91.0" prefHeight="25.0" prefWidth="117.0" promptText="Carbon Copy" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip></TextField>
-      <TextField fx:id="blindcc" layoutX="216.0" layoutY="91.0" prefHeight="25.0" prefWidth="168.0" promptText="Blind Carbon Copy" styleClass="input-field">
+      <TextField fx:id="blindcc" layoutX="216.0" layoutY="91.0" prefHeight="25.0" prefWidth="168.0" promptText="Blind Carbon Copy" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Separate receipients with comma" />
          </tooltip></TextField>
@@ -49,15 +49,15 @@
          <tooltip>
             <Tooltip text="Email Content" />
          </tooltip></TextArea>
-      <Button fx:id="attachButton" layoutX="49.0" layoutY="405.0" mnemonicParsing="false" onAction="#addFiles" styleClass="button-login" text="Attach Files">
+      <Button fx:id="attachButton" layoutX="49.0" layoutY="405.0" mnemonicParsing="false" onAction="#addFiles" style="-fx-background-radius: 20;" styleClass="button-login" text="Attach Files">
          <tooltip>
             <Tooltip text="Typically servers only support 25MB of attachments" />
          </tooltip></Button>
-      <Button layoutX="157.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" styleClass="button-discard" text="Discard">
+      <Button layoutX="157.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Discard">
          <tooltip>
             <Tooltip text="Discard Draft and leave compose screen" />
          </tooltip></Button>
-      <Button fx:id="sendButton" layoutX="243.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="26.0" prefWidth="109.0" styleClass="button-login" text="Send">
+      <Button fx:id="sendButton" layoutX="243.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Send">
          <tooltip>
             <Tooltip onCloseRequest="#sendEmail" text="Send Email (Unreversable action)" />
          </tooltip></Button>
