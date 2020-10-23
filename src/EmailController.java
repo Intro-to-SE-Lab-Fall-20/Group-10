@@ -53,7 +53,7 @@ public class EmailController {
     public TextField searchFolderField;
     public Button refreshButton;
 
-    //used so that we don't have to load emailcontroller evertime we come back here
+    //used so that we don't have to load emailcontroller everytime we come back here
     public static Parent root;
     public static Parent viewRoot;
 
