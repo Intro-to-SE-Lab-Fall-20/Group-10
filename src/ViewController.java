@@ -30,6 +30,7 @@ import java.util.LinkedList;
 
 public class ViewController  {
 
+    //gui elements
     @FXML
     private Button backButton;
     @FXML
@@ -61,6 +62,7 @@ public class ViewController  {
     private Store store;
     private Folder emailFolder;
 
+    //prepare tableview and fields with email contents
     @FXML
     public void initialize() {
         try {
@@ -74,8 +76,10 @@ public class ViewController  {
             size.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("size"));
             type.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("type"));
 
+            //can resize table columns
             table.setColumnResizePolicy((param) -> true );
 
+            //don't let user rearrange tableview
             table.getColumns().addListener((ListChangeListener) change -> {
                 change.next();
                 if(change.wasReplaced()) {
@@ -141,6 +145,7 @@ public class ViewController  {
                 }
             });
 
+            //download an attachmnet
             table.setRowFactory( tv -> {
                 TableRow<AttachmentPreview> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
@@ -182,6 +187,7 @@ public class ViewController  {
         }
     }
 
+    //goto forward email screen
     @FXML
     private void forwardEmail() {
         try {
@@ -209,6 +215,7 @@ public class ViewController  {
         }
     }
 
+    //goto reply email screen
     @FXML
     private void replyEmail() {
         try {

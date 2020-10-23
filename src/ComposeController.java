@@ -35,8 +35,10 @@ import java.util.Properties;
 
 public class ComposeController {
 
+    //attachment list
     private LinkedList<File> attachments = new LinkedList<>();
 
+    //ui elements
     @FXML
     public Button attachButton;
     public TextField to;
@@ -126,6 +128,7 @@ public class ComposeController {
             }
         });
 
+        //click on attachment to save it to a location
         table.setRowFactory( tv -> {
             TableRow<AttachmentPreview> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -147,6 +150,7 @@ public class ComposeController {
             return row ;
         });
 
+        //remove an attachment from a table
         table.setOnKeyPressed(keyEvent -> {
             AttachmentPreview selectedItem = (AttachmentPreview) table.getSelectionModel().getSelectedItem();
             if ( selectedItem != null ) {
@@ -159,6 +163,7 @@ public class ComposeController {
         });
     }
 
+    //snappy animation to go back
     @FXML
     private void goBack(ActionEvent event) {
         try {
@@ -204,7 +209,7 @@ public class ComposeController {
         return true;
     }
 
-    //main driver method for StraightShot
+    //main driver method for StraightShot, sending emails
     @FXML
     private void sendEmail(ActionEvent e) {
         try {
@@ -313,6 +318,7 @@ public class ComposeController {
         }
     }
 
+    //calculate size of attachments in MB
     private double attachmentsSize() {
         double megaBytes = 0;
 
@@ -393,6 +399,7 @@ public class ComposeController {
         table.refresh();
     }
 
+    //add files to the attachment list and the table, not the multipart yet
     @FXML
     private void addFiles(ActionEvent e) {
         try {

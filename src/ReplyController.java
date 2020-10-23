@@ -33,6 +33,7 @@ import java.util.Properties;
 
 public class ReplyController {
 
+    //gui elements
     @FXML
     public static AnchorPane parent;
     @FXML
@@ -58,6 +59,7 @@ public class ReplyController {
 
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
 
+    //prepare the reply
     @FXML
     public void initialize() {
         try {
@@ -71,6 +73,7 @@ public class ReplyController {
 
             table.setColumnResizePolicy((param) -> true );
 
+            //don't let user rearrange columns
             table.getColumns().addListener((ListChangeListener) change -> {
                 change.next();
                 if(change.wasReplaced()) {
@@ -136,6 +139,7 @@ public class ReplyController {
                 }
             });
 
+            //can still download attachments even in the replyview
             table.setRowFactory( tv -> {
                 TableRow<AttachmentPreview> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
@@ -169,6 +173,7 @@ public class ReplyController {
                 return row ;
             });
 
+            //remove an attachment
             table.setOnKeyPressed(keyEvent -> {
                 AttachmentPreview selectedItem = table.getSelectionModel().getSelectedItem();
                 if ( selectedItem != null ) {
@@ -180,6 +185,7 @@ public class ReplyController {
                 }
             });
 
+            //initialize tableview for attachmnets
             initAttachments();
         }
 
@@ -188,6 +194,7 @@ public class ReplyController {
         }
     }
 
+    //send our reply
     @FXML
     private void sendReply(ActionEvent event) {
         String replyingSubject = replySubject.getText();
@@ -261,6 +268,7 @@ public class ReplyController {
         }
     }
 
+    //attachment size in MB
     private double attachmentsSize() {
         double megaBytes = 0;
 
@@ -303,6 +311,7 @@ public class ReplyController {
         return true;
     }
 
+    //add attachments to tableview and attachment list but not the reply multipart yet
     @FXML
     private void addFiles(ActionEvent e) {
         try {
@@ -347,6 +356,7 @@ public class ReplyController {
         }
     }
 
+    //step back to previous screen
     @FXML
     private void goBack(ActionEvent event) {
         try {
@@ -355,8 +365,6 @@ public class ReplyController {
             Scene currentScene = attachButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();
             pc.getChildren().remove(EmailController.root);
-
-            //todo set view's root to emailcontroller's root
         }
 
         catch (Exception e) {
@@ -376,6 +384,7 @@ public class ReplyController {
         System.exit(0);
     }
 
+    //add attachments to tableview method
     private void initAttachments() {
         try {
             for (File attachment : additionalAttachments) {
@@ -445,6 +454,7 @@ public class ReplyController {
         return Controller.emailAddress;
     }
 
+    //make sure we support the email server
     private String getEmailHost(String email) throws Exception {
         if (email.endsWith("gmail.com"))
             return "smtp.gmail.com";
@@ -456,6 +466,7 @@ public class ReplyController {
             throw new IllegalAccessException("Unsupported email host");
     }
 
+    //fx popup
     private Popup createPopup(final String message) {
         final Popup popup = new Popup();
         popup.setAutoFix(true);

@@ -33,6 +33,7 @@ import java.util.Properties;
 
 public class ForwardController {
 
+    //gui elements
     @FXML
     public static AnchorPane parent;
     @FXML
@@ -56,6 +57,7 @@ public class ForwardController {
     @FXML
     private Button forwardButton;
 
+    //attachments list
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
 
     @FXML
@@ -72,6 +74,7 @@ public class ForwardController {
 
             table.setColumnResizePolicy((param) -> true );
 
+            //don't let the user rearrange the columns
             table.getColumns().addListener((ListChangeListener) change -> {
                 change.next();
                 if(change.wasReplaced()) {
@@ -137,6 +140,7 @@ public class ForwardController {
                 }
             });
 
+            //you can still download an attachment when forwarding it
             table.setRowFactory( tv -> {
                 TableRow<AttachmentPreview> row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
@@ -170,6 +174,7 @@ public class ForwardController {
                 return row ;
             });
 
+            //remove an attachment
             table.setOnKeyPressed(keyEvent -> {
                 AttachmentPreview selectedItem = table.getSelectionModel().getSelectedItem();
                 if ( selectedItem != null ) {
@@ -189,6 +194,7 @@ public class ForwardController {
         }
     }
 
+    //send the forward
     @FXML
     private void sendForward(ActionEvent event) {
         String forwardingSubject = forwardSubject.getText();
@@ -262,6 +268,7 @@ public class ForwardController {
         }
     }
 
+    //attachments total size in MB
     private double attachmentsSize() {
         double megaBytes = 0;
 
@@ -304,6 +311,7 @@ public class ForwardController {
         return true;
     }
 
+    //add files to list and tableview
     @FXML
     private void addFiles(ActionEvent e) {
         try {
@@ -356,8 +364,6 @@ public class ForwardController {
             Scene currentScene = attachButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();
             pc.getChildren().remove(EmailController.root);
-
-            //todo set view's root to emailcontroller's root
         }
 
         catch (Exception e) {
@@ -377,6 +383,7 @@ public class ForwardController {
         System.exit(0);
     }
 
+    //fill tableview with attachment names
     private void initAttachments() {
         try {
             for (File attachment : additionalAttachments) {
@@ -446,6 +453,7 @@ public class ForwardController {
         return Controller.emailAddress;
     }
 
+    //make sure that we support the email server
     private String getEmailHost(String email) throws Exception {
         if (email.endsWith("gmail.com"))
             return "smtp.gmail.com";
@@ -457,6 +465,7 @@ public class ForwardController {
             throw new IllegalAccessException("Unsupported email host");
     }
 
+    //fx popup
     private Popup createPopup(final String message) {
         final Popup popup = new Popup();
         popup.setAutoFix(true);

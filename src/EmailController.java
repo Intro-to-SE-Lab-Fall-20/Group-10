@@ -27,14 +27,12 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
-//todo comment code [Good Java practice for points for spring 3]
-//todo don't download attachments unless user wants them in a specific dir, this will reduce lag
-//todo sort out yahoo.com email
+//todo sort out yahoo.com and outlook.com email
 //todo put animations back in when using goBack()s
-//todo don't download attachments, only download names and file sizes I guess
-//todo try song length method again
+//todo don't download attachments, only download names and file and then download if they actually want to
 
 public class EmailController {
+    //all gui elements
     @FXML
     public Label inboxLabel;
     public TableView<EmailPreview> table;
@@ -103,6 +101,7 @@ public class EmailController {
                 }
             });
 
+            //these methods are for tooltips when you hover over an email in the list
             from.setCellFactory(new Callback<TableColumn<EmailPreview,String>, TableCell<EmailPreview,String>>() {
                 @Override
                 public TableCell<EmailPreview, String> call( TableColumn<EmailPreview, String> param) {
@@ -179,6 +178,7 @@ public class EmailController {
                 }
             });
 
+            //open the email on mouse click if we can
             table.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
                     try {
@@ -212,6 +212,7 @@ public class EmailController {
                 }
             });
 
+            //init user folders like inbox
             initFolders();
 
             folderChoiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, n1, n2) -> {
@@ -228,6 +229,7 @@ public class EmailController {
 
             folderChoiceBox.getSelectionModel().select(matchIndex);
 
+            //prepare the textfield used for searching through emails
             searchFolderField.setOnAction(event -> {
                 try {
                     Platform.runLater(() -> loadingProgressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS));
@@ -262,6 +264,7 @@ public class EmailController {
                 }
             });
 
+            //deleting emails function
             table.setOnKeyPressed(keyEvent -> {
                 EmailPreview selectedItem = table.getSelectionModel().getSelectedItem();
                 if ( selectedItem != null ) {
@@ -280,6 +283,7 @@ public class EmailController {
         }
     }
 
+    //simple email getter
     private String getEmailAddress() {
         return Controller.emailAddress;
     }
@@ -500,6 +504,7 @@ public class EmailController {
             currentMessageBody = getMessageText(currentMessage);
             currentMessageAttachments = new LinkedList<>();
 
+            //todo spring 4 change the downloading of attachments to after the email is loaded and in a separate thread
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
@@ -561,6 +566,7 @@ public class EmailController {
             currentMessageBody = getMessageText(currentMessage);
             currentMessageAttachments = new LinkedList<>();
 
+            //todo spring 4 change the downloading of attachments to after the email is loaded and in a separate thread
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
@@ -623,6 +629,7 @@ public class EmailController {
             currentMessageBody = getMessageText(currentMessage);
             currentMessageAttachments = new LinkedList<>();
 
+            //todo spring 4 change the downloading of attachments to after the email is loaded and in a separate thread
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
@@ -779,6 +786,7 @@ public class EmailController {
 
     }
 
+    //class for table rows that helps in displaying an email preview on mouse_hover_over
     public class TooltipTableRow<T> extends TableRow<T> {
 
         private Function<T, String> toolTipStringFunction;
@@ -799,7 +807,7 @@ public class EmailController {
         }
     }
 
-    //popup messages, can customize look based on the style sheet selected
+    //fx popup as opposed to the swing popup inside of main
     private Popup createPopup(final String message) {
         final Popup popup = new Popup();
         popup.setAutoFix(true);
