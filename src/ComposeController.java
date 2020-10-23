@@ -35,6 +35,8 @@ import java.util.Properties;
 
 public class ComposeController {
 
+    public Button discardButton;
+    public Button sendButton;
     //attachment list
     private LinkedList<File> attachments = new LinkedList<>();
 
