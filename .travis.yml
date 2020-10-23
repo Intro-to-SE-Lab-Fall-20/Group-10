@@ -2,6 +2,7 @@ language: java
 jdk: openjdk11
 before_install:
   - sudo apt install openjfx
+  - sudo apt-get install ant
   - sudo apt-get install ant-optional
 dist: xenial
 addons:
@@ -9,4 +10,4 @@ addons:
     packages:
       - ant
 install: true
-script: ant -lib C:\Program Files\apache-ant-1.9.15\lib\ant-unit.jar test
+script: ant test
