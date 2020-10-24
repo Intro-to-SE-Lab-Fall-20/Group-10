@@ -71,7 +71,7 @@ public class Main extends Application {
 
             JLabel desc = new JLabel(message, SwingConstants.CENTER);
             desc.setForeground(Color.BLACK);
-            desc.setFont(new Font("Segoe UI Black", Font.BOLD, 12));
+            desc.setFont(new Font("Segoe UI Black", Font.BOLD, 10));
             desc.setBounds(5, 5, width - 10, 20);
 
             consoleLabel.add(desc, SwingConstants.CENTER);

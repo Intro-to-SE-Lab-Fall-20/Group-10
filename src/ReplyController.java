@@ -490,7 +490,7 @@ public class ReplyController {
         final Popup popup = createPopup(message);
         popup.setOnShown(e -> {
             popup.setX(stage.getX() + stage.getWidth() / 2 - popup.getWidth() / 2);
-            popup.setY(stage.getY() + 25);
+            popup.setY(stage.getY() + 20);
         });
         popup.show(stage);
         PauseTransition delay = new PauseTransition(Duration.seconds(2));

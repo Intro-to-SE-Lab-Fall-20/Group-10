@@ -233,8 +233,8 @@
     -fx-background-color: rgb(226, 40, 102);
     -fx-background-radius: 4px;
 
-    -fx-border-radius: 4px;
-    -fx-border-width: 1px;
+    -fx-border-radius: 0px;
+    -fx-border-width: 2px;
     -fx-border-color: black;
 }
 
