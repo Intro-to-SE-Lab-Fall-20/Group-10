@@ -316,7 +316,7 @@ public class ComposeController {
                     //attempt to send and if successful, inform user and go back to inbox screen
                     Transport.send(mes);
 
-                    showPopupMessage("Sent messaage", Main.primaryStage);
+                    showPopupMessage("Sent email", Main.primaryStage);
 
                     goBack(null);
                 }

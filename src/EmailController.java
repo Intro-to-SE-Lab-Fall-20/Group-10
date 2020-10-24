@@ -486,7 +486,7 @@ public class EmailController {
         }
     }
 
-    //when we go to viewer for the first time, it fails but after that it works.
+    //view the full email, this is where the user can choose to view and download attachments if there are any
     @FXML
     private void gotoViewer(Message view) {
         try {
@@ -500,7 +500,10 @@ public class EmailController {
             currentMessageBody = getMessageText(currentMessage);
             currentMessageAttachments = new LinkedList<>();
 
-            //todo spring 4 change the downloading of attachments to after the email is loaded and in a separate thread
+            //todo skip loading attachments and put a "load attachments" button where the table is that when clicked will download them in the background
+            //todo make timeout for popups editable and then display it here that lasts until we're done loading attachments
+            //todo sprint 4 change the downloading of attachments to after the email is loaded and in a separate thread
+            //todo redo tableview for attachment to be a combo box maybe? with buttons next to it for downloading it or removing it
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
@@ -553,7 +556,10 @@ public class EmailController {
     @FXML
     public void gotoReply(ActionEvent event) {
         try {
-            Main.startWorking("Preparing reply"); //todo only go to reply or forward if there is a mesasge selected
+            if (currentMessageMultipart == null)
+                return;
+
+            Main.startWorking("Preparing reply");
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
@@ -562,7 +568,7 @@ public class EmailController {
             currentMessageBody = getMessageText(currentMessage);
             currentMessageAttachments = new LinkedList<>();
 
-            //todo spring 4 change the downloading of attachments to after the email is loaded and in a separate thread
+            //todo sprint 4 change the downloading of attachments to after the email is loaded and in a separate thread
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
@@ -616,6 +622,9 @@ public class EmailController {
     @FXML
     public void gotoForward(ActionEvent event) {
         try {
+            if (currentMessageMultipart == null)
+                return;
+
             Main.startWorking("Preparing forward");
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
@@ -625,7 +634,7 @@ public class EmailController {
             currentMessageBody = getMessageText(currentMessage);
             currentMessageAttachments = new LinkedList<>();
 
-            //todo spring 4 change the downloading of attachments to after the email is loaded and in a separate thread
+            //todo sprint 4 change the downloading of attachments to after the email is loaded and in a separate thread
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
@@ -731,6 +740,9 @@ public class EmailController {
     @FXML
     public void deleteEmail() {
         try {
+            if (currentMessageMultipart == null)
+                return;
+
             int deleteIndex = messages.length - table.getSelectionModel().getSelectedIndex() - 1;
 
             StringBuilder passwordBuilder = new StringBuilder();

@@ -30,7 +30,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("StraightShot");
-        this.primaryStage = primaryStage;
+        Main.primaryStage = primaryStage;
         primaryStage.setScene(new Scene(root));
         primaryStage.getIcons().add(new Image(
                 Main.class.getResourceAsStream("IO/Logo.png")));
