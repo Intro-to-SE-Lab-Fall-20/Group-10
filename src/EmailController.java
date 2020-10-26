@@ -32,7 +32,6 @@ import java.util.function.Function;
 //todo make popups consistent and slide up and down from dragLabel
 //todo tell user when downloading attachments
 //todo tooltips are inconsistent for copied GUIs like view vs reply vs forward
-//todo choice box for attachments "pac.png - 2.58MB" with button to download, open, or remove depending on possibilities
 
 public class EmailController {
     //all gui elements
@@ -483,6 +482,41 @@ public class EmailController {
         }
     }
 
+    //todo test if this works with view, reply, and forward
+    public void initChosenEmailAttachments() {
+        try {
+            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
+                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
+
+                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
+                    continue;
+                }
+
+                InputStream is = bodyPart.getInputStream();
+
+                //this is the temp folder we will completely delete on exit
+                File dir = new File("tmp");
+
+                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
+                if (!dir.exists()) dir.mkdir();
+
+                FileOutputStream fos = new FileOutputStream(f);
+
+                byte[] buf = new byte[4096];
+
+                int bytesRead;
+                while((bytesRead = is.read(buf))!=-1) {
+                    fos.write(buf, 0, bytesRead);
+                }
+
+                fos.close();
+                currentMessageAttachments.add(f);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //view the full email, this is where the user can choose to view and download attachments if there are any
     @FXML
     private void gotoViewer(Message view) {
@@ -514,7 +548,6 @@ public class EmailController {
 
                 File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
                 if (!dir.exists()) dir.mkdir();
-
 
                 FileOutputStream fos = new FileOutputStream(f);
 

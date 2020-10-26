@@ -37,7 +37,7 @@
       </TextField>
       <TextField fx:id="forwardSubject" layoutX="76.0" layoutY="59.0" prefHeight="25.0" prefWidth="309.0" promptText="Forwarding subject" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
-            <Tooltip text="Email Subject" />
+            <Tooltip text="Forwarding Subject" />
          </tooltip>
       </TextField>
       <TextArea fx:id="emailContent" layoutX="36.0" layoutY="92.0" prefHeight="160.0" prefWidth="329.0" styleClass="input-field">
@@ -52,12 +52,12 @@
       </Button>
       <Button fx:id="discardButton" layoutX="208.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Discard">
          <tooltip>
-            <Tooltip text="Discard Draft and leave compose screen" />
+            <Tooltip text="Discard forward" />
          </tooltip>
       </Button>
-      <Button fx:id="forwardButton" layoutX="292.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendForward" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Send">
+      <Button fx:id="forwardButton" layoutX="292.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendForward" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Forward">
          <tooltip>
-            <Tooltip text="Send Email (Unreversable action)" />
+            <Tooltip text="Forward Email" />
          </tooltip>
       </Button>
       <Label focusTraversable="false" layoutX="21.0" layoutY="64.0" prefHeight="15.0" prefWidth="57.0" styleClass="description-label" text="Subject:" />

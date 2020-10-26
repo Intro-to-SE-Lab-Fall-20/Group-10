@@ -1,20 +1,17 @@
 import javafx.animation.*;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -23,9 +20,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,25 +30,11 @@ public class ReplyController {
     //gui elements
     @FXML
     public static AnchorPane parent;
-    @FXML
     private TextField replyTo;
-    @FXML
     private TextField replySubject;
-    @FXML
     private TextArea emailContent;
-    @FXML
-    private TableView<AttachmentPreview> table;
-    @FXML
-    private TableColumn name;
-    @FXML
-    private TableColumn size;
-    @FXML
-    private TableColumn type;
-    @FXML
     private Button attachButton;
-    @FXML
     private Button discardButton;
-    @FXML
     private Button replyButton;
 
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
@@ -66,127 +46,7 @@ public class ReplyController {
             replySubject.setText("RE: " + EmailController.currentMessageSubject);
             emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
 
-            //set how each column will display its data <AttachmentPreview, String> means display this object as a string
-            name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
-            size.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("size"));
-            type.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("type"));
-
-            table.setColumnResizePolicy((param) -> true );
-
-            //don't let user rearrange columns
-            table.getColumns().addListener((ListChangeListener) change -> {
-                change.next();
-                if(change.wasReplaced()) {
-                    table.getColumns().clear();
-                    table.getColumns().addAll(name,size,type);
-                }
-            });
-
-            name.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
-                @Override
-                public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
-                    return new TableCell<>() {
-                        private Text text;
-
-                        @Override
-                        public void updateItem(String item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (!isEmpty()) {
-                                text = new Text(item);
-                                text.setWrappingWidth(80);
-                                setGraphic(text);
-                            }
-                        }
-                    };
-                }
-            });
-
-            size.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
-                @Override
-                public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
-                    return new TableCell<>() {
-                        private Text text;
-
-                        @Override
-                        public void updateItem(String item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (!isEmpty()) {
-                                text = new Text(item);
-                                text.setWrappingWidth(80);
-                                setGraphic(text);
-                            }
-                        }
-                    };
-                }
-            });
-
-            type.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
-                @Override
-                public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
-                    return new TableCell<>() {
-                        private Text text;
-
-                        @Override
-                        public void updateItem(String item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (!isEmpty()) {
-                                text = new Text(item);
-                                text.setWrappingWidth(80);
-                                setGraphic(text);
-                            }
-                        }
-                    };
-                }
-            });
-
-            //can still download attachments even in the replyview
-            table.setRowFactory( tv -> {
-                TableRow<AttachmentPreview> row = new TableRow<>();
-                row.setOnMouseClicked(event -> {
-                    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                        try {
-                            File copyMe = row.getItem().getPointerFile().getAbsoluteFile();
-                            Path from = Paths.get(copyMe.toURI());
-
-                            DirectoryChooser directoryChooser = new DirectoryChooser();
-                            directoryChooser.setTitle("Select location to download " + copyMe.getName() + " to");
-                            File selectedDirectory = directoryChooser.showDialog(Main.primaryStage);
-
-                            if (selectedDirectory == null)
-                                return;
-
-                            Path to = Paths.get((selectedDirectory + System.getProperty("file.separator") + copyMe.getName()));
-
-                            if (selectedDirectory != null && selectedDirectory.isDirectory())
-                                Files.copy(from, to);
-
-                            showPopupMessage("Successfully saved " + copyMe.getName() + " to " + selectedDirectory.getName(), Main.primaryStage);
-
-                        }
-
-                        catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-                return row ;
-            });
-
-            //remove an attachment
-            table.setOnKeyPressed(keyEvent -> {
-                AttachmentPreview selectedItem = table.getSelectionModel().getSelectedItem();
-                if ( selectedItem != null ) {
-                    if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
-                        additionalAttachments.remove(0);
-                        table.getItems().remove(table.getSelectionModel().getSelectedIndex());
-                        table.refresh();
-                    }
-                }
-            });
-
-            //initialize tableview for attachmnets
-            initAttachments();
+            //todo copy stuff from view
         }
 
         catch (Exception e) {
@@ -332,21 +192,8 @@ public class ReplyController {
                     }
                 }
 
-                table.getItems().clear();
-
                 for (File attachment : additionalAttachments) {
-                    if (getFileExtension(attachment).equalsIgnoreCase("png") ||
-                            getFileExtension(attachment).equalsIgnoreCase("jpg") ||
-                            getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
-                        int[] dim = getImageDimensions(attachment);
-                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                                getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
-                    }
-
-                    else {
-                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                                getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
-                    }
+                    //todo
                 }
             }
         }
@@ -393,31 +240,13 @@ public class ReplyController {
     //add attachments to tableview method
     private void initAttachments() {
         try {
-            for (File attachment : additionalAttachments) {
-                if (getFileExtension(attachment).equalsIgnoreCase("png") ||
-                        getFileExtension(attachment).equalsIgnoreCase("jpg") ||
-                        getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
-                    int[] dim = getImageDimensions(attachment);
-                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                            getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
-                }
-
-                else {
-                    addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                            getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
-                }
-            }
+            //todo load attachments from the email if it has any, inform if none
+            //todo add attchments to the choicebox
         }
 
         catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    //used to add attachment representations to the table
-    private void addAttachmentsToTable(String name, String size, String type, File file) {
-        table.getItems().add(new AttachmentPreview(name,size,type,file));
-        table.refresh();
     }
 
     //must pass in a file that is an iamge and will return [xDim, yDim] of the image
