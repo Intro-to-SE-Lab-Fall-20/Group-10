@@ -176,7 +176,7 @@ public class Controller {
 
         //make sure we can load stuff from the email and make sure it is formatted correctly using a regex
         if (isValidEmail(emailAddress) && validateCredentials(emailAddress, password)) {
-            Main.startWorking("Email Authenticated");
+            Main.startWorking("Email Authenticated",2500);
             loadEmail(e);
         }
 

@@ -1,4 +1,5 @@
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.mail.Folder;
-import javax.mail.Message;
 import javax.mail.Store;
 import java.io.File;
 import java.nio.file.Files;
@@ -31,20 +31,28 @@ import java.util.LinkedList;
 public class ViewController  {
 
     //gui elements
+    @FXML
     private Button backButton;
+    @FXML
     public static AnchorPane parent;
+    @FXML
     public Label fromLabel;
+    @FXML
     private Label subjectLabel;
+    @FXML
     private Label dateLabel;
+    @FXML
     public TextArea emailContent;
+    @FXML
     public Button replyButton;
+    @FXML
     public Button forwardButton;
+    @FXML
     public Button loadAttachments;
+    @FXML
     public Button downloadAttachment;
+    @FXML
     public ChoiceBox<String> attachmentsChoice;
-
-    private Message localDisplayMessage;
-    private EmailPreview thisPrev;
 
     private LinkedList<File> attachments;
     public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
@@ -52,13 +60,33 @@ public class ViewController  {
     private Store store;
     private Folder emailFolder;
 
+    @FXML
     private void loadAttachments(ActionEvent e) {
-        Main.startWorking("Loading...");
-        //todo does this work? Either way do it in the background
-        new Thread(this::initAttachments).start();
+        Main.startWorking("Loading...",0);
+        new Thread().start();
+
+        new Thread(() -> {
+            EmailController.initChosenEmailAttachments();
+
+            attachments = EmailController.currentMessageAttachments;
+
+            attachmentsChoice.getItems().clear();
+            attachmentsDisplay.clear();
+
+            for (File attachment : attachments) {
+                String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                attachmentsDisplay.add(currentAttachDisp);
+            }
+
+            attachmentsChoice.setItems(attachmentsDisplay);
+
+            Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+
+            Main.startWorking("Loaded!",2500);
+        }).start();
     }
 
-    //todo does this work
+    @FXML
     private void downloadAttachment(ActionEvent e) {
         try {
 
@@ -107,7 +135,7 @@ public class ViewController  {
     @FXML
     private void forwardEmail() {
         try {
-            Main.startWorking("Preparing forward");
+            Main.startWorking("Preparing forward",2500);
 
             Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
             EmailController.root = root;
@@ -135,7 +163,7 @@ public class ViewController  {
     @FXML
     private void replyEmail() {
         try {
-            Main.startWorking("Preparing reply");
+            Main.startWorking("Preparing reply",2500);
 
             Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
             EmailController.root = root;
@@ -248,17 +276,6 @@ public class ViewController  {
 
         else {
             f.delete();
-        }
-    }
-
-    private void initAttachments() {
-        try {
-            //todo load attachments from the email if it has any, inform if none
-            //todo add attchments to the choicebox
-        }
-
-        catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 

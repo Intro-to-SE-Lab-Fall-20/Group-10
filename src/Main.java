@@ -18,6 +18,9 @@ public class Main extends Application {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    //used for popups
+    private static JFrame informFrame;
+
     //used for autolog in for developers
     public static boolean autoLoggedIn = false;
 
@@ -53,13 +56,15 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
-    public static void startWorking(String message) {
+    public static void startWorking(String message, int delay) {
         try {
             int width = 150;
             int height = 30;
 
-            JFrame informFrame = new JFrame();
+            if (informFrame != null)
+                informFrame.dispose();
+
+            informFrame = new JFrame();
             informFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             informFrame.setTitle("Working in background");
             informFrame.setSize(width, height);
@@ -83,14 +88,17 @@ public class Main extends Application {
             informFrame.setResizable(false);
             informFrame.setIconImage(new ImageIcon("src/IO/Logo.png").getImage());
 
-            Timer t = new Timer(2500, null);
-            t.addActionListener(e -> {
-                informFrame.setVisible(false);
-                informFrame.dispose();
+            //pass in a zero to stay until next call here
+            if (delay != 0) {
+                Timer t = new Timer(delay, null);
+                t.addActionListener(e -> {
+                    informFrame.setVisible(false);
+                    informFrame.dispose();
 
-            });
-            t.setRepeats(false);
-            t.start();
+                });
+                t.setRepeats(false);
+                t.start();
+            }
         }
 
         catch (Exception e) {

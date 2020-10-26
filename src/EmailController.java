@@ -453,7 +453,7 @@ public class EmailController {
 
     @FXML
     private void refreshFolder(ActionEvent event) {
-        Main.startWorking("Refreshing folder");
+        Main.startWorking("Refreshing folder",2500);
 
         if (searchFolderField.getText().length() == 0)
             fetchEmail(currentFolder);
@@ -482,9 +482,12 @@ public class EmailController {
         }
     }
 
+    //todo call this on "load attachments" action from view, compose, or reply
     //todo test if this works with view, reply, and forward
-    public void initChosenEmailAttachments() {
+    public static void initChosenEmailAttachments() {
         try {
+            currentMessageAttachments = new LinkedList<>();
+
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
@@ -512,6 +515,7 @@ public class EmailController {
                 fos.close();
                 currentMessageAttachments.add(f);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -521,46 +525,17 @@ public class EmailController {
     @FXML
     private void gotoViewer(Message view) {
         try {
-            Main.startWorking("Loading email");
+            if (currentMessageMultipart == null)
+                return;
 
-            currentMessage = view;
-            currentMessageMultipart = (Multipart) currentMessage.getContent();
-            currentMessageSubject = currentMessage.getSubject();
-            currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
-            currentMessageDate = String.valueOf(currentMessage.getSentDate());
-            currentMessageBody = getMessageText(currentMessage);
-            currentMessageAttachments = new LinkedList<>();
+            Main.startWorking("Loading email",2500);
 
-            //todo skip loading attachments and put a "load attachments" button where the table is that when clicked will download them in the background
-            //todo make timeout for popups editable and then display it here that lasts until we're done loading attachments
-            //todo sprint 4 change the downloading of attachments to after the email is loaded and in a separate thread
-            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
-                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
-
-                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
-                    continue;
-                }
-
-                InputStream is = bodyPart.getInputStream();
-
-                //this is the temp folder we will completely delete on exit
-                File dir = new File("tmp");
-
-                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
-                if (!dir.exists()) dir.mkdir();
-
-                FileOutputStream fos = new FileOutputStream(f);
-
-                byte[] buf = new byte[4096];
-
-                int bytesRead;
-                while((bytesRead = is.read(buf))!=-1) {
-                    fos.write(buf, 0, bytesRead);
-                }
-
-                fos.close();
-                currentMessageAttachments.add(f);
-            }
+            EmailController.currentMessage = view;
+            EmailController.currentMessageMultipart = (Multipart) currentMessage.getContent();
+            EmailController.currentMessageSubject = currentMessage.getSubject();
+            EmailController.currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
+            EmailController.currentMessageDate = String.valueOf(currentMessage.getSentDate());
+            EmailController.currentMessageBody = getMessageText(currentMessage);
 
             root = FXMLLoader.load(getClass().getResource("view.fxml"));
             viewRoot  = root;
@@ -588,43 +563,13 @@ public class EmailController {
             if (currentMessageMultipart == null)
                 return;
 
-            Main.startWorking("Preparing reply");
+            Main.startWorking("Preparing reply",2500);
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
-            currentMessageAttachments = new LinkedList<>();
-
-            //todo sprint 4 change the downloading of attachments to after the email is loaded and in a separate thread
-            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
-                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
-
-                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
-                    continue;
-                }
-
-                InputStream is = bodyPart.getInputStream();
-
-                //this is the temp folder we will completely delete on exit
-                File dir = new File("tmp");
-
-                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
-                if (!dir.exists()) dir.mkdir();
-
-                FileOutputStream fos = new FileOutputStream(f);
-
-                byte[] buf = new byte[4096];
-
-                int bytesRead;
-                while((bytesRead = is.read(buf))!=-1) {
-                    fos.write(buf, 0, bytesRead);
-                }
-
-                fos.close();
-                currentMessageAttachments.add(f);
-            }
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
@@ -654,43 +599,13 @@ public class EmailController {
             if (currentMessageMultipart == null)
                 return;
 
-            Main.startWorking("Preparing forward");
+            Main.startWorking("Preparing forward",2500);
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
-            currentMessageAttachments = new LinkedList<>();
-
-            //todo sprint 4 change the downloading of attachments to after the email is loaded and in a separate thread
-            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
-                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
-
-                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
-                    continue;
-                }
-
-                InputStream is = bodyPart.getInputStream();
-
-                //this is the temp folder we will completely delete on exit
-                File dir = new File("tmp");
-
-                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
-                if (!dir.exists()) dir.mkdir();
-
-                FileOutputStream fos = new FileOutputStream(f);
-
-                byte[] buf = new byte[4096];
-
-                int bytesRead;
-                while((bytesRead = is.read(buf))!=-1) {
-                    fos.write(buf, 0, bytesRead);
-                }
-
-                fos.close();
-                currentMessageAttachments.add(f);
-            }
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
