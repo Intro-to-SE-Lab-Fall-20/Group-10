@@ -1,11 +1,11 @@
 import javafx.animation.*;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -14,7 +14,6 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.imageio.ImageIO;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -30,14 +29,25 @@ public class ReplyController {
     //gui elements
     @FXML
     public static AnchorPane parent;
+    @FXML
     private TextField replyTo;
+    @FXML
+    private ChoiceBox<String> attachmentsChoice;
+    @FXML
     private TextField replySubject;
+    @FXML
     private TextArea emailContent;
+    @FXML
     private Button attachButton;
+    @FXML
+    private Button removeAttachments;
+    @FXML
     private Button discardButton;
+    @FXML
     private Button replyButton;
 
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
+    public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
 
     //prepare the reply
     @FXML
@@ -46,7 +56,20 @@ public class ReplyController {
             replySubject.setText("RE: " + EmailController.currentMessageSubject);
             emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
 
-            //todo copy stuff from view
+            additionalAttachments = null;
+            additionalAttachments = EmailController.currentMessageAttachments;
+
+            attachmentsChoice.getItems().clear();
+            attachmentsDisplay.clear();
+
+            for (File attachment : additionalAttachments) {
+                String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                attachmentsDisplay.add(currentAttachDisp);
+            }
+
+            attachmentsChoice.setItems(attachmentsDisplay);
+
+            Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
         }
 
         catch (Exception e) {
@@ -171,6 +194,21 @@ public class ReplyController {
         return true;
     }
 
+    @FXML
+    private void removeFile(ActionEvent e) {
+        int index = attachmentsChoice.getSelectionModel().getSelectedIndex();
+
+        if (index >= 0 && index < attachmentsDisplay.size()) {
+            attachmentsDisplay.remove(index);
+            additionalAttachments.remove(index);
+
+            attachmentsChoice.setItems(attachmentsDisplay);
+
+            if (attachmentsDisplay.size() > 0)
+                attachmentsChoice.getSelectionModel().select(0);
+        }
+    }
+
     //add attachments to tableview and attachment list but not the reply multipart yet
     @FXML
     private void addFiles(ActionEvent e) {
@@ -187,14 +225,26 @@ public class ReplyController {
 
             if (listAttachments != null) {
                 for (File f : listAttachments) {
-                    if (!additionalAttachments.contains(f)) {
+                    boolean skip = false;
+
+                    for (File compFile : additionalAttachments)
+                        if (compFile.getName().equalsIgnoreCase(f.getName()))
+                            skip = true;
+
+                    if (!skip)
                         additionalAttachments.add(f);
-                    }
                 }
 
+                attachmentsChoice.getItems().clear();
+                attachmentsDisplay.clear();
+
                 for (File attachment : additionalAttachments) {
-                    //todo
+                    String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                    attachmentsDisplay.add(currentAttachDisp);
                 }
+
+                attachmentsChoice.setItems(attachmentsDisplay);
+                attachmentsChoice.getSelectionModel().select(0);
             }
         }
 
@@ -235,43 +285,6 @@ public class ReplyController {
         ViewController.clearLocalAttachments();
 
         System.exit(0);
-    }
-
-    //add attachments to tableview method
-    private void initAttachments() {
-        try {
-            //todo load attachments from the email if it has any, inform if none
-            //todo add attchments to the choicebox
-        }
-
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    //must pass in a file that is an iamge and will return [xDim, yDim] of the image
-    private int[] getImageDimensions(File imageFile) {
-        try {
-            return new int[]{ImageIO.read(imageFile).getWidth(), ImageIO.read(imageFile).getHeight()};
-        }
-
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new int[]{0,0};
-    }
-
-    //will return txt, png, mp3, or whatever the file type is
-    private String getFileExtension(File f) {
-        String extension = "";
-        int i = f.getName().lastIndexOf('.');
-
-        if (i > 0) {
-            extension = f.getName().substring(i + 1);
-        }
-
-        return extension.replace(".","");
     }
 
     //returns a representation if a file in MB or KB with 2 decimal places

@@ -28,10 +28,11 @@ import java.util.*;
 import java.util.function.Function;
 
 //todo sort out yahoo.com and outlook.com email
-//todo don't download attachments, only download names and file and then download if they actually want to
-//todo make popups consistent and slide up and down from dragLabel
-//todo tell user when downloading attachments
-//todo tooltips are inconsistent for copied GUIs like view vs reply vs forward
+//todo attach swing popup to frame or convert everything to fx popups
+//todo add a shutdown hook to remove tmp dir
+//todo fix double attachment glitch
+//todo add tooltips on GUIs that were edited
+//todo you have to click load attachments in view twice for it to work
 
 public class EmailController {
     //all gui elements
@@ -482,8 +483,6 @@ public class EmailController {
         }
     }
 
-    //todo call this on "load attachments" action from view, compose, or reply
-    //todo test if this works with view, reply, and forward
     public static void initChosenEmailAttachments() {
         try {
             currentMessageAttachments = new LinkedList<>();
@@ -563,13 +562,17 @@ public class EmailController {
             if (currentMessageMultipart == null)
                 return;
 
-            Main.startWorking("Preparing reply",2500);
+            Main.startWorking("Preparing reply",0);
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
+
+            initChosenEmailAttachments();
+
+            Main.startWorking("Done!",2000);
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
@@ -599,13 +602,17 @@ public class EmailController {
             if (currentMessageMultipart == null)
                 return;
 
-            Main.startWorking("Preparing forward",2500);
+            Main.startWorking("Preparing forward",0);
 
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
+
+            initChosenEmailAttachments();
+
+            Main.startWorking("Done!",2000);
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));

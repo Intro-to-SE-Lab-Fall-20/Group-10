@@ -1,4 +1,7 @@
 import javafx.animation.*;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -26,15 +29,26 @@ public class ForwardController {
     //gui elements
     @FXML
     public static AnchorPane parent;
+    @FXML
     private TextField forwardTo;
+    @FXML
     private TextField forwardSubject;
+    @FXML
     private TextArea emailContent;
+    @FXML
     private Button attachButton;
+    @FXML
+    private ChoiceBox<String> attachmentsChoice;
+    @FXML
+    private Button removeAttachments;
+    @FXML
     private Button discardButton;
+    @FXML
     private Button forwardButton;
 
     //attachments list
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
+    public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -43,7 +57,20 @@ public class ForwardController {
             forwardTo.setText("");
             emailContent.setText(EmailController.currentMessageBody);
 
-            //todo copy stuff from view
+            additionalAttachments = null;
+            additionalAttachments = EmailController.currentMessageAttachments;
+
+            attachmentsChoice.getItems().clear();
+            attachmentsDisplay.clear();
+
+            for (File attachment : additionalAttachments) {
+                String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                attachmentsDisplay.add(currentAttachDisp);
+            }
+
+            attachmentsChoice.setItems(attachmentsDisplay);
+
+            Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
         }
 
         catch (Exception e) {
@@ -168,6 +195,21 @@ public class ForwardController {
         return true;
     }
 
+    @FXML
+    private void removeFile(ActionEvent e) {
+        int index = attachmentsChoice.getSelectionModel().getSelectedIndex();
+
+        if (index >= 0 && index < attachmentsDisplay.size()) {
+            attachmentsDisplay.remove(index);
+            additionalAttachments.remove(index);
+
+            attachmentsChoice.setItems(attachmentsDisplay);
+
+            if (attachmentsDisplay.size() > 0)
+                attachmentsChoice.getSelectionModel().select(0);
+        }
+    }
+
     //add files to list and tableview
     @FXML
     private void addFiles(ActionEvent e) {
@@ -184,14 +226,26 @@ public class ForwardController {
 
             if (listAttachments != null) {
                 for (File f : listAttachments) {
-                    if (!additionalAttachments.contains(f)) {
+                    boolean skip = false;
+
+                    for (File compFile : additionalAttachments)
+                        if (compFile.getName().equalsIgnoreCase(f.getName()))
+                            skip = true;
+
+                    if (!skip)
                         additionalAttachments.add(f);
-                    }
                 }
 
+                attachmentsChoice.getItems().clear();
+                attachmentsDisplay.clear();
+
                 for (File attachment : additionalAttachments) {
-                    //todo
+                    String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                    attachmentsDisplay.add(currentAttachDisp);
                 }
+
+                attachmentsChoice.setItems(attachmentsDisplay);
+                attachmentsChoice.getSelectionModel().select(0);
             }
         }
 

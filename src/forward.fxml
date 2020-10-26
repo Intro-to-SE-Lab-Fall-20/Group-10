@@ -44,14 +44,13 @@
             <Tooltip text="Discard forward" />
          </tooltip>
       </Button>
-      <Button fx:id="forwardButton" layoutX="292.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendForward" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Forward">
+      <Button fx:id="forwardButton" layoutX="292.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendForward" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Send">
          <tooltip>
             <Tooltip text="Forward Email" />
          </tooltip>
       </Button>
       <Label focusTraversable="false" layoutX="21.0" layoutY="64.0" prefHeight="15.0" prefWidth="57.0" styleClass="description-label" text="Subject:" />
-      <Button fx:id="addAttachments" layoutX="41.0" layoutY="372.0" mnemonicParsing="false" onAction="#addFiles" prefHeight="26.0" prefWidth="69.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Add" />
       <Button fx:id="removeAttachments" layoutX="294.0" layoutY="372.0" mnemonicParsing="false" onAction="#removeFile" style="-fx-background-radius: 20;" styleClass="button-discard" text="Remove" />
-      <ChoiceBox fx:id="attachmentsChoice" layoutX="126.0" layoutY="372.0" prefWidth="150.0" style="-fx-background-radius: 20;" />
+      <ChoiceBox fx:id="attachmentsChoice" layoutX="41.0" layoutY="372.0" prefHeight="26.0" prefWidth="235.0" style="-fx-background-radius: 20;" />
    </children>
 </AnchorPane>
