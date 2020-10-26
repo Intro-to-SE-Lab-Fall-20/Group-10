@@ -1,32 +1,23 @@
 import javafx.animation.*;
-import javafx.collections.ListChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 
-import javax.imageio.ImageIO;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.awt.*;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.LinkedList;
@@ -37,133 +28,22 @@ public class ComposeController {
 
     public Button discardButton;
     public Button sendButton;
+
     //attachment list
     private LinkedList<File> attachments = new LinkedList<>();
+    public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
 
     //ui elements
     @FXML
     public Button attachButton;
+    public Button removeAttachment;
+    public ChoiceBox<String> attachmentChoice;
     public TextField to;
     public TextField subject;
     public TextField carboncopy;
     public TextField blindcc;
     public TextArea emailContent;
     public static AnchorPane parent;
-
-    @FXML
-    public TableView table;
-    public TableColumn name;
-    public TableColumn size;
-    public TableColumn type;
-
-    @FXML
-    public void initialize() {
-        //set how each column will display its data <AttachmentPreview, String> means display this object as a string
-        name.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("name"));
-        size.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("size"));
-        type.setCellValueFactory(new PropertyValueFactory<AttachmentPreview, String>("type"));
-
-        table.setColumnResizePolicy((param) -> true );
-
-        table.getColumns().addListener((ListChangeListener) change -> {
-            change.next();
-            if(change.wasReplaced()) {
-                table.getColumns().clear();
-                table.getColumns().addAll(name,size,type);
-            }
-        });
-
-        name.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
-            @Override
-            public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
-                return new TableCell<>() {
-                    private Text text;
-
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!isEmpty()) {
-                            text = new Text(item);
-                            text.setWrappingWidth(80);
-                            setGraphic(text);
-                        }
-                    }
-                };
-            }
-        });
-
-        size.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
-            @Override
-            public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
-                return new TableCell<>() {
-                    private Text text;
-
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!isEmpty()) {
-                            text = new Text(item);
-                            text.setWrappingWidth(80);
-                            setGraphic(text);
-                        }
-                    }
-                };
-            }
-        });
-
-        type.setCellFactory(new Callback<TableColumn<AttachmentPreview,String>, TableCell<AttachmentPreview,String>>() {
-            @Override
-            public TableCell<AttachmentPreview, String> call(TableColumn<AttachmentPreview, String> param) {
-                return new TableCell<>() {
-                    private Text text;
-
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!isEmpty()) {
-                            text = new Text(item);
-                            text.setWrappingWidth(80);
-                            setGraphic(text);
-                        }
-                    }
-                };
-            }
-        });
-
-        //click on attachment to save it to a location
-        table.setRowFactory( tv -> {
-            TableRow<AttachmentPreview> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                    try {
-                        File openMeh = row.getItem().getPointerFile();
-                        Desktop desktop = Desktop.getDesktop();
-
-                        if(openMeh.exists())
-                            desktop.open(openMeh);
-                    }
-
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            return row ;
-        });
-
-        //remove an attachment from a table
-        table.setOnKeyPressed(keyEvent -> {
-            AttachmentPreview selectedItem = (AttachmentPreview) table.getSelectionModel().getSelectedItem();
-            if ( selectedItem != null ) {
-                if (keyEvent.getCode().equals(KeyCode.DELETE) || keyEvent.getCode().equals(KeyCode.BACK_SPACE)){
-                    attachments.remove(0);
-                    table.getItems().remove(table.getSelectionModel().getSelectedIndex());
-                    table.refresh();
-                }
-            }
-        });
-    }
 
     //slide down animation to go back to emailcontroller
     @FXML
@@ -338,30 +218,6 @@ public class ComposeController {
         return megaBytes;
     }
 
-    //must pass in a file that is an iamge and will return [xDim, yDim] of the image
-    private int[] getImageDimensions(File imageFile) {
-        try {
-            return new int[]{ImageIO.read(imageFile).getWidth(), ImageIO.read(imageFile).getHeight()};
-        }
-
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new int[]{0,0};
-    }
-
-    //will return txt, png, mp3, or whatever the file type is
-    private String getFileExtension(File f) {
-        String extension = "";
-        int i = f.getName().lastIndexOf('.');
-
-        if (i > 0) {
-            extension = f.getName().substring(i + 1);
-        }
-
-        return extension.replace(".","");
-    }
 
     //returns a representation if a file in MB or KB with 2 decimal places
     private String getDisplayFileSize(File f) {
@@ -403,12 +259,6 @@ public class ComposeController {
         }
     }
 
-    //used to add attachment representations to the table
-    private void addAttachmentsToTable(String name, String size, String type, File file) {
-        table.getItems().add(new AttachmentPreview(name,size,type, file));
-        table.refresh();
-    }
-
     //add files to the attachment list and the table, not the multipart yet
     @FXML
     private void addFiles(ActionEvent e) {
@@ -430,27 +280,36 @@ public class ComposeController {
                     }
                 }
 
-                table.getItems().clear();
+                attachmentChoice.getItems().clear();
+                attachmentsDisplay.clear();
 
                 for (File attachment : attachments) {
-                    if (getFileExtension(attachment).equalsIgnoreCase("png") ||
-                            getFileExtension(attachment).equalsIgnoreCase("jpg") ||
-                            getFileExtension(attachment).equalsIgnoreCase("jpeg")) {
-                        int[] dim = getImageDimensions(attachment);
-                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                                getDisplayFileSize(attachment),dim[0] + " x " + dim[1], attachment);
-                    }
-
-                    else {
-                        addAttachmentsToTable(attachment.getName().replace("." + getFileExtension(attachment),""),
-                                getDisplayFileSize(attachment),getFileExtension(attachment), attachment);
-                    }
+                    String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                    attachmentsDisplay.add(currentAttachDisp);
                 }
+
+                attachmentChoice.setItems(attachmentsDisplay);
+                attachmentChoice.getSelectionModel().select(0);
             }
         }
 
         catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void removeFiles(ActionEvent e) {
+        int index = attachmentChoice.getSelectionModel().getSelectedIndex();
+
+        if (index >= 0 && index < attachmentsDisplay.size()) {
+            attachmentsDisplay.remove(index);
+            attachments.remove(index);
+
+            attachmentChoice.setItems(attachmentsDisplay);
+
+            if (attachmentsDisplay.size() > 0)
+                attachmentChoice.getSelectionModel().select(0);
         }
     }
 

@@ -30,12 +30,9 @@ import java.util.function.Function;
 //todo sort out yahoo.com and outlook.com email
 //todo don't download attachments, only download names and file and then download if they actually want to
 //todo make popups consistent and slide up and down from dragLabel
-//todo tell user email was authenticated before saying loading inbox
 //todo tell user when downloading attachments
-//todo choicebox for email @s so all you type in is straightshotmsu and choose @gmail.com, @outlook.com, @yahoo.com
-//todo tooltips are inconsistent for copied uis
-//todo buttons more rounded
-//todo if text is cut off in tableview, add a ...
+//todo tooltips are inconsistent for copied GUIs like view vs reply vs forward
+//todo choice box for attachments "pac.png - 2.58MB" with button to download, open, or remove depending on possibilities
 
 public class EmailController {
     //all gui elements
@@ -503,7 +500,6 @@ public class EmailController {
             //todo skip loading attachments and put a "load attachments" button where the table is that when clicked will download them in the background
             //todo make timeout for popups editable and then display it here that lasts until we're done loading attachments
             //todo sprint 4 change the downloading of attachments to after the email is loaded and in a separate thread
-            //todo redo tableview for attachment to be a combo box maybe? with buttons next to it for downloading it or removing it
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
