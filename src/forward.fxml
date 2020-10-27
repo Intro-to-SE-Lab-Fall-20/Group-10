@@ -50,7 +50,13 @@
          </tooltip>
       </Button>
       <Label focusTraversable="false" layoutX="21.0" layoutY="64.0" prefHeight="15.0" prefWidth="57.0" styleClass="description-label" text="Subject:" />
-      <Button fx:id="removeAttachments" layoutX="294.0" layoutY="372.0" mnemonicParsing="false" onAction="#removeFile" style="-fx-background-radius: 20;" styleClass="button-discard" text="Remove" />
-      <ChoiceBox fx:id="attachmentsChoice" layoutX="41.0" layoutY="372.0" prefHeight="26.0" prefWidth="235.0" style="-fx-background-radius: 20;" />
+      <Button fx:id="removeAttachments" layoutX="294.0" layoutY="372.0" mnemonicParsing="false" onAction="#removeFile" style="-fx-background-radius: 20;" styleClass="button-discard" text="Remove">
+         <tooltip>
+            <Tooltip text="Remove selected attachment" />
+         </tooltip></Button>
+      <ChoiceBox fx:id="attachmentsChoice" layoutX="41.0" layoutY="372.0" prefHeight="26.0" prefWidth="235.0" style="-fx-background-radius: 20;">
+         <tooltip>
+            <Tooltip text="Attachments" />
+         </tooltip></ChoiceBox>
    </children>
 </AnchorPane>

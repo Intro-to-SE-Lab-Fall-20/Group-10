@@ -42,7 +42,7 @@
       <Label fx:id="dateLabel" layoutX="42.0" layoutY="64.0" styleClass="description-label" text="Date: " />
       <ChoiceBox fx:id="attachmentsChoice" layoutX="129.0" layoutY="368.0" prefHeight="26.0" prefWidth="142.0" style="-fx-background-radius: 20;">
          <tooltip>
-            <Tooltip text="Files send with email" />
+            <Tooltip text="Files sent with email" />
          </tooltip>
       </ChoiceBox>
       <Button fx:id="loadAttachments" layoutX="42.0" layoutY="368.0" mnemonicParsing="false" onAction="#loadAttachments" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Load">

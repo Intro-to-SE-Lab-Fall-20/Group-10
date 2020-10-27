@@ -54,6 +54,9 @@ public class Main extends Application {
         root.setOnMouseReleased((event -> Main.primaryStage.setOpacity(1.0f)));
 
         primaryStage.show();
+
+        //shutdown hook to remove tmp directory
+        Runtime.getRuntime().addShutdownHook(new Thread(ViewController::clearLocalAttachments));
     }
 
     public static void startWorking(String message, int delay) {

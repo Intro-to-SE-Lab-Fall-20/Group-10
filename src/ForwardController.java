@@ -287,21 +287,9 @@ public class ForwardController {
         System.exit(0);
     }
 
-    //fill tableview with attachment names
-    private void initAttachments() {
-        try {
-            //todo load attachments from the email if it has any, inform if none
-            //todo add attchments to the choicebox
-        }
-
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
     //returns a representation if a file in MB or KB with 2 decimal places
     private String getDisplayFileSize(File f) {
-        DecimalFormat threeDecimal = new DecimalFormat("#.###");
+        DecimalFormat threeDecimal = new DecimalFormat("#.##");
         double mbSize = f.length() / 1024.0 / 1024.0;
 
         if (mbSize < 1)

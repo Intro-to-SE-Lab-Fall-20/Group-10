@@ -29,10 +29,10 @@ import java.util.function.Function;
 
 //todo sort out yahoo.com and outlook.com email
 //todo attach swing popup to frame or convert everything to fx popups
-//todo add a shutdown hook to remove tmp dir
 //todo fix double attachment glitch
-//todo add tooltips on GUIs that were edited
 //todo you have to click load attachments in view twice for it to work
+//todo if we press back then stop the thread that's responsibile for loading attacahments
+
 
 public class EmailController {
     //all gui elements
