@@ -49,27 +49,70 @@ public class ReplyController {
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
     public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
 
+    private Thread loadingAttachThread;
+
     //prepare the reply
     @FXML
     public void initialize() {
         try {
-            replySubject.setText("RE: " + EmailController.currentMessageSubject);
-            emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
+            //todo copy this for forward
+            if (EmailController.currentMessageAttachments == null) {
+                removeAttachments.setDisable(true);
+                attachButton.setDisable(true);
+                replyButton.setDisable(true);
 
-            additionalAttachments = null;
-            additionalAttachments = EmailController.currentMessageAttachments;
+                loadingAttachThread = new Thread(() -> {
+                    replySubject.setText("RE: " + EmailController.currentMessageSubject);
+                    emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
 
-            attachmentsChoice.getItems().clear();
-            attachmentsDisplay.clear();
+                    Main.startWorking("Preparing reply",0);
 
-            for (File attachment : additionalAttachments) {
-                String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
-                attachmentsDisplay.add(currentAttachDisp);
+                    EmailController.initChosenEmailAttachments();
+
+                    Main.startWorking("Loaded!",2000);
+
+                    additionalAttachments = null;
+                    additionalAttachments = EmailController.currentMessageAttachments;
+
+                    attachmentsChoice.getItems().clear();
+                    attachmentsDisplay.clear();
+
+                    for (File attachment : additionalAttachments) {
+                        String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                        attachmentsDisplay.add(currentAttachDisp);
+                    }
+
+                    attachmentsChoice.setItems(attachmentsDisplay);
+
+                    Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+
+                    removeAttachments.setDisable(false);
+                    attachButton.setDisable(false);
+                    replyButton.setDisable(false);
+                });
+
+                loadingAttachThread.start();
             }
 
-            attachmentsChoice.setItems(attachmentsDisplay);
+            else {
+                replySubject.setText("RE: " + EmailController.currentMessageSubject);
+                emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
 
-            Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+                additionalAttachments = null;
+                additionalAttachments = EmailController.currentMessageAttachments;
+
+                attachmentsChoice.getItems().clear();
+                attachmentsDisplay.clear();
+
+                for (File attachment : additionalAttachments) {
+                    String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                    attachmentsDisplay.add(currentAttachDisp);
+                }
+
+                attachmentsChoice.setItems(attachmentsDisplay);
+
+                Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+            }
         }
 
         catch (Exception e) {
@@ -258,6 +301,7 @@ public class ReplyController {
     private void goBack(ActionEvent event) {
         try {
             ViewController.clearLocalAttachments();
+            EmailController.currentMessageAttachments = null;
 
             Scene currentScene = attachButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();

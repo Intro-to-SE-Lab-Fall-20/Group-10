@@ -60,12 +60,15 @@ public class ViewController  {
     private Store store;
     private Folder emailFolder;
 
+    public Thread loadingAttachThread;
+
     @FXML
     private void loadAttachments(ActionEvent e) {
         Main.startWorking("Loading...",0);
-        new Thread().start();
 
-        new Thread(() -> {
+        loadAttachments.setDisable(true);
+
+        loadingAttachThread = new Thread(() -> {
             EmailController.initChosenEmailAttachments();
 
             attachments = EmailController.currentMessageAttachments;
@@ -83,7 +86,11 @@ public class ViewController  {
             Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
 
             Main.startWorking("Loaded!",2500);
-        }).start();
+
+            Platform.runLater(() -> loadAttachments.setDisable(false));
+        });
+
+        loadingAttachThread.start();
     }
 
     @FXML
@@ -135,7 +142,8 @@ public class ViewController  {
     @FXML
     private void forwardEmail() {
         try {
-            Main.startWorking("Preparing forward",2500);
+            if (attachments != null)
+                EmailController.currentMessageAttachments = attachments;
 
             Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
             EmailController.root = root;
@@ -163,7 +171,8 @@ public class ViewController  {
     @FXML
     private void replyEmail() {
         try {
-            Main.startWorking("Preparing reply",2500);
+            if (attachments != null)
+                EmailController.currentMessageAttachments = attachments;
 
             Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
             EmailController.root = root;
@@ -240,6 +249,7 @@ public class ViewController  {
     private void goBack(ActionEvent event) {
         try {
             clearLocalAttachments();
+            EmailController.currentMessageAttachments = null;
 
             Scene currentScene = forwardButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();

@@ -28,11 +28,9 @@ import java.util.*;
 import java.util.function.Function;
 
 //todo sort out yahoo.com and outlook.com email
-//todo attach swing popup to frame or convert everything to fx popups
-//todo fix double attachment glitch
-//todo you have to click load attachments in view twice for it to work
-//todo if we press back then stop the thread that's responsibile for loading attacahments
-
+//todo be able to cancel loading attachments at any point
+//todo, when going from view->reply or view->forward, and if files have been loaded, make those
+// the attachments in emailcontroller so we basically pass them along to reply or forward to skip reloading them
 
 public class EmailController {
     //all gui elements
@@ -298,6 +296,7 @@ public class EmailController {
             props.put("mail.smtp.starttls.enable", true);
             props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
             props.put("mail.smtp.port", 587);
+            props.put("mail.imap.fetchsize", "4096");
 
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
@@ -351,6 +350,7 @@ public class EmailController {
             props.put("mail.smtp.starttls.enable", true); //(tls is transport layer security and is a good practice)
             props.put("mail.smtp.host", getEmailHost(getEmailAddress())); //set host
             props.put("mail.smtp.port", 587); //port 587 is the standard SMTP port
+            props.put("mail.imap.fetchsize", "4096");
 
             //create a session from our email (this is from our javaMail library)
             Session session = Session.getInstance(props,
@@ -483,6 +483,7 @@ public class EmailController {
         }
     }
 
+    //todo speed up
     public static void initChosenEmailAttachments() {
         try {
             currentMessageAttachments = new LinkedList<>();
@@ -490,26 +491,22 @@ public class EmailController {
             for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
                 BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
 
-                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null) {
+                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null)
                     continue;
-                }
 
                 InputStream is = bodyPart.getInputStream();
 
                 //this is the temp folder we will completely delete on exit
                 File dir = new File("tmp");
-
-                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
                 if (!dir.exists()) dir.mkdir();
+                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
 
                 FileOutputStream fos = new FileOutputStream(f);
-
                 byte[] buf = new byte[4096];
 
                 int bytesRead;
-                while((bytesRead = is.read(buf))!=-1) {
+                while((bytesRead = is.read(buf)) != -1)
                     fos.write(buf, 0, bytesRead);
-                }
 
                 fos.close();
                 currentMessageAttachments.add(f);
@@ -526,8 +523,6 @@ public class EmailController {
         try {
             if (currentMessageMultipart == null)
                 return;
-
-            Main.startWorking("Loading email",2500);
 
             EmailController.currentMessage = view;
             EmailController.currentMessageMultipart = (Multipart) currentMessage.getContent();
@@ -704,6 +699,7 @@ public class EmailController {
             props.put("mail.smtp.starttls.enable", true);
             props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
             props.put("mail.smtp.port", 587);
+            props.put("mail.imap.fetchsize", "4096");
 
             Session session = Session.getInstance(props,
                     new javax.mail.Authenticator() {
