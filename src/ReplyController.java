@@ -67,7 +67,7 @@ public class ReplyController {
 
                     Main.startWorking("Preparing reply",0);
 
-                    EmailController.initChosenEmailAttachments();
+                    EmailController.initAttachments();
 
                     Main.startWorking("Loaded!",2000);
 

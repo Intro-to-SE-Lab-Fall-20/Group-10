@@ -69,7 +69,7 @@ public class ViewController  {
         loadAttachments.setDisable(true);
 
         loadingAttachThread = new Thread(() -> {
-            EmailController.initChosenEmailAttachments();
+            EmailController.initAttachments();
 
             attachments = EmailController.currentMessageAttachments;
 

@@ -67,7 +67,7 @@ public class ForwardController {
 
                     Main.startWorking("Preparing forward",0);
 
-                    EmailController.initChosenEmailAttachments();
+                    EmailController.initAttachments();
 
                     Main.startWorking("Loaded!",2000);
 

@@ -22,6 +22,7 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 import javax.mail.*;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import java.io.*;
 import java.util.*;
@@ -483,36 +484,27 @@ public class EmailController {
         }
     }
 
-    //todo speed up
-    public static void initChosenEmailAttachments() {
+    //refined download attachments, maybe there's also some way that we can just quickly get the name's?
+    public static void initAttachments() {
         try {
             currentMessageAttachments = new LinkedList<>();
 
-            for (int i = 0; i < currentMessageMultipart.getCount(); i++) {
-                BodyPart bodyPart = currentMessageMultipart.getBodyPart(i);
+            File dir = new File("tmp");
+            if (!dir.exists()) dir.mkdir();
 
-                if(!Part.ATTACHMENT.equalsIgnoreCase(bodyPart.getDisposition()) && bodyPart.getFileName() == null)
-                    continue;
+            int numberOfParts = currentMessageMultipart.getCount();
+            for (int partCount = 0; partCount < numberOfParts; partCount++) {
+                MimeBodyPart part = (MimeBodyPart) currentMessageMultipart.getBodyPart(partCount);
+                if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+                    String fileName = part.getFileName();
+                    part.saveFile(dir + System.getProperty("file.separator") + fileName);
 
-                InputStream is = bodyPart.getInputStream();
-
-                //this is the temp folder we will completely delete on exit
-                File dir = new File("tmp");
-                if (!dir.exists()) dir.mkdir();
-                File f = new File(dir + System.getProperty("file.separator") + bodyPart.getFileName());
-
-                FileOutputStream fos = new FileOutputStream(f);
-                byte[] buf = new byte[4096];
-
-                int bytesRead;
-                while((bytesRead = is.read(buf)) != -1)
-                    fos.write(buf, 0, bytesRead);
-
-                fos.close();
-                currentMessageAttachments.add(f);
+                    currentMessageAttachments.add(new File(dir + System.getProperty("file.separator") + fileName));
+                }
             }
+        }
 
-        } catch (Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -565,7 +557,7 @@ public class EmailController {
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
 
-            initChosenEmailAttachments();
+            initAttachments();
 
             Main.startWorking("Done!",2000);
 
@@ -605,7 +597,7 @@ public class EmailController {
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
 
-            initChosenEmailAttachments();
+            initAttachments();
 
             Main.startWorking("Done!",2000);
 
