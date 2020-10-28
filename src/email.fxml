@@ -41,7 +41,10 @@
                 <Tooltip text="Write an email" />
             </tooltip>
         </Button>
-        <CheckBox fx:id="hideOnCloseCheckBox" layoutX="68.0" layoutY="48.0" mnemonicParsing="false" selected="true" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close" />
+        <CheckBox fx:id="hideOnCloseCheckBox" layoutX="68.0" layoutY="48.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-font-weight: bold; -fx-border-color: transparent; -fx-font-family: sans-serif;" text="Hide on close">
+         <tooltip>
+            <Tooltip text="When close is pressed, simply minimize" />
+         </tooltip></CheckBox>
         <Label fx:id="unreadEmailsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="48.0" prefHeight="18.0" prefWidth="46.0" style="-fx-background-color: #e2174d; -fx-text-fill: white; -fx-background-radius: 20;" styleClass="description-label" text="0" textFill="WHITE" translateY="1.0">
          <tooltip>
             <Tooltip text="Emails in current folder" />

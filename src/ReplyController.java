@@ -27,24 +27,15 @@ import java.util.Properties;
 public class ReplyController {
 
     //gui elements
-    @FXML
-    public static AnchorPane parent;
-    @FXML
-    private TextField replyTo;
-    @FXML
-    private ChoiceBox<String> attachmentsChoice;
-    @FXML
-    private TextField replySubject;
-    @FXML
-    private TextArea emailContent;
-    @FXML
-    private Button attachButton;
-    @FXML
-    private Button removeAttachments;
-    @FXML
-    private Button discardButton;
-    @FXML
-    private Button replyButton;
+    @FXML public static AnchorPane parent;
+    @FXML private TextField replyTo;
+    @FXML private ChoiceBox<String> attachmentsChoice;
+    @FXML private TextField replySubject;
+    @FXML private TextArea emailContent;
+    @FXML private Button attachButton;
+    @FXML private Button removeAttachments;
+    @FXML private Button discardButton;
+    @FXML private Button replyButton;
 
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
     public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
@@ -55,7 +46,6 @@ public class ReplyController {
     @FXML
     public void initialize() {
         try {
-            //todo copy this for forward
             if (EmailController.currentMessageAttachments == null) {
                 removeAttachments.setDisable(true);
                 attachButton.setDisable(true);
@@ -86,6 +76,8 @@ public class ReplyController {
 
                     Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
 
+                    ViewController.attachments = additionalAttachments;
+
                     removeAttachments.setDisable(false);
                     attachButton.setDisable(false);
                     replyButton.setDisable(false);
@@ -112,6 +104,8 @@ public class ReplyController {
                 attachmentsChoice.setItems(attachmentsDisplay);
 
                 Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+
+                ViewController.attachments = additionalAttachments;
             }
         }
 

@@ -55,7 +55,7 @@ public class Main extends Application {
 
         primaryStage.show();
 
-        //shutdown hook to remove tmp directory
+        //shutdown hook to remove temp directory
         Runtime.getRuntime().addShutdownHook(new Thread(ViewController::clearLocalAttachments));
     }
 

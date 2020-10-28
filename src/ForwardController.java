@@ -27,24 +27,15 @@ import java.util.Properties;
 public class ForwardController {
 
     //gui elements
-    @FXML
-    public static AnchorPane parent;
-    @FXML
-    private TextField forwardTo;
-    @FXML
-    private TextField forwardSubject;
-    @FXML
-    private TextArea emailContent;
-    @FXML
-    private Button attachButton;
-    @FXML
-    private ChoiceBox<String> attachmentsChoice;
-    @FXML
-    private Button removeAttachments;
-    @FXML
-    private Button discardButton;
-    @FXML
-    private Button forwardButton;
+    @FXML public static AnchorPane parent;
+    @FXML private TextField forwardTo;
+    @FXML private TextField forwardSubject;
+    @FXML private TextArea emailContent;
+    @FXML private Button attachButton;
+    @FXML private ChoiceBox<String> attachmentsChoice;
+    @FXML private Button removeAttachments;
+    @FXML private Button discardButton;
+    @FXML private Button forwardButton;
 
     //attachments list
     private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
@@ -86,6 +77,8 @@ public class ForwardController {
 
                     Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
 
+                    ViewController.attachments = additionalAttachments;
+
                     removeAttachments.setDisable(false);
                     attachButton.setDisable(false);
                     forwardButton.setDisable(false);
@@ -113,6 +106,8 @@ public class ForwardController {
                 attachmentsChoice.setItems(attachmentsDisplay);
 
                 Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+
+                ViewController.attachments = additionalAttachments;
             }
         }
 

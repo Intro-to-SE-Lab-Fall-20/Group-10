@@ -28,10 +28,8 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
-//todo sort out yahoo.com and outlook.com email
-//todo be able to cancel loading attachments at any point
-//todo, when going from view->reply or view->forward, and if files have been loaded, make those
-// the attachments in emailcontroller so we basically pass them along to reply or forward to skip reloading them
+//make all popups the same FX one so that they're attached to the frame
+//hint maybe: you can still move the frame even when running so do something with that maybe? a separate thread probably
 
 public class EmailController {
     //all gui elements
@@ -455,10 +453,12 @@ public class EmailController {
 
     @FXML
     private void refreshFolder(ActionEvent event) {
-        Main.startWorking("Refreshing folder",2500);
+        Main.startWorking("Refreshing folder",0);
 
-        if (searchFolderField.getText().length() == 0)
+        if (searchFolderField.getText().length() == 0) {
             fetchEmail(currentFolder);
+            Main.startWorking("Refreshed!", 1000);
+        }
     }
 
     //animation for going to compose screen
@@ -484,12 +484,13 @@ public class EmailController {
         }
     }
 
+
     //refined download attachments, maybe there's also some way that we can just quickly get the name's?
     public static void initAttachments() {
         try {
             currentMessageAttachments = new LinkedList<>();
 
-            File dir = new File("tmp");
+            File dir = new File("temp");
             if (!dir.exists()) dir.mkdir();
 
             int numberOfParts = currentMessageMultipart.getCount();
@@ -557,9 +558,9 @@ public class EmailController {
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
 
-            initAttachments();
+            initAttachments(); //todo don't init here, go there first and then load attachments so it' a sep thread
 
-            Main.startWorking("Done!",2000);
+            Main.startWorking("Prepared!",1000);
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
@@ -599,7 +600,7 @@ public class EmailController {
 
             initAttachments();
 
-            Main.startWorking("Done!",2000);
+            Main.startWorking("Prepared!",1000);
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));

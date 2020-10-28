@@ -30,32 +30,28 @@ import java.util.LinkedList;
 
 public class ViewController  {
 
-    //gui elements
-    @FXML
-    private Button backButton;
-    @FXML
-    public static AnchorPane parent;
-    @FXML
-    public Label fromLabel;
-    @FXML
-    private Label subjectLabel;
-    @FXML
-    private Label dateLabel;
-    @FXML
-    public TextArea emailContent;
-    @FXML
-    public Button replyButton;
-    @FXML
-    public Button forwardButton;
-    @FXML
-    public Button loadAttachments;
-    @FXML
-    public Button downloadAttachment;
-    @FXML
-    public ChoiceBox<String> attachmentsChoice;
+    //todo when going to reply or forward, pass it OUR attachments and override whatever is there if of
+    // course there are files inside of view right now that have also been loaded
 
-    private LinkedList<File> attachments;
-    public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
+    //todo if we load files inside of reply or forward, make it the files for view in case we came from there too
+
+    //todo when leaving view, reply, or forward, make sure to reset attachments and email stuff
+
+    //gui elements
+    @FXML private Button backButton;
+    @FXML public static AnchorPane parent;
+    @FXML public Label fromLabel;
+    @FXML private Label subjectLabel;
+    @FXML private Label dateLabel;
+    @FXML public TextArea emailContent;
+    @FXML public Button replyButton;
+    @FXML public Button forwardButton;
+    @FXML public Button loadAttachments;
+    @FXML public Button downloadAttachment;
+    @FXML public static ChoiceBox<String> attachmentsChoice;
+
+    public static LinkedList<File> attachments;
+    public static ObservableList attachmentsDisplay = FXCollections.observableArrayList();
 
     private Store store;
     private Folder emailFolder;
@@ -70,6 +66,12 @@ public class ViewController  {
 
         loadingAttachThread = new Thread(() -> {
             EmailController.initAttachments();
+
+            if (EmailController.currentMessageAttachments.size() == 0) {
+                Main.startWorking("No attachments!", 1000);
+                Platform.runLater(() -> loadAttachments.setDisable(false));
+                return;
+            }
 
             attachments = EmailController.currentMessageAttachments;
 
@@ -96,6 +98,8 @@ public class ViewController  {
     @FXML
     private void downloadAttachment(ActionEvent e) {
         try {
+            if (EmailController.currentMessageAttachments == null || EmailController.currentMessageAttachments.size() == 0)
+                return;
 
             int index = attachmentsChoice.getSelectionModel().getSelectedIndex();
 
@@ -236,7 +240,7 @@ public class ViewController  {
 
     public static void clearLocalAttachments() {
         try {
-            File dir = new File("tmp");
+            File dir = new File("temp");
             rmDir(dir);
         }
 
@@ -290,7 +294,7 @@ public class ViewController  {
     }
 
     //returns a representation if a file in MB or KB with 2 decimal places
-    private String getDisplayFileSize(File f) {
+    private static String getDisplayFileSize(File f) {
         DecimalFormat threeDecimal = new DecimalFormat("#.##");
         double mbSize = f.length() / 1024.0 / 1024.0;
 
