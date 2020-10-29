@@ -30,9 +30,6 @@ import java.util.LinkedList;
 
 public class ViewController  {
 
-    //todo when going to reply or forward, pass it OUR attachments and override whatever is there if of
-    // course there are files inside of view right now that have also been loaded
-
     //todo before going to reply or forward when we load attachments in this file, show those in our choicebox here too
 
     //gui elements
@@ -57,7 +54,7 @@ public class ViewController  {
     public Thread loadingAttachThread;
 
     @FXML
-    private void loadAttachments(ActionEvent e) {
+    public void loadAttachments(ActionEvent e) {
         Main.startWorking("Loading...",0);
 
         loadAttachments.setDisable(true);
@@ -101,6 +98,8 @@ public class ViewController  {
         });
 
         loadingAttachThread.start();
+
+        EmailController.currentMessageAttachments = attachments;
     }
 
     @FXML
@@ -143,8 +142,6 @@ public class ViewController  {
             fromLabel.setText("From: " + EmailController.currentMessageFrom);
             dateLabel.setText("Date: " + EmailController.currentMessageDate);
             emailContent.setText(EmailController.currentMessageBody);
-            EmailController.currentMessageAttachments = null;
-            attachments = null;
         }
 
         catch (Exception e) {
@@ -156,50 +153,35 @@ public class ViewController  {
     @FXML
     private void forwardEmail() {
         try {
-            loadAttachments.setDisable(true);
-            forwardButton.setDisable(true);
-            replyButton.setDisable(true);
-            downloadAttachment.setDisable(true);
-            backButton.setDisable(true);
+            new Thread(() -> Platform.runLater(() -> {
+                try {
+                    loadAttachments.setDisable(false);
+                    forwardButton.setDisable(false);
+                    replyButton.setDisable(false);
+                    downloadAttachment.setDisable(false);
+                    backButton.setDisable(false);
 
-            new Thread(() -> {
-                Main.startWorking("Preparing forward...",0);
+                    Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
+                    EmailController.root = root;
+                    Scene currentScene = backButton.getScene();
+                    root.translateXProperty().set(currentScene.getWidth());
 
-                EmailController.initAttachments();
+                    StackPane pc = (StackPane) currentScene.getRoot();
+                    pc.getChildren().add(root);
 
-                Main.startWorking("Prepared!",1000);
+                    Timeline tim = new Timeline();
+                    KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                    KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
 
-                Platform.runLater(() -> {
-                    try {
-                        loadAttachments.setDisable(false);
-                        forwardButton.setDisable(false);
-                        replyButton.setDisable(false);
-                        downloadAttachment.setDisable(false);
-                        backButton.setDisable(false);
-                        attachments = EmailController.currentMessageAttachments;
+                    tim.getKeyFrames().add(kf);
+                    tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+                    tim.play();
+                }
 
-                        Parent root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
-                        EmailController.root = root;
-                        Scene currentScene = backButton.getScene();
-                        root.translateXProperty().set(currentScene.getWidth());
-
-                        StackPane pc = (StackPane) currentScene.getRoot();
-                        pc.getChildren().add(root);
-
-                        Timeline tim = new Timeline();
-                        KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-                        KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
-
-                        tim.getKeyFrames().add(kf);
-                        tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
-                        tim.play();
-                    }
-
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }).start();
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            })).start();
         }
 
         catch (Exception e) {
@@ -211,50 +193,35 @@ public class ViewController  {
     @FXML
     private void replyEmail() {
         try {
-            loadAttachments.setDisable(true);
-            forwardButton.setDisable(true);
-            replyButton.setDisable(true);
-            downloadAttachment.setDisable(true);
-            backButton.setDisable(true);
+            new Thread(() -> Platform.runLater(() -> {
+                try {
+                    loadAttachments.setDisable(false);
+                    forwardButton.setDisable(false);
+                    replyButton.setDisable(false);
+                    downloadAttachment.setDisable(false);
+                    backButton.setDisable(false);
 
-            new Thread(() -> {
-                Main.startWorking("Preparing reply...",0);
+                    Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
+                    EmailController.root = root;
+                    Scene currentScene = backButton.getScene();
+                    root.translateXProperty().set(currentScene.getWidth());
 
-                EmailController.initAttachments();
+                    StackPane pc = (StackPane) currentScene.getRoot();
+                    pc.getChildren().add(root);
 
-                Main.startWorking("Prepared!",1000);
+                    Timeline tim = new Timeline();
+                    KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                    KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
 
-                Platform.runLater(() -> {
-                    try {
-                        loadAttachments.setDisable(false);
-                        forwardButton.setDisable(false);
-                        replyButton.setDisable(false);
-                        downloadAttachment.setDisable(false);
-                        backButton.setDisable(false);
-                        attachments = EmailController.currentMessageAttachments;
+                    tim.getKeyFrames().add(kf);
+                    tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+                    tim.play();
+                }
 
-                        Parent root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
-                        EmailController.root = root;
-                        Scene currentScene = backButton.getScene();
-                        root.translateXProperty().set(currentScene.getWidth());
-
-                        StackPane pc = (StackPane) currentScene.getRoot();
-                        pc.getChildren().add(root);
-
-                        Timeline tim = new Timeline();
-                        KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-                        KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
-
-                        tim.getKeyFrames().add(kf);
-                        tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
-                        tim.play();
-                    }
-
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }).start();
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            })).start();
         }
 
         catch (Exception e) {
@@ -316,6 +283,7 @@ public class ViewController  {
         try {
             clearLocalAttachments();
             EmailController.currentMessageAttachments = null;
+            attachments = null;
 
             Scene currentScene = forwardButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();

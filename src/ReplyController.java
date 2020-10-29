@@ -46,26 +46,43 @@ public class ReplyController {
     @FXML
     public void initialize() {
         try {
-            replySubject.setText("RE: " + EmailController.currentMessageSubject);
-            emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
+            removeAttachments.setDisable(true);
+            replyButton.setDisable(true);
+            discardButton.setDisable(true);
+            attachButton.setDisable(true);
 
-            additionalAttachments = null;
-            additionalAttachments = EmailController.currentMessageAttachments;
+            new Thread(() -> {
+                if (EmailController.currentMessageAttachments == null) {
+                    Main.startWorking("Preparing reply...",0);
+                    EmailController.initAttachments();
+                    Main.startWorking("Prepared!",1000);
+                }
 
-            attachmentsChoice.getItems().clear();
-            attachmentsDisplay.clear();
+                Platform.runLater(() -> {
+                    replySubject.setText("RE: " + EmailController.currentMessageSubject);
+                    emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
 
-            for (File attachment : additionalAttachments) {
-                String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
-                attachmentsDisplay.add(currentAttachDisp);
-            }
+                    additionalAttachments = new LinkedList<>(EmailController.currentMessageAttachments);
 
-            attachmentsChoice.setItems(attachmentsDisplay);
+                    attachmentsChoice.getItems().clear();
+                    attachmentsDisplay.clear();
 
-            if (EmailController.currentMessageAttachments.size() > 0)
-                Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+                    for (File attachment : additionalAttachments) {
+                        String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                        attachmentsDisplay.add(currentAttachDisp);
+                    }
 
-            ViewController.attachments = additionalAttachments;
+                    attachmentsChoice.setItems(attachmentsDisplay);
+
+                    removeAttachments.setDisable(false);
+                    replyButton.setDisable(false);
+                    discardButton.setDisable(false);
+                    attachButton.setDisable(false);
+
+                    if (EmailController.currentMessageAttachments.size() > 0)
+                        Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+                });
+            }).start();
         }
 
         catch (Exception e) {

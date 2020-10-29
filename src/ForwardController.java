@@ -38,7 +38,7 @@ public class ForwardController {
     @FXML private Button forwardButton;
 
     //attachments list
-    private LinkedList<File> additionalAttachments = EmailController.currentMessageAttachments;
+    private LinkedList<File> additionalAttachments;
     public ObservableList attachmentsDisplay = FXCollections.observableArrayList();
 
     private Thread loadingAttachThread;
@@ -46,25 +46,44 @@ public class ForwardController {
     @FXML
     public void initialize() {
         try {
-            forwardSubject.setText("");
-            forwardTo.setText("");
-            emailContent.setText(EmailController.currentMessageBody);
+            removeAttachments.setDisable(true);
+            forwardButton.setDisable(true);
+            discardButton.setDisable(true);
+            attachButton.setDisable(true);
 
-            additionalAttachments = null;
-            additionalAttachments = EmailController.currentMessageAttachments;
+            new Thread(() -> {
+                if (EmailController.currentMessageAttachments == null) {
+                    Main.startWorking("Preparing forward...",0);
+                    EmailController.initAttachments();
+                    Main.startWorking("Prepared!",1000);
+                }
 
-            attachmentsChoice.getItems().clear();
-            attachmentsDisplay.clear();
+                Platform.runLater(() -> {
+                    forwardSubject.setText("");
+                    forwardTo.setText("");
+                    emailContent.setText(EmailController.currentMessageBody);
 
-            for (File attachment : additionalAttachments) {
-                String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
-                attachmentsDisplay.add(currentAttachDisp);
-            }
+                    additionalAttachments = new LinkedList<>(EmailController.currentMessageAttachments);
 
-            attachmentsChoice.setItems(attachmentsDisplay);
+                    attachmentsChoice.getItems().clear();
+                    attachmentsDisplay.clear();
 
-            if (EmailController.currentMessageAttachments.size() > 0)
-                Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+                    for (File attachment : additionalAttachments) {
+                        String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                        attachmentsDisplay.add(currentAttachDisp);
+                    }
+
+                    attachmentsChoice.setItems(attachmentsDisplay);
+
+                    removeAttachments.setDisable(false);
+                    forwardButton.setDisable(false);
+                    discardButton.setDisable(false);
+                    attachButton.setDisable(false);
+
+                    if (EmailController.currentMessageAttachments.size() > 0)
+                        Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
+                });
+            }).start();
         }
 
         catch (Exception e) {

@@ -554,17 +554,11 @@ public class EmailController {
             if (currentMessageMultipart == null)
                 return;
 
-            Main.startWorking("Preparing reply",0);
-
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
-
-            initAttachments(); //todo just goto reply or forward and then once there load files and disable buttons
-
-            Main.startWorking("Prepared!",1000);
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("reply.fxml"));
@@ -596,17 +590,11 @@ public class EmailController {
             if (currentMessageMultipart == null)
                 return;
 
-            Main.startWorking("Preparing forward",0);
-
             currentMessageMultipart = (Multipart) currentMessage.getContent();
             currentMessageSubject = currentMessage.getSubject();
             currentMessageFrom = String.valueOf(currentMessage.getFrom()[0]);
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
-
-            initAttachments();
-
-            Main.startWorking("Prepared!",1000);
 
             if (currentMessageMultipart != null) {
                 root = FXMLLoader.load(EmailController.class.getResource("forward.fxml"));
