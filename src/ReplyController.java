@@ -46,67 +46,26 @@ public class ReplyController {
     @FXML
     public void initialize() {
         try {
-            if (EmailController.currentMessageAttachments == null) {
-                removeAttachments.setDisable(true);
-                attachButton.setDisable(true);
-                replyButton.setDisable(true);
+            replySubject.setText("RE: " + EmailController.currentMessageSubject);
+            emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
 
-                loadingAttachThread = new Thread(() -> {
-                    replySubject.setText("RE: " + EmailController.currentMessageSubject);
-                    emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
+            additionalAttachments = null;
+            additionalAttachments = EmailController.currentMessageAttachments;
 
-                    Main.startWorking("Preparing reply",0);
+            attachmentsChoice.getItems().clear();
+            attachmentsDisplay.clear();
 
-                    EmailController.initAttachments();
-
-                    Main.startWorking("Loaded!",2000);
-
-                    additionalAttachments = null;
-                    additionalAttachments = EmailController.currentMessageAttachments;
-
-                    attachmentsChoice.getItems().clear();
-                    attachmentsDisplay.clear();
-
-                    for (File attachment : additionalAttachments) {
-                        String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
-                        attachmentsDisplay.add(currentAttachDisp);
-                    }
-
-                    attachmentsChoice.setItems(attachmentsDisplay);
-
-                    Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
-
-                    ViewController.attachments = additionalAttachments;
-
-                    removeAttachments.setDisable(false);
-                    attachButton.setDisable(false);
-                    replyButton.setDisable(false);
-                });
-
-                loadingAttachThread.start();
+            for (File attachment : additionalAttachments) {
+                String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
+                attachmentsDisplay.add(currentAttachDisp);
             }
 
-            else {
-                replySubject.setText("RE: " + EmailController.currentMessageSubject);
-                emailContent.setText("\n\n-----------------------------------------------------------------\n" + EmailController.currentMessageBody);
+            attachmentsChoice.setItems(attachmentsDisplay);
 
-                additionalAttachments = null;
-                additionalAttachments = EmailController.currentMessageAttachments;
-
-                attachmentsChoice.getItems().clear();
-                attachmentsDisplay.clear();
-
-                for (File attachment : additionalAttachments) {
-                    String currentAttachDisp = attachment.getName() + " - " + getDisplayFileSize(attachment);
-                    attachmentsDisplay.add(currentAttachDisp);
-                }
-
-                attachmentsChoice.setItems(attachmentsDisplay);
-
+            if (EmailController.currentMessageAttachments.size() > 0)
                 Platform.runLater(() -> attachmentsChoice.getSelectionModel().select(0));
 
-                ViewController.attachments = additionalAttachments;
-            }
+            ViewController.attachments = additionalAttachments;
         }
 
         catch (Exception e) {
@@ -294,9 +253,6 @@ public class ReplyController {
     @FXML
     private void goBack(ActionEvent event) {
         try {
-            ViewController.clearLocalAttachments();
-            EmailController.currentMessageAttachments = null;
-
             Scene currentScene = attachButton.getScene();
             StackPane pc = (StackPane) currentScene.getRoot();
             EmailController.root.translateXProperty().set(0);

@@ -514,6 +514,8 @@ public class EmailController {
     @FXML
     private void gotoViewer(Message view) {
         try {
+            EmailController.currentMessageAttachments = null;
+
             if (currentMessageMultipart == null)
                 return;
 
@@ -547,6 +549,8 @@ public class EmailController {
     @FXML
     public void gotoReply(ActionEvent event) {
         try {
+            EmailController.currentMessageAttachments = null;
+
             if (currentMessageMultipart == null)
                 return;
 
@@ -558,7 +562,7 @@ public class EmailController {
             currentMessageDate = String.valueOf(currentMessage.getSentDate());
             currentMessageBody = getMessageText(currentMessage);
 
-            initAttachments(); //todo don't init here, go there first and then load attachments so it' a sep thread
+            initAttachments(); //todo just goto reply or forward and then once there load files and disable buttons
 
             Main.startWorking("Prepared!",1000);
 
@@ -587,6 +591,8 @@ public class EmailController {
     @FXML
     public void gotoForward(ActionEvent event) {
         try {
+            EmailController.currentMessageAttachments = null;
+
             if (currentMessageMultipart == null)
                 return;
 
