@@ -8,8 +8,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RegisterController">
    <children>
+      <PasswordField fx:id="confPassword" layoutX="126.0" layoutY="243.0" style="-fx-background-radius: 20;" styleClass="input-field">
+         <tooltip>
+            <Tooltip text="Password" />
+         </tooltip>
+      </PasswordField>
       <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
          <children>
             <Label fx:id="CloseButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_app" prefHeight="20.0" prefWidth="20.0" styleClass="close-btn" stylesheets="@DefaultStyle.css" text="X" textFill="WHITE" translateX="380.0" />
@@ -19,35 +24,30 @@
       </HBox>
       <Label focusTraversable="false" layoutX="125.0" layoutY="48.0" prefHeight="23.0" prefWidth="171.0" styleClass="description-label" textAlignment="CENTER" wrapText="true" />
       <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" />
-      <TextField fx:id="emailField" layoutX="124.0" layoutY="125.0" style="-fx-background-radius: 20;" styleClass="input-field">
+      <TextField fx:id="newusernameField" layoutX="124.0" layoutY="125.0" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Complete email (ex: Straight@Shot.com)" />
          </tooltip>
       </TextField>
-      <PasswordField fx:id="passField" layoutX="124.0" layoutY="180.0" onAction="#login" style="-fx-background-radius: 20;" styleClass="input-field">
+      <PasswordField fx:id="passField" layoutX="124.0" layoutY="180.0" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Password" />
          </tooltip>
       </PasswordField>
       <Label focusTraversable="false" layoutX="163.0" layoutY="102.0" styleClass="description-label" text="Username:" />
       <Label focusTraversable="false" layoutX="167.0" layoutY="158.0" styleClass="description-label" text="Password:" />
-      <Label focusTraversable="false" layoutX="94.0" layoutY="35.0" onMouseClicked="#enableIMAP" prefHeight="49.0" prefWidth="203.0" style="-fx-font-size: 12;" styleClass="description-label" text="Register an account with any alpha-numeric username and password" textAlignment="CENTER" wrapText="true">
+      <Label focusTraversable="false" layoutX="94.0" layoutY="32.0" prefHeight="49.0" prefWidth="203.0" style="-fx-font-size: 12;" styleClass="description-label" text="Register an account with any alpha-numeric username and password" textAlignment="CENTER" wrapText="true">
          <tooltip>
             <Tooltip text="Click me to learn how to complete these actions!" />
          </tooltip>
       </Label>
-      <Button fx:id="login1" layoutX="113.0" layoutY="314.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Register &amp; Login">
+      <Button fx:id="registerLogin" layoutX="113.0" layoutY="314.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Register &amp; Login">
          <tooltip>
             <Tooltip text="Login" />
          </tooltip>
       </Button>
-      <PasswordField fx:id="passField1" layoutX="126.0" layoutY="243.0" onAction="#login" style="-fx-background-radius: 20;" styleClass="input-field">
-         <tooltip>
-            <Tooltip text="Password" />
-         </tooltip>
-      </PasswordField>
       <Label focusTraversable="false" layoutX="144.0" layoutY="218.0" styleClass="description-label" text="Confirm Password:" />
-      <Button fx:id="login11" layoutX="113.0" layoutY="360.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Register &amp; Back">
+      <Button fx:id="registerBack" layoutX="113.0" layoutY="360.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Register &amp; Back">
          <tooltip>
             <Tooltip text="Login" />
          </tooltip>

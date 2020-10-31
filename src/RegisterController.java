@@ -1,58 +1,30 @@
-import javafx.animation.*;
-import javafx.event.ActionEvent;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MasterController {
+public class RegisterController {
 
-    @FXML public Button login;
-    @FXML public Button loginButton;
-    @FXML public TextField usernameField;
-    @FXML public PasswordField passwordField;
-    @FXML public Button registerButton;
-
-    public static Parent root;
+    @FXML public TextField newusernameField;
+    @FXML public PasswordField passField;
+    @FXML public PasswordField confPassword;
+    @FXML public Button registerLogin;
+    @FXML public Button registerBack;
 
     @FXML
-    public void register(ActionEvent e) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("register.fxml"));
-            Scene currentScene = registerButton.getScene();
-            root.translateYProperty().set(currentScene.getHeight());
+    public void login(MouseEvent e) {
 
-            StackPane pc = (StackPane) currentScene.getRoot();
-            pc.getChildren().add(root);
-
-            Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
-            tim.getKeyFrames().add(kf);
-
-            tim.play();
-        }
-
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     @FXML
-    public void login(ActionEvent e) {
-        String username = usernameField.getText();
-        char[] password = passwordField.getText().toCharArray();
+    public void back(MouseEvent e) {
 
-        //todo attempt to authorize user and then allow them to select login for ss or goto note viewer
     }
 
     @FXML
