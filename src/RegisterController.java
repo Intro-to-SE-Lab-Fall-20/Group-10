@@ -56,7 +56,7 @@ public class RegisterController {
                 valid = false;
 
             if (valid) {
-                String wl = newUserName + "," + toHexString(getSHA(password));
+                String wl = newUserName.toLowerCase() + "," + toHexString(getSHA(password));
 
                 BufferedWriter bw = new BufferedWriter(new FileWriter(usersFile, true));
                 bw.write(wl);

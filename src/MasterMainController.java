@@ -14,6 +14,13 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+
 public class MasterMainController {
 
     @FXML public Button login;
@@ -51,8 +58,35 @@ public class MasterMainController {
     public void login(ActionEvent e) {
         String username = usernameField.getText();
         char[] password = passwordField.getText().toCharArray();
+        String sha = toHexString(getSHA(password));
+        String combo = username.toLowerCase() + "," + sha;
 
-        //todo attempt to authorize user and then allow them to select login for ss or goto note viewer
+        boolean validUser = false;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File("users.csv")));
+
+            String line = br.readLine();
+
+            while (line != null) {
+                if (line.equals(combo))
+                    validUser = true;
+
+                line = br.readLine();
+            }
+
+            if (validUser) {
+                //todo goto main.fxml
+            }
+
+            else {
+                showPopupMessage("Sorry, but I could not validate the user " + username, Main.primaryStage);
+            }
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -89,5 +123,34 @@ public class MasterMainController {
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(e -> popup.hide());
         delay.play();
+    }
+
+    public byte[] getSHA(char[] input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            StringBuilder sb = new StringBuilder();
+
+            for (char c : input)
+                sb.append(c);
+
+            return md.digest(sb.toString().getBytes(StandardCharsets.UTF_8));
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public String toHexString(byte[] hash) {
+        BigInteger number = new BigInteger(1, hash);
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        while (hexString.length() < 32) {
+            hexString.insert(0, '0');
+        }
+
+        return hexString.toString();
     }
 }
