@@ -27,11 +27,12 @@ import java.security.MessageDigest;
 import java.util.Properties;
 import java.util.UUID;
 
-public class Controller {
+public class MainController {
     @FXML public StackPane masterStack;
     @FXML public AnchorPane parent;
     @FXML public TextField emailField;
     @FXML public PasswordField passField;
+    @FXML public Button goBack;
 
     public static String emailAddress;
     public static char[] password ;
@@ -67,8 +68,6 @@ public class Controller {
 
         catch (Exception ignored) {}
     }
-
-
 
     @FXML
     private void minimize_stage(MouseEvent e) {
@@ -166,6 +165,11 @@ public class Controller {
         }
 
         return false;
+    }
+
+    @FXML
+    private void goBack(ActionEvent e) {
+        //todo go back to mastermain login
     }
 
     //main login method

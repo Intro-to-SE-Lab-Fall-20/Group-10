@@ -280,15 +280,15 @@ public class EmailController {
 
     //simple email getter
     private String getEmailAddress() {
-        return Controller.emailAddress;
+        return MainController.emailAddress;
     }
 
     //initialize folders choicebox for email address
     private void initFolders() {
         try {
             StringBuilder passwordBuilder = new StringBuilder();
-            for (int i = 0; i < Controller.password.length; i++)
-                passwordBuilder.append(Controller.password[i]);
+            for (int i = 0; i < MainController.password.length; i++)
+                passwordBuilder.append(MainController.password[i]);
 
             Properties props = new Properties();
             props.put("mail.smtp.auth", true);
@@ -340,8 +340,8 @@ public class EmailController {
         try {
             //first convert char[] holding password to a string builder that we can call toString on
             StringBuilder passwordBuilder = new StringBuilder();
-            for (int i = 0; i < Controller.password.length; i++)
-                passwordBuilder.append(Controller.password[i]);
+            for (int i = 0; i < MainController.password.length; i++)
+                passwordBuilder.append(MainController.password[i]);
 
             //init properties for smtp (Simple Mail Transfer Protocol)
             Properties props = new Properties();
@@ -679,8 +679,8 @@ public class EmailController {
             int deleteIndex = messages.length - table.getSelectionModel().getSelectedIndex() - 1;
 
             StringBuilder passwordBuilder = new StringBuilder();
-            for (int i = 0; i < Controller.password.length; i++)
-                passwordBuilder.append(Controller.password[i]);
+            for (int i = 0; i < MainController.password.length; i++)
+                passwordBuilder.append(MainController.password[i]);
             Properties props = new Properties();
             props.put("mail.smtp.auth", true);
             props.put("mail.smtp.starttls.enable", true);

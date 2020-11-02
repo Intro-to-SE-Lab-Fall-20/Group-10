@@ -113,10 +113,10 @@ public class ForwardController {
                 }
 
                 //init email and password
-                String ourEmail = Controller.emailAddress;
+                String ourEmail = MainController.emailAddress;
                 StringBuilder passwordBuilder = new StringBuilder();
-                for (int i = 0 ; i < Controller.password.length ; i++)
-                    passwordBuilder.append(Controller.password[i]);
+                for (int i = 0; i < MainController.password.length ; i++)
+                    passwordBuilder.append(MainController.password[i]);
 
                 Properties props = new Properties();
                 props.put("mail.smtp.auth", true);
@@ -310,7 +310,7 @@ public class ForwardController {
     }
 
     private String getEmailAddress() {
-        return Controller.emailAddress;
+        return MainController.emailAddress;
     }
 
     //make sure that we support the email server

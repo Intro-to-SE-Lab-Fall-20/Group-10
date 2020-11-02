@@ -341,7 +341,7 @@ public class ViewController  {
     }
 
     private String getEmailAddress() {
-        return Controller.emailAddress;
+        return MainController.emailAddress;
     }
 
     private String getEmailHost(String email) throws Exception {

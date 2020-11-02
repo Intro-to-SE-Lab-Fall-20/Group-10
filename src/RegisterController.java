@@ -1,13 +1,24 @@
-import javafx.animation.PauseTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 public class RegisterController {
 
@@ -15,17 +26,80 @@ public class RegisterController {
     @FXML public PasswordField passField;
     @FXML public PasswordField confPassword;
     @FXML public Button registerLogin;
-    @FXML public Button registerBack;
     @FXML public Button cancel;
+
+    public Parent root;
 
     @FXML
     public void login(MouseEvent e) {
-        //todo register user and login
+        try {
+            File usersFile = new File("users.csv");
+            if (!usersFile.exists()) usersFile.createNewFile();
+
+            String newUserName = newusernameField.getText();
+            char[] password = passField.getText().toCharArray();
+            char[] passwordConf = confPassword.getText().toCharArray();
+
+            boolean valid = true;
+
+            if (password.length != passwordConf.length)
+                valid = false;
+
+            for (int c = 0 ; c < password.length ; c++)
+                if (password[c] != passwordConf[c])
+                    valid = false;
+
+            if (password.length < 5)
+                valid = false;
+
+            if (!newUserName.matches("[^a-zA-Z0-9]"))
+                valid = false;
+
+            if (valid) {
+                String wl = newUserName + "," + toHexString(getSHA(password));
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(usersFile, true));
+                bw.write(wl);
+                bw.newLine();
+                bw.flush();
+                bw.close();
+
+                loadEmailMain();
+            }
+
+            else {
+                showPopupMessage("Sorry, but I could not register a user based on these" +
+                        " credentials. Please make sure your username is alpha-numeric and your password" +
+                        " is greater than 4 characters.",Main.primaryStage);
+            }
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-    @FXML
-    public void back(MouseEvent e) {
-        //todo register user and go back
+    //todo does this work?
+    private void loadEmailMain() {
+        try {
+            root = FXMLLoader.load(EmailController.class.getResource("main.fxml"));
+            Scene currentScene = passField.getScene();
+            root.translateXProperty().set(currentScene.getWidth());
+
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
+
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+
+            tim.getKeyFrames().add(kf);
+            tim.play();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -67,5 +141,34 @@ public class RegisterController {
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(e -> popup.hide());
         delay.play();
+    }
+
+    public byte[] getSHA(char[] input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            StringBuilder sb = new StringBuilder();
+
+            for (char c : input)
+                sb.append(c);
+
+            return md.digest(sb.toString().getBytes(StandardCharsets.UTF_8));
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public String toHexString(byte[] hash) {
+        BigInteger number = new BigInteger(1, hash);
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        while (hexString.length() < 32) {
+            hexString.insert(0, '0');
+        }
+
+        return hexString.toString();
     }
 }

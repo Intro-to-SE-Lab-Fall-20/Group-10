@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class MainTest extends ApplicationTest {
-    // Tests Controller too
+    // Tests MainController too
     public Stage primaryStage;
     public double xOffset = 0d;
     public double yOffset = 0d;

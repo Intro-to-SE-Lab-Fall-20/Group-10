@@ -14,7 +14,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MasterController {
+public class MasterMainController {
 
     @FXML public Button login;
     @FXML public Button loginButton;

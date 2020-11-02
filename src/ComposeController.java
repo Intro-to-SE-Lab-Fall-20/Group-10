@@ -135,10 +135,10 @@ public class ComposeController {
                 }
 
                 //init email and password
-                String ourEmail = Controller.emailAddress;
+                String ourEmail = MainController.emailAddress;
                 StringBuilder passwordBuilder = new StringBuilder();
-                for (int i = 0 ; i < Controller.password.length ; i++)
-                    passwordBuilder.append(Controller.password[i]);
+                for (int i = 0; i < MainController.password.length ; i++)
+                    passwordBuilder.append(MainController.password[i]);
 
                 //init tls and smtp
                 Properties props = new Properties();

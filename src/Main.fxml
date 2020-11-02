@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="masterStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<StackPane fx:id="masterStack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
     <AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
         <children>
             <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
@@ -32,7 +32,7 @@
                     <Tooltip text="Password" />
                 </tooltip>
             </PasswordField>
-            <Button fx:id="login" layoutX="160.0" layoutY="344.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="87.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Login">
+            <Button fx:id="login" layoutX="209.0" layoutY="345.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="87.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Login">
                 <tooltip>
                     <Tooltip text="Login" />
                 </tooltip>
@@ -49,6 +49,7 @@
                <Tooltip text="Click me to learn how to complete these actions!" />
             </tooltip></Label>
          <Label focusTraversable="false" layoutX="95.0" layoutY="62.0" prefHeight="23.0" prefWidth="211.0" style="-fx-text-fill: #0070BB;" styleClass="description-label" text="Nathan Cheshire and Mallory Duke" textAlignment="CENTER" translateY="-10.0" wrapText="true" />
+         <Button fx:id="Back" layoutX="107.0" layoutY="345.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="87.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Back" />
         </children>
     </AnchorPane>
 </StackPane>

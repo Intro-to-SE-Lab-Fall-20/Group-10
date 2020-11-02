@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RegisterController">
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RegisterController">
    <children>
       <PasswordField fx:id="confPassword" layoutX="126.0" layoutY="243.0" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
@@ -41,17 +41,12 @@
             <Tooltip text="Click me to learn how to complete these actions!" />
          </tooltip>
       </Label>
-      <Button fx:id="registerLogin" layoutX="113.0" layoutY="314.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Register &amp; Login">
+      <Button fx:id="registerLogin" layoutX="116.0" layoutY="301.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Register &amp; Login">
          <tooltip>
             <Tooltip text="Login" />
          </tooltip>
       </Button>
       <Label focusTraversable="false" layoutX="144.0" layoutY="218.0" styleClass="description-label" text="Confirm Password:" />
-      <Button fx:id="registerBack" layoutX="113.0" layoutY="360.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 20;" styleClass="button-compose" text="Register &amp; Back">
-         <tooltip>
-            <Tooltip text="Login" />
-         </tooltip>
-      </Button>
-      <Button fx:id="cancel" layoutX="165.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 20;" styleClass="button-discard" text="Cancel" />
+      <Button fx:id="cancel" layoutX="171.0" layoutY="337.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 20;" styleClass="button-discard" text="Cancel" />
    </children>
 </AnchorPane>
