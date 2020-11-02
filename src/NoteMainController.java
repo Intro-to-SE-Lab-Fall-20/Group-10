@@ -2,35 +2,42 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class RegisterController {
+import javax.swing.table.TableColumn;
+import java.awt.event.ActionEvent;
 
-    @FXML public TextField newusernameField;
-    @FXML public PasswordField passField;
-    @FXML public PasswordField confPassword;
-    @FXML public Button registerLogin;
-    @FXML public Button registerBack;
-    @FXML public Button cancel;
+public class NoteMainController {
+
+    @FXML public TableView table;
+    @FXML public TableColumn noteColumn;
+    @FXML public Button addNote;
+    @FXML public Button back;
+    @FXML public Button openNote;
+    @FXML public Button deleteNote;
 
     @FXML
-    public void login(MouseEvent e) {
-        //todo register user and login
+    public void back(ActionEvent e) {
+        //todo go back to screen to choose note or email
     }
 
     @FXML
-    public void back(MouseEvent e) {
-        //todo register user and go back
+    public void addNote(ActionEvent e) {
+        //todo go to create note
     }
 
     @FXML
-    public void goBack(MouseEvent e) {
-        //todo go back to mastermain
+    public void openNote(ActionEvent e) {
+        //todo open a blank note up
+    }
+
+    @FXML
+    public void deleteNote(ActionEvent e) {
+        //todo delete selected note if any
     }
 
     @FXML
@@ -43,7 +50,7 @@ public class RegisterController {
         System.exit(0);
     }
 
-    //fx popup as opposed to the swing popup inside of main
+    //popup messages, can customize look based on the style sheet selected
     private Popup createPopup(final String message) {
         final Popup popup = new Popup();
         popup.setAutoFix(true);

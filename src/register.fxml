@@ -52,5 +52,6 @@
             <Tooltip text="Login" />
          </tooltip>
       </Button>
+      <Button fx:id="cancel" layoutX="165.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 20;" styleClass="button-discard" text="Cancel" />
    </children>
 </AnchorPane>

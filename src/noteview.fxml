@@ -16,10 +16,10 @@
             <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="300.0" />
          </children>
       </HBox>
-      <Button layoutX="275.0" layoutY="410.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Delete Note" />
-      <Button layoutX="14.0" layoutY="410.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Save &amp; Resign" />
-      <TextArea layoutX="14.0" layoutY="57.0" prefHeight="345.0" prefWidth="371.0" />
-      <TextField layoutX="14.0" layoutY="26.0" prefHeight="25.0" prefWidth="371.0" promptText="Rename note" style="-fx-background-radius: 20;" />
-      <Button layoutX="139.0" layoutY="410.0" mnemonicParsing="false" style="-fx-background-radius: 20;" styleClass="button-login" text="Discard changes" />
+      <TextField fx:id="noteNameField" layoutX="14.0" layoutY="26.0" prefHeight="25.0" prefWidth="371.0" promptText="Rename note" style="-fx-background-radius: 20;" />
+      <TextArea fx:id="noteTextArea" layoutX="14.0" layoutY="57.0" prefHeight="345.0" prefWidth="371.0" promptText="Note content" style="-fx-border-radius: 20; -fx-background-color: white; -fx-background-radius: 20;" />
+      <Button fx:id="saveAndResign" layoutX="14.0" layoutY="410.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Save &amp; Resign" />
+      <Button fx:id="discardChanges" layoutX="139.0" layoutY="410.0" mnemonicParsing="false" onAction="#discardChanges" style="-fx-background-radius: 20;" styleClass="button-login" text="Discard changes" />
+      <Button fx:id="deleteNote" layoutX="275.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteNote" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Delete Note" />
    </children>
 </AnchorPane>

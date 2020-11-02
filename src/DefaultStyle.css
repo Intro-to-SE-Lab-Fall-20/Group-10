@@ -30,6 +30,27 @@
     -fx-background-color: #171717;
 }
 
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane:focused {
+    -fx-background-color:  #2196f3,transparent;
+}
+.text-area .scroll-pane .viewport:focused{
+    -fx-background-color:  #2196f3,transparent;
+}
+.text-area .scroll-pane .conten:focusedt{
+    -fx-background-color:  #2196f3,transparent;
+}
+
+
 .window-label {
     -fx-font-size: 1.2em;
     -fx-font-family: sans-serif;

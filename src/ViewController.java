@@ -68,7 +68,13 @@ public class ViewController  {
 
             if (EmailController.currentMessageAttachments.size() == 0) {
                 Main.startWorking("No attachments!", 1000);
-                Platform.runLater(() -> loadAttachments.setDisable(false));
+                Platform.runLater(() -> {
+                    loadAttachments.setDisable(false);
+                    forwardButton.setDisable(false);
+                    replyButton.setDisable(false);
+                    downloadAttachment.setDisable(false);
+                    backButton.setDisable(false);
+                });
                 return;
             }
 

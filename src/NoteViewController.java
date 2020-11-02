@@ -2,35 +2,36 @@ import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class RegisterController {
+import java.awt.event.ActionEvent;
 
-    @FXML public TextField newusernameField;
-    @FXML public PasswordField passField;
-    @FXML public PasswordField confPassword;
-    @FXML public Button registerLogin;
-    @FXML public Button registerBack;
-    @FXML public Button cancel;
+public class NoteViewController {
+
+    @FXML public TextField noteNameField;
+    @FXML public TextArea noteTextArea;
+    @FXML public Button saveAndResign;
+    @FXML public Button discardChanges;
+    @FXML public Button deleteNote;
 
     @FXML
-    public void login(MouseEvent e) {
-        //todo register user and login
+    public void saveAndResign (ActionEvent e) {
+        //todo save note and go back to notemain.fxml
     }
 
     @FXML
-    public void back(MouseEvent e) {
-        //todo register user and go back
+    public void discardChanges (ActionEvent e) {
+        //todo go back to notemain.fxml and don't save note
     }
 
     @FXML
-    public void goBack(MouseEvent e) {
-        //todo go back to mastermain
+    public void deleteNote (ActionEvent e) {
+        //todo delete note and go back to notemain.fxml
     }
 
     @FXML
@@ -43,7 +44,7 @@ public class RegisterController {
         System.exit(0);
     }
 
-    //fx popup as opposed to the swing popup inside of main
+    //popup messages, can customize look based on the style sheet selected
     private Popup createPopup(final String message) {
         final Popup popup = new Popup();
         popup.setAutoFix(true);
