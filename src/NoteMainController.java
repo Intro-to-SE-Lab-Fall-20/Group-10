@@ -32,12 +32,13 @@ public class NoteMainController {
 
     @FXML
     public void openNote(ActionEvent e) {
-        //todo open a blank note up
+        //todo create newnote.txt or newnote1.txt etc. and goto noteviewcontroller and load it in
     }
 
     @FXML
     public void deleteNote(ActionEvent e) {
-        //todo delete selected note if any
+        table.getSelectionModel().getSelectedIndex();
+
     }
 
     @FXML

@@ -76,6 +76,7 @@ public class MasterMainController {
             }
 
             if (validUser) {
+                System.out.println("goto main.fxml");
                 //todo goto main.fxml
             }
 
