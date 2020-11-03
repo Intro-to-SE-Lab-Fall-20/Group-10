@@ -10,11 +10,6 @@
 
 <AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RegisterController">
    <children>
-      <PasswordField fx:id="confPassword" layoutX="126.0" layoutY="243.0" style="-fx-background-radius: 20;" styleClass="input-field">
-         <tooltip>
-            <Tooltip text="Password" />
-         </tooltip>
-      </PasswordField>
       <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
          <children>
             <Label fx:id="CloseButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_app" prefHeight="20.0" prefWidth="20.0" styleClass="close-btn" stylesheets="@DefaultStyle.css" text="X" textFill="WHITE" translateX="380.0" />
@@ -22,8 +17,6 @@
             <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="195.0" />
          </children>
       </HBox>
-      <Label focusTraversable="false" layoutX="125.0" layoutY="48.0" prefHeight="23.0" prefWidth="171.0" styleClass="description-label" textAlignment="CENTER" wrapText="true" />
-      <Label focusTraversable="false" layoutX="96.0" layoutY="77.0" styleClass="description-label" />
       <TextField fx:id="newusernameField" layoutX="124.0" layoutY="125.0" style="-fx-background-radius: 20;" styleClass="input-field">
          <tooltip>
             <Tooltip text="Complete email (ex: Straight@Shot.com)" />
@@ -34,6 +27,12 @@
             <Tooltip text="Password" />
          </tooltip>
       </PasswordField>
+      <PasswordField fx:id="confPassword" layoutX="126.0" layoutY="243.0" style="-fx-background-radius: 20;" styleClass="input-field">
+         <tooltip>
+            <Tooltip text="Password" />
+         </tooltip>
+      </PasswordField>
+      <Label focusTraversable="false" layoutX="125.0" layoutY="48.0" prefHeight="23.0" prefWidth="171.0" styleClass="description-label" textAlignment="CENTER" wrapText="true" />
       <Label focusTraversable="false" layoutX="163.0" layoutY="102.0" styleClass="description-label" text="Username:" />
       <Label focusTraversable="false" layoutX="167.0" layoutY="158.0" styleClass="description-label" text="Password:" />
       <Label focusTraversable="false" layoutX="94.0" layoutY="32.0" prefHeight="49.0" prefWidth="203.0" style="-fx-font-size: 12;" styleClass="description-label" text="Register an account with any alpha-numeric username and password" textAlignment="CENTER" wrapText="true">

@@ -1,4 +1,5 @@
 import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +32,7 @@ public class RegisterController {
     public Parent root;
 
     @FXML
-    public void login(MouseEvent e) {
+    public void login(ActionEvent e) {
         try {
             File usersFile = new File("users.csv");
             if (!usersFile.exists()) usersFile.createNewFile();
@@ -52,7 +53,7 @@ public class RegisterController {
             if (password.length < 5)
                 valid = false;
 
-            if (!newUserName.matches("[^a-zA-Z0-9]"))
+            if (!check(newUserName))
                 valid = false;
 
             if (valid) {
@@ -65,6 +66,8 @@ public class RegisterController {
                 bw.close();
 
                 loadEmailMain();
+
+                showPopupMessage("Successfully registered user " + newUserName,Main.primaryStage);
             }
 
             else {
@@ -79,7 +82,6 @@ public class RegisterController {
         }
     }
 
-    //todo does this work?
     private void loadEmailMain() {
         try {
             root = FXMLLoader.load(EmailController.class.getResource("main.fxml"));
@@ -103,8 +105,21 @@ public class RegisterController {
     }
 
     @FXML
-    public void goBack(MouseEvent e) {
-        //todo go back to mastermain
+    public void goBack(ActionEvent e) {
+        newusernameField.setText("");
+        passField.setText("");
+        confPassword.setText("");
+
+        Scene currentScene = registerLogin.getScene();
+        StackPane pc = (StackPane) currentScene.getRoot();
+
+        MasterMainController.root.translateYProperty().set(0);
+        Timeline tim1 = new Timeline();
+        KeyValue kv1 = new KeyValue(MasterMainController.root.translateYProperty(), currentScene.getHeight(), Interpolator.EASE_IN);
+        KeyFrame kf1 = new KeyFrame(Duration.seconds(0.5), kv1);
+        tim1.getKeyFrames().add(kf1);
+        tim1.setOnFinished(ex -> pc.getChildren().remove( MasterMainController.root));
+        tim1.play();
     }
 
     @FXML
@@ -170,5 +185,18 @@ public class RegisterController {
         }
 
         return hexString.toString();
+    }
+
+    boolean check(String username) {
+        if (username == null)
+            return false;
+
+        int len = username.length();
+
+        for (int i = 0; i < len; i++)
+            if (!Character.isLetterOrDigit(username.charAt(i)))
+                return false;
+
+        return true;
     }
 }

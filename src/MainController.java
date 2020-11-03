@@ -17,9 +17,6 @@ import javafx.util.Duration;
 import javax.mail.Session;
 import javax.mail.Store;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.math.BigInteger;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -28,7 +25,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class MainController {
-    @FXML public StackPane masterStack;
+
     @FXML public AnchorPane parent;
     @FXML public TextField emailField;
     @FXML public PasswordField passField;
@@ -38,36 +35,7 @@ public class MainController {
     public static char[] password ;
     public static String theme;
 
-    @FXML
-    public void initialize() {
-        //what this does is logs in for me basically so that I don't have to type in the password everytime
-        //it checks for a file and if it exists, grabs username and password from it
-        //if it doesn't exist it just proceeds as normal, this is what we call a code hook
-        try {
-            File debugLogin = new File("../auto-login-straight-shot.txt");
-
-            if (debugLogin.exists() && !Main.autoLoggedIn) {
-                BufferedReader ac = new BufferedReader(new FileReader(debugLogin));
-
-                String line = ac.readLine();
-                String[] parts = line.split(":");
-
-                if (parts.length == 2 && !parts[0].equals("") && !parts[1].equals("")) {
-                    if (silentValidateCredentials(parts[0], parts[1].toCharArray())) {
-                        Main.autoLoggedIn = true;
-                        emailAddress = parts[0];
-                        password = parts[1].toCharArray();
-
-                        Parent root = FXMLLoader.load(getClass().getResource("email.fxml"));
-                        Scene currentScene = emailField.getScene();
-                        masterStack.getChildren().add(root);
-                    }
-                }
-            }
-        }
-
-        catch (Exception ignored) {}
-    }
+    public static Parent root;
 
     @FXML
     private void minimize_stage(MouseEvent e) {
@@ -169,7 +137,30 @@ public class MainController {
 
     @FXML
     private void goBack(ActionEvent e) {
-        //todo go back to mastermain login
+        try {
+            //load new parent and scene
+            Parent root = FXMLLoader.load(getClass().getResource("MasterMain.fxml"));
+            Scene currentScene = emailField.getScene();
+            root.translateXProperty().set(-currentScene.getWidth()); //new scene starts off current scene
+
+            //add the new scene
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
+
+            //animate the scene in
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+
+            //play animation and when done, remove the old scene
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+            tim.play();
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     //main login method
@@ -254,13 +245,15 @@ public class MainController {
             // possible place to change style to user's chosen style
             Scene currentScene = emailField.getScene();
             root.translateXProperty().set(currentScene.getWidth());
-            masterStack.getChildren().add(root);
+
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
 
             Timeline tim = new Timeline();
             KeyValue kv = new KeyValue(root.translateXProperty(), 0 , Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
-            tim.setOnFinished(event1 -> masterStack.getChildren().remove(parent));
+            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
             tim.play();
         }
 

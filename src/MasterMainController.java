@@ -23,6 +23,7 @@ import java.security.MessageDigest;
 
 public class MasterMainController {
 
+    @FXML public StackPane masterStack;
     @FXML public Button login;
     @FXML public Button loginButton;
     @FXML public TextField usernameField;
@@ -33,6 +34,9 @@ public class MasterMainController {
 
     @FXML
     public void register(ActionEvent e) {
+        usernameField.setText("");
+        passwordField.setText("");
+
         try {
             root = FXMLLoader.load(getClass().getResource("register.fxml"));
             Scene currentScene = registerButton.getScene();
@@ -64,7 +68,10 @@ public class MasterMainController {
         boolean validUser = false;
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("users.csv")));
+            File usersFile = new File("users.csv");
+            if (!usersFile.exists()) usersFile.createNewFile();
+
+            BufferedReader br = new BufferedReader(new FileReader(usersFile));
 
             String line = br.readLine();
 
@@ -76,12 +83,34 @@ public class MasterMainController {
             }
 
             if (validUser) {
-                System.out.println("goto main.fxml");
-                //todo goto main.fxml
+                usernameField.setText("");
+                passwordField.setText("");
+
+                try {
+                    root = FXMLLoader.load(EmailController.class.getResource("main.fxml"));
+                    Scene currentScene = passwordField.getScene();
+                    root.translateXProperty().set(currentScene.getWidth());
+
+                    StackPane pc = (StackPane) currentScene.getRoot();
+                    pc.getChildren().add(root);
+
+                    Timeline tim = new Timeline();
+                    KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                    KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+
+                    tim.getKeyFrames().add(kf);
+                    tim.play();
+                }
+
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
 
             else {
                 showPopupMessage("Sorry, but I could not validate the user " + username, Main.primaryStage);
+                usernameField.setText("");
+                passwordField.setText("");
             }
         }
 
