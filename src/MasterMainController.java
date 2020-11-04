@@ -31,6 +31,7 @@ public class MasterMainController {
     @FXML public Button registerButton;
 
     public static Parent root;
+    public static String currentUser = null;
 
     @FXML
     public void register(ActionEvent e) {
@@ -83,6 +84,7 @@ public class MasterMainController {
             }
 
             if (validUser) {
+                currentUser = username;
                 usernameField.setText("");
                 passwordField.setText("");
 
