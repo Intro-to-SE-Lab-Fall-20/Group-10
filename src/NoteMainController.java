@@ -1,24 +1,18 @@
 import javafx.animation.PauseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.swing.table.TableColumn;
-import java.awt.event.ActionEvent;
-
 public class NoteMainController {
 
     @FXML public TableView table;
-    @FXML public TableColumn noteColumn;
-    @FXML public Button addNote;
-    @FXML public Button back;
-    @FXML public Button openNote;
-    @FXML public Button deleteNote;
+    @FXML public TableColumn noteCol;
 
     @FXML
     public void back(ActionEvent e) {
@@ -26,17 +20,17 @@ public class NoteMainController {
     }
 
     @FXML
-    public void addNote(ActionEvent e) {
+    public void addNoteAction(ActionEvent e) {
         //todo go to create note
     }
 
     @FXML
-    public void openNote(ActionEvent e) {
+    public void openNoteAction(ActionEvent e) {
         //todo create newnote.txt or newnote1.txt etc. and goto noteviewcontroller and load it in
     }
 
     @FXML
-    public void deleteNote(ActionEvent e) {
+    public void deleteNoteAction(ActionEvent e) {
         table.getSelectionModel().getSelectedIndex();
 
     }

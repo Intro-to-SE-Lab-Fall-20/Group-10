@@ -136,6 +136,30 @@ public class MainController {
     }
 
     @FXML
+    private void gotoNotes(ActionEvent e) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("notemain.fxml"));
+            // possible place to change style to user's chosen style
+            Scene currentScene = emailField.getScene();
+            root.translateXProperty().set(currentScene.getWidth());
+
+            StackPane pc = (StackPane) currentScene.getRoot();
+            pc.getChildren().add(root);
+
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(root.translateXProperty(), 0 , Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+            tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> pc.getChildren().remove(parent));
+            tim.play();
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
     private void goBack(ActionEvent e) {
         try {
             //load new parent and scene
