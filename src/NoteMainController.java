@@ -96,12 +96,7 @@ public class NoteMainController {
 
         refreshNoteFiles();
 
-        //Add emails to table
-        for (int i = noteFiles.length - 1; i >= 0 ; i--) {
-            File f = noteFiles[i];
-
-            writePart(f.getName(),getContents(f));
-        }
+        //todo if notes there, add them to table
 
         table.setRowFactory((tableView) -> new TooltipTableRow<>(NotePreview::toString));
     }
@@ -182,20 +177,36 @@ public class NoteMainController {
 
     @FXML
     public void addNoteAction(ActionEvent e) {
-        File users = new File("users");
-        if (!users.exists()) users.mkdir();
+        try {
+            File users = new File("users");
+            if (!users.exists()) users.mkdir();
 
-        refreshNoteFiles();
+            refreshNoteFiles();
 
-        String validName = "newnote";
+            String validName = "untitled";
+            File[] takenFiles = noteFiles;
+            LinkedList<String> takenNames = new LinkedList<>();
+            int i = 1;
 
-        //todo make sure newnote.txt doesn't exist
+            for (File f : takenFiles)
+                takenNames.add(f.getName().replace(".txt",""));
 
-        //if so, while it's invalid, append a number of the end so for loop inside of while
+            while (takenNames.contains(validName + i)) {
+                i++;
+            }
 
-        //create a file from validName + ".txt"
+            File mkFile = new File("users/" + MasterMainController.currentUser + "/" + validName +  i + ".txt");
+            mkFile.createNewFile();
 
-        //set it as the currentNote and call openNoteAction
+            currentFile = mkFile;
+            currentName = currentFile.getName();
+
+            //todo openNoteAction(e);
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
