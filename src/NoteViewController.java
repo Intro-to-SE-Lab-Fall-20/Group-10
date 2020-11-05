@@ -1,12 +1,21 @@
-import javafx.animation.PauseTransition;
+import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+
 
 public class NoteViewController {
 
@@ -17,18 +26,76 @@ public class NoteViewController {
     @FXML public Button deleteNote;
 
     @FXML
-    public void saveAndResign (ActionEvent e) {
-        //todo save note and go back to notemain.fxml
+    private void initialize() {
+        noteTextArea.setText(NoteMainController.currentContents);
+        noteNameField.setText(NoteMainController.currentName);
     }
 
     @FXML
-    public void discardChanges (ActionEvent e) {
-        //todo go back to notemain.fxml and don't save note
+    private void saveAndResign (ActionEvent e) {
+        try {
+            BufferedWriter br = new BufferedWriter(new FileWriter(NoteMainController.currentFile,false));
+            br.write(noteTextArea.getText());
+            br.flush();
+            br.close();
+
+            NoteMainController.currentFile.renameTo(
+                    new File(NoteMainController.currentFile.getAbsolutePath().replace(NoteMainController.currentFile.getName(), noteNameField.getText())));
+
+            NoteMainController.refreshTable();
+
+            Scene currentScene = noteTextArea.getScene();
+            StackPane pc = (StackPane) currentScene.getRoot();
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(),currentScene.getHeight() , Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+            tim.getKeyFrames().add(kf);
+            tim.play();
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
-    public void deleteNote (ActionEvent e) {
-        //todo delete note and go back to notemain.fxml
+    private void discardChanges (ActionEvent e) {
+        try {
+            Scene currentScene = noteTextArea.getScene();
+            StackPane pc = (StackPane) currentScene.getRoot();
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(),currentScene.getHeight() , Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+            tim.getKeyFrames().add(kf);
+            tim.play();
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void deleteNote (ActionEvent e) {
+        try {
+            NoteMainController.currentFile.delete();
+
+            NoteMainController.refreshTable();
+
+            Scene currentScene = noteTextArea.getScene();
+            StackPane pc = (StackPane) currentScene.getRoot();
+            Timeline tim = new Timeline();
+            KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(),currentScene.getHeight() , Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+            tim.getKeyFrames().add(kf);
+            tim.play();
+
+        }
+
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML

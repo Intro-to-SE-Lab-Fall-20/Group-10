@@ -27,13 +27,13 @@ public class NoteMainController {
     @FXML public TableColumn noteCol;
 
     public File[] noteFiles;
-    public File currentFile;
+    public static File currentFile;
     public static String currentName;
     public static String currentContents;
 
     @FXML
     private void initialize() {
-        noteCol.setCellValueFactory(new PropertyValueFactory<NotePreview, String>("note"));
+        noteCol.setCellValueFactory(new PropertyValueFactory<NotePreview, String>("name"));
 
         table.setColumnResizePolicy((param) -> true );
 
@@ -70,7 +70,8 @@ public class NoteMainController {
             if (event.getClickCount() == 1) {
                 try {
                     int index = table.getSelectionModel().getSelectedIndex();
-                    currentFile = noteFiles[index];
+                    if (index >= 0 && index < noteFiles.length)
+                        currentFile = noteFiles[index];
                 }
 
                 catch (Exception e) {
@@ -83,7 +84,10 @@ public class NoteMainController {
                     int index = table.getSelectionModel().getSelectedIndex();
 
                     if (index >= 0 && index < noteFiles.length) {
-                        System.out.println("goto NoteView");
+                        currentFile = noteFiles[index];
+                        currentName = currentFile.getName();
+                        currentContents = getContents(currentFile);
+                        openNoteAction(null);
                     }
 
                 } catch (Exception e) {
@@ -96,7 +100,8 @@ public class NoteMainController {
 
         refreshNoteFiles();
 
-        //todo if notes there, add them to table
+        for (File f : noteFiles)
+            writePart(f.getName(),getContents(f));
 
         table.setRowFactory((tableView) -> new TooltipTableRow<>(NotePreview::toString));
     }
@@ -117,6 +122,8 @@ public class NoteMainController {
                     build.append("\n");
                     line = br.readLine();
                 }
+
+                br.close();
 
                 return build.toString();
             }
@@ -201,12 +208,25 @@ public class NoteMainController {
             currentFile = mkFile;
             currentName = currentFile.getName();
 
-            //todo openNoteAction(e);
+            openNoteAction(e);
+
+            table.getItems().clear();
+
+            refreshNoteFiles();
+
+            for (File f : noteFiles)
+                writePart(f.getName(),getContents(f));
+
+            table.setRowFactory((tableView) -> new TooltipTableRow<>(NotePreview::toString));
         }
 
         catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static void refreshTable() {
+        //todo update table
     }
 
     @FXML
@@ -238,11 +258,26 @@ public class NoteMainController {
     public void deleteNoteAction(ActionEvent e) {
         int delIndex = table.getSelectionModel().getSelectedIndex();
 
-        //todo get file and attempt to remove
+        currentFile = noteFiles[delIndex];
 
-        //inform if successful
+        try {
+            currentFile.delete();
+            showPopupMessage(currentFile.getName() + " was successfully deleted",Main.primaryStage);
+        }
 
-        //refresh table content
+        catch (Exception ex) {
+            showPopupMessage("Could not delete " + currentFile.getName() ,Main.primaryStage);
+            ex.printStackTrace();
+        }
+
+        table.getItems().clear();
+
+        refreshNoteFiles();
+
+        for (File f : noteFiles)
+            writePart(f.getName(),getContents(f));
+
+        table.setRowFactory((tableView) -> new TooltipTableRow<>(NotePreview::toString));
     }
 
     @FXML
