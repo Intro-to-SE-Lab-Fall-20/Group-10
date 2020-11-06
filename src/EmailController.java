@@ -278,6 +278,18 @@ public class EmailController {
         }
     }
 
+    //gets the iamp server based on the email provdider
+    public String getIMAPServer(String email) {
+        if (email.endsWith("gmail.com"))
+            return "imap.gmail.com";
+        else if (email.endsWith("yahoo.com"))
+            return "imap.mail.yahoo.com";
+        else if (email.endsWith("outlook.com"))
+            return "imap-mail.outlook.com";
+        else
+            return null;
+    }
+
     //simple email getter
     private String getEmailAddress() {
         return MainController.emailAddress;
@@ -293,7 +305,7 @@ public class EmailController {
             Properties props = new Properties();
             props.put("mail.smtp.auth", true);
             props.put("mail.smtp.starttls.enable", true);
-            props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
+            props.put("mail.smtp.host", (getEmailAddress()));
             props.put("mail.smtp.port", 587);
             props.put("mail.imap.fetchsize", "4096");
 
@@ -305,7 +317,7 @@ public class EmailController {
                     });
 
             Store store = session.getStore("imaps");
-            store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+            store.connect(getIMAPServer(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
             Folder[] f = store.getDefaultFolder().list();
             folderList.clear();
@@ -362,7 +374,7 @@ public class EmailController {
             //imaps is simply a protocol (Internet Message Access Protocol)
             //create an imaps session using our emailAddress host, email, and password
             store = session.getStore("imaps");
-            store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+            store.connect(getIMAPServer(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
             //get all the messages from the specified folder
             emailFolder = store.getFolder(folderChoiceBox.getItems().get(Integer.parseInt(currentFolder)));
@@ -684,7 +696,7 @@ public class EmailController {
             Properties props = new Properties();
             props.put("mail.smtp.auth", true);
             props.put("mail.smtp.starttls.enable", true);
-            props.put("mail.smtp.host", getEmailHost(getEmailAddress()));
+            props.put("mail.smtp.host", getIMAPServer(getEmailAddress()));
             props.put("mail.smtp.port", 587);
             props.put("mail.imap.fetchsize", "4096");
 
@@ -696,7 +708,7 @@ public class EmailController {
                     });
 
             Store store = session.getStore("imaps");
-            store.connect(getEmailHost(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
+            store.connect(getIMAPServer(getEmailAddress()), getEmailAddress(), passwordBuilder.toString());
 
             Folder emailFolder = store.getFolder(folderChoiceBox.getItems().get(Integer.parseInt(currentFolder)));
             emailFolder.open(Folder.READ_WRITE);

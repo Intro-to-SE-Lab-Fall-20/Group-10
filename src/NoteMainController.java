@@ -226,7 +226,7 @@ public class NoteMainController {
     }
 
     public static void refreshTable() {
-        //todo update table
+        //todo update table, instead of this, just actually unload notemaincontroller and reload it, same for the email attachment refreshing you need to fix
     }
 
     @FXML

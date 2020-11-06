@@ -67,6 +67,8 @@ public class RegisterController {
 
                 loadEmailMain();
 
+                MasterMainController.currentUser = newUserName;
+
                 showPopupMessage("Successfully registered user " + newUserName,Main.primaryStage);
             }
 

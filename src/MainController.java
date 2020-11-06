@@ -108,28 +108,60 @@ public class MainController {
         StringBuilder passBuild = new StringBuilder();
         for (char c : pass) passBuild.append(c);
 
-        Properties props = System.getProperties();
-
-        //we told the user to enable imaps and pop3 so this shouldn't be a problem
-        props.setProperty("mail.store.protocol", "imaps");
-
         try {
-            Session session = Session.getDefaultInstance(props, null);
-            Store store = session.getStore("imaps");
+            Properties props = System.getProperties();
 
-            //if this doesn't work then we know the email couldn't be validated so an exception
-            //will be thrown and we will informt the user we couldn't login
-            store.connect(getIMAPServer(user), user, passBuild.toString());
+            if (user.endsWith("gmail.com")) {
+                //we told the user to enable imaps and pop3 so this shouldn't be a problem
+                props.setProperty("mail.store.protocol", "imaps");
+                Session session = Session.getDefaultInstance(props, null);
+                Store store = session.getStore("imaps");
 
-            return true;
+                //if this doesn't work then we know the email couldn't be validated so an exception
+                //will be thrown and we will informt the user we couldn't login
+                store.connect(getIMAPServer(user), user, passBuild.toString());
+
+                return true;
+            }
+
+            else if (user.endsWith("yahoo.com")) {
+                System.out.println("here");
+                //we told the user to enable imaps and pop3 so this shouldn't be a problem
+                props.setProperty("mail.store.protocol", "imaps");
+                Session session = Session.getDefaultInstance(props);
+                Store store = session.getStore("imaps");
+
+                //if this doesn't work then we know the email couldn't be validated so an exception
+                //will be thrown and we will informt the user we couldn't login
+                store.connect(getIMAPServer(user), user, passBuild.toString());
+
+                return true;
+            }
+
+            else {
+                //we told the user to enable imaps and pop3 so this shouldn't be a problem
+                props.setProperty("mail.store.protocol", "imaps");
+                Session session = Session.getDefaultInstance(props, null);
+                Store store = session.getStore("imaps");
+
+                //if this doesn't work then we know the email couldn't be validated so an exception
+                //will be thrown and we will informt the user we couldn't login
+                store.connect(getIMAPServer(user), user, passBuild.toString());
+
+                return true;
+            }
         }
 
         catch (Exception e) {
+            e.printStackTrace();
+
             showPopupMessage("Sorry, " + System.getProperty("user.name") + ", but I couldn't validate\nthe email: " +
                     emailAddress, Main.primaryStage);
 
             emailField.setText("");
             passField.setText("");
+
+
         }
 
         return false;
@@ -206,18 +238,6 @@ public class MainController {
             emailField.setText("");
             passField.setText("");
         }
-    }
-
-    //get the email host, will remove cases if we cannot support any other mail services aside from (gmail)
-    private String getEmailHost(String email) throws Exception {
-        if (email.endsWith("gmail.com"))
-            return "smtp.gmail.com";
-        else if (email.endsWith("yahoo.com"))
-            return "smtp.mail.yahoo.com";
-        else if (email.endsWith("outlook.com"))
-            return "smtp.office365.com";
-        else
-            throw new Exception("Unsupported email host");
     }
 
     //Secure Hashing Algorithm 256-bit (standard encryption for modern browsers)
