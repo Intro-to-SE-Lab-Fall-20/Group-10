@@ -31,6 +31,7 @@ import java.util.LinkedList;
 public class ViewController  {
 
     //todo before going to reply or forward when we load attachments in this file, show those in our choicebox here too
+    //todo solve by just unloading and reloading class, use a flag to say files are already downloaded so just grab the names and display them
 
     //gui elements
     @FXML private Button backButton;

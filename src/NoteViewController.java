@@ -1,6 +1,8 @@
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,15 +44,26 @@ public class NoteViewController {
             NoteMainController.currentFile.renameTo(
                     new File(NoteMainController.currentFile.getAbsolutePath().replace(NoteMainController.currentFile.getName(), noteNameField.getText())));
 
-            NoteMainController.refreshTable();
+            try {
+                Parent removeRoot = MasterMainController.root;
+                MasterMainController.root = FXMLLoader.load(getClass().getResource("notemain.fxml"));
+                Scene currentScene = noteTextArea.getScene();
+                MasterMainController.root.translateYProperty().set(currentScene.getHeight());
 
-            Scene currentScene = noteTextArea.getScene();
-            StackPane pc = (StackPane) currentScene.getRoot();
-            Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(),currentScene.getHeight() , Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
-            tim.getKeyFrames().add(kf);
-            tim.play();
+                StackPane pc = (StackPane) currentScene.getRoot();
+                pc.getChildren().add(MasterMainController.root);
+
+                Timeline tim = new Timeline();
+                KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+                tim.getKeyFrames().add(kf);
+                tim.setOnFinished(event1 -> pc.getChildren().remove(removeRoot));
+                tim.play();
+            }
+
+            catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         catch (Exception ex) {
@@ -81,16 +94,26 @@ public class NoteViewController {
         try {
             NoteMainController.currentFile.delete();
 
-            NoteMainController.refreshTable();
+            try {
+                Parent removeRoot = MasterMainController.root;
+                MasterMainController.root = FXMLLoader.load(getClass().getResource("notemain.fxml"));
+                Scene currentScene = noteTextArea.getScene();
+                MasterMainController.root.translateYProperty().set(currentScene.getHeight());
 
-            Scene currentScene = noteTextArea.getScene();
-            StackPane pc = (StackPane) currentScene.getRoot();
-            Timeline tim = new Timeline();
-            KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(),currentScene.getHeight() , Interpolator.EASE_IN);
-            KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
-            tim.getKeyFrames().add(kf);
-            tim.play();
+                StackPane pc = (StackPane) currentScene.getRoot();
+                pc.getChildren().add(MasterMainController.root);
 
+                Timeline tim = new Timeline();
+                KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
+                tim.getKeyFrames().add(kf);
+                tim.setOnFinished(event1 -> pc.getChildren().remove(removeRoot));
+                tim.play();
+            }
+
+            catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         catch (Exception ex) {

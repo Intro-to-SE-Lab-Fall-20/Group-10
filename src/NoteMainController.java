@@ -96,6 +96,8 @@ public class NoteMainController {
             }
         });
 
+        System.out.println("here");
+
         table.getItems().clear();
 
         refreshNoteFiles();
@@ -168,7 +170,7 @@ public class NoteMainController {
         File currentUserFolder = new File("users/" + MasterMainController.currentUser);
 
         if (!currentUserFolder.exists()) {
-            currentUserFolder.mkdir();
+            currentUserFolder.mkdirs();
             noteFiles = null;
             return;
         }
@@ -225,16 +227,13 @@ public class NoteMainController {
         }
     }
 
-    public static void refreshTable() {
-        //todo update table, instead of this, just actually unload notemaincontroller and reload it, same for the email attachment refreshing you need to fix
-    }
-
     @FXML
     public void openNoteAction(ActionEvent e) {
         currentName = currentFile.getName();
         currentContents = getContents(currentFile);
 
         try {
+            Parent removeRoot = MasterMainController.root;
             MasterMainController.root = FXMLLoader.load(getClass().getResource("noteview.fxml"));
             Scene currentScene = table.getScene();
             MasterMainController.root.translateYProperty().set(currentScene.getHeight());
@@ -246,6 +245,7 @@ public class NoteMainController {
             KeyValue kv = new KeyValue(MasterMainController.root.translateYProperty(), 0, Interpolator.EASE_IN);
             KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
+            tim.setOnFinished(event1 -> pc.getChildren().remove(removeRoot));
             tim.play();
         }
 
