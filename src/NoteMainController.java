@@ -96,8 +96,6 @@ public class NoteMainController {
             }
         });
 
-        System.out.println("here");
-
         table.getItems().clear();
 
         refreshNoteFiles();

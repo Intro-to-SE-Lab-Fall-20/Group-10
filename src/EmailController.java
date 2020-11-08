@@ -28,8 +28,7 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
-//make all popups the same FX one so that they're attached to the frame
-//hint maybe: you can still move the frame even when running so do something with that maybe? a separate thread probably
+//todo on loading for compose disable other buttons and say working on it
 
 public class EmailController {
     //all gui elements
