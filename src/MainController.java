@@ -125,7 +125,6 @@ public class MainController {
             }
 
             else if (user.endsWith("yahoo.com")) {
-                System.out.println("here");
                 //we told the user to enable imaps and pop3 so this shouldn't be a problem
                 props.setProperty("mail.store.protocol", "imaps");
                 Session session = Session.getDefaultInstance(props);

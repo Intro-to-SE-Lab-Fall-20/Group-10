@@ -28,8 +28,6 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
-//todo on loading for compose disable other buttons and say working on it
-
 public class EmailController {
     //all gui elements
     @FXML
@@ -192,7 +190,7 @@ public class EmailController {
 
                     catch (ClassCastException cce) {
                         cce.printStackTrace();
-                        System.out.println("Message had no content so we couldn't make a current multipart\n\n");
+                        Main.startWorking("Message has no text",1000);
                     }
 
                     catch (Exception e) {
@@ -476,6 +474,13 @@ public class EmailController {
     @FXML
     private void gotoCompose(ActionEvent event) {
         try {
+            Main.startWorking("Loading email...",0);
+            composeButton.setDisable(true);
+            forwardButton.setDisable(true);
+            replyButton.setDisable(true);
+            deleteButton.setDisable(true);
+            logoutButton.setDisable(true);
+
             root = FXMLLoader.load(getClass().getResource("compose.fxml"));
             Scene currentScene = logoutButton.getScene();
             root.translateYProperty().set(currentScene.getHeight());
@@ -488,6 +493,13 @@ public class EmailController {
             KeyFrame kf = new KeyFrame(Duration.seconds(0.5), kv);
             tim.getKeyFrames().add(kf);
             tim.play();
+
+            Main.startWorking("Loaded!",1000);
+            composeButton.setDisable(false);
+            forwardButton.setDisable(false);
+            replyButton.setDisable(false);
+            deleteButton.setDisable(false);
+            logoutButton.setDisable(false);
         }
 
         catch (Exception e) {
