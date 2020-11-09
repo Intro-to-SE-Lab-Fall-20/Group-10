@@ -100,8 +100,9 @@ public class NoteMainController {
 
         refreshNoteFiles();
 
-        for (File f : noteFiles)
-            writePart(f.getName(),getContents(f));
+        if (noteFiles != null)
+            for (File f : noteFiles)
+                writePart(f.getName(),getContents(f));
 
         table.setRowFactory((tableView) -> new TooltipTableRow<>(NotePreview::toString));
     }
@@ -227,6 +228,10 @@ public class NoteMainController {
 
     @FXML
     public void openNoteAction(ActionEvent e) {
+        if (currentFile == null) {
+            return;
+        }
+
         currentName = currentFile.getName();
         currentContents = getContents(currentFile);
 
@@ -256,26 +261,28 @@ public class NoteMainController {
     public void deleteNoteAction(ActionEvent e) {
         int delIndex = table.getSelectionModel().getSelectedIndex();
 
-        currentFile = noteFiles[delIndex];
+        if (delIndex >= 0 && delIndex < table.getItems().size()) {
+            currentFile = noteFiles[delIndex];
 
-        try {
-            currentFile.delete();
-            showPopupMessage(currentFile.getName() + " was successfully deleted",Main.primaryStage);
+            try {
+                currentFile.delete();
+                showPopupMessage(currentFile.getName() + " was successfully deleted",Main.primaryStage);
+            }
+
+            catch (Exception ex) {
+                showPopupMessage("Could not delete " + currentFile.getName() ,Main.primaryStage);
+                ex.printStackTrace();
+            }
+
+            table.getItems().clear();
+
+            refreshNoteFiles();
+
+            for (File f : noteFiles)
+                writePart(f.getName(),getContents(f));
+
+            table.setRowFactory((tableView) -> new TooltipTableRow<>(NotePreview::toString));
         }
-
-        catch (Exception ex) {
-            showPopupMessage("Could not delete " + currentFile.getName() ,Main.primaryStage);
-            ex.printStackTrace();
-        }
-
-        table.getItems().clear();
-
-        refreshNoteFiles();
-
-        for (File f : noteFiles)
-            writePart(f.getName(),getContents(f));
-
-        table.setRowFactory((tableView) -> new TooltipTableRow<>(NotePreview::toString));
     }
 
     @FXML

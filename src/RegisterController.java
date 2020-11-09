@@ -14,9 +14,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -28,8 +26,48 @@ public class RegisterController {
     @FXML public PasswordField confPassword;
     @FXML public Button registerLogin;
     @FXML public Button cancel;
+    @FXML public Label passMatch;
 
     public Parent root;
+
+    @FXML
+    private void initialize() {
+        confPassword.setOnKeyReleased(event -> {
+            if (passField.getText().equals(confPassword.getText())) {
+                if (passField.getText().length() >= 5) {
+                    passMatch.setStyle("-fx-text-fill:  rgb(60, 167, 92)");
+                    passMatch.setText("Passwords match, good job");
+                }
+
+                else {
+                    passMatch.setText("Password should be > 4 characters");
+                }
+            }
+
+            else {
+                passMatch.setStyle("-fx-text-fill:  rgb(223,85,83)");
+                passMatch.setText("Passwords do not match");
+            }
+        });
+
+        passField.setOnKeyReleased(event -> {
+            if (passField.getText().equals(confPassword.getText())) {
+                if (passField.getText().length() >= 5) {
+                    passMatch.setStyle("-fx-text-fill:  rgb(60, 167, 92)");
+                    passMatch.setText("Passwords match, good job");
+                }
+
+                else {
+                    passMatch.setText("Password should be > 4 characters");
+                }
+            }
+
+            else {
+                passMatch.setStyle("-fx-text-fill:  rgb(223,85,83)");
+                passMatch.setText("Passwords do not match");
+            }
+        });
+    }
 
     @FXML
     public void login(ActionEvent e) {
@@ -42,6 +80,7 @@ public class RegisterController {
             char[] passwordConf = confPassword.getText().toCharArray();
 
             boolean valid = true;
+            boolean alreadyExist = false;
 
             if (password.length != passwordConf.length)
                 valid = false;
@@ -55,6 +94,11 @@ public class RegisterController {
 
             if (!check(newUserName))
                 valid = false;
+
+            if (alreadyExists(newUserName)) {
+                valid = false;
+                alreadyExist = true;
+            }
 
             if (valid) {
                 String wl = newUserName.toLowerCase() + "," + toHexString(getSHA(password));
@@ -73,9 +117,19 @@ public class RegisterController {
             }
 
             else {
-                showPopupMessage("Sorry, but I could not register a user based on these" +
-                        " credentials. Please make sure your username is alpha-numeric and your password" +
-                        " is greater than 4 characters.",Main.primaryStage);
+                if (alreadyExist) {
+                    showPopupMessage("Sorry, but that username is already in use. Please choose a different one", Main.primaryStage);
+                    newusernameField.setText("");
+                    passField.setText("");
+                    confPassword.setText("");
+                } else {
+                    showPopupMessage("Sorry, but I could not register a user based on these" +
+                            " credentials. Please make sure your username is alpha-numeric and your password" +
+                            " is greater than 4 characters", Main.primaryStage);
+                    newusernameField.setText("");
+                    passField.setText("");
+                    confPassword.setText("");
+                }
             }
         }
 
@@ -200,5 +254,32 @@ public class RegisterController {
                 return false;
 
         return true;
+    }
+
+    private boolean alreadyExists(String check) {
+        boolean ret = false;
+
+        try {
+            BufferedReader bw = new BufferedReader(new FileReader(new File("users.csv")));
+
+            String line = bw.readLine();
+
+            while (line != null) {
+                String part = line.split(",")[0];
+
+                if (part.equalsIgnoreCase(check))
+                    ret = true;
+
+                line = bw.readLine();
+            }
+
+            bw.close();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ret;
     }
 }

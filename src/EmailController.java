@@ -454,7 +454,7 @@ public class EmailController {
         return null;
     }
 
-    //display email messages in content emailTable
+    //display email messages in content emailTablet
     private void writePart(String from, String date, String subject, String message) {
         table.getItems().add(new EmailPreview(from,date,subject,message));
         table.refresh();
