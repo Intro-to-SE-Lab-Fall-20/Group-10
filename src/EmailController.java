@@ -73,6 +73,9 @@ public class EmailController {
     private Store store;
     private Folder emailFolder;
 
+    //todo add spam protection for someone guessing passwords
+    //todo let table columns be extended in width
+
     @FXML
     public void initialize() {
         try {
@@ -86,7 +89,7 @@ public class EmailController {
             subject.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("subject"));
             message.setCellValueFactory(new PropertyValueFactory<EmailPreview, String>("message"));
 
-            table.setColumnResizePolicy((param) -> true );
+            table.setColumnResizePolicy((param) -> false);
 
             //don't let the user rearrange the column ordering
             table.getColumns().addListener((ListChangeListener) change -> {
@@ -198,7 +201,7 @@ public class EmailController {
                     }
                 }
 
-                if (event.getClickCount() > 1 && getMessageText(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]).length() > 0) {
+                if (event.getClickCount() > 1 && (messages.length - table.getSelectionModel().getSelectedIndex() - 1 < messages.length) && getMessageText(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]).length() > 0) {
                     try {
                         gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
 
