@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -45,16 +44,6 @@ public class ComposeController {
     public TextField blindcc;
     public TextArea emailContent;
     public static AnchorPane parent;
-
-    @FXML
-    private void initialize() {
-        //passMatch.setStyle("-fx-text-fill:  rgb(60, 167, 92)");
-        emailContent.setStyle("-fx-accent: rgb(204,153,0)");
-        emailContent.setStyle("-fx-background-color: #ffffff");
-        emailContent.setStyle("-fx-font-weight: bold");
-        //todo make a custom color, font, and weight field
-        emailContent.setFont(new Font("sans serif",40));
-    }
 
     //slide down animation to go back to emailcontroller
     @FXML
@@ -189,7 +178,7 @@ public class ComposeController {
                 Multipart emailContent = new MimeMultipart();
 
                 MimeBodyPart textBodyPart = new MimeBodyPart();
-                textBodyPart.setText(content);
+                textBodyPart.setContent(content,"text/html");
 
                 emailContent.addBodyPart(textBodyPart);
 
