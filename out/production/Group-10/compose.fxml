@@ -36,13 +36,13 @@
          </tooltip></TextField>
       <TextArea fx:id="emailContent" layoutX="36.0" layoutY="123.0" prefHeight="235.0" prefWidth="329.0" styleClass="input-field">
          <tooltip>
-            <Tooltip text="Email Content" />
+            <Tooltip text="Email Content, make use of styling using HTML tags" />
          </tooltip></TextArea>
       <Button fx:id="attachButton" layoutX="41.0" layoutY="368.0" mnemonicParsing="false" onAction="#addFiles" prefHeight="26.0" prefWidth="69.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Add">
          <tooltip>
             <Tooltip text="Typically servers only support 25MB of attachments" />
          </tooltip></Button>
-      <Button layoutX="108.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Discard">
+      <Button fx:id="discardButton" layoutX="108.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Discard">
          <tooltip>
             <Tooltip text="Discard Draft and leave compose screen" />
          </tooltip></Button>

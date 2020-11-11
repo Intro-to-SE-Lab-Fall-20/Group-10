@@ -42,7 +42,7 @@
          <tooltip>
             <Tooltip text="Typically servers only support 25MB of attachments" />
          </tooltip></Button>
-      <Button layoutX="108.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Discard">
+      <Button fx:id="discardButton" layoutX="108.0" layoutY="405.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="72.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Discard">
          <tooltip>
             <Tooltip text="Discard Draft and leave compose screen" />
          </tooltip></Button>
