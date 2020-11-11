@@ -36,7 +36,7 @@
          </tooltip></TextField>
       <TextArea fx:id="emailContent" layoutX="36.0" layoutY="123.0" prefHeight="235.0" prefWidth="329.0" styleClass="input-field">
          <tooltip>
-            <Tooltip text="Email Content" />
+            <Tooltip text="Email Content, make use of styling using HTML tags" />
          </tooltip></TextArea>
       <Button fx:id="attachButton" layoutX="41.0" layoutY="368.0" mnemonicParsing="false" onAction="#addFiles" prefHeight="26.0" prefWidth="69.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Add">
          <tooltip>

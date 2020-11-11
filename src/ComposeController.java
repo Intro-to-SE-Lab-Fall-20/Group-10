@@ -178,7 +178,7 @@ public class ComposeController {
                 Multipart emailContent = new MimeMultipart();
 
                 MimeBodyPart textBodyPart = new MimeBodyPart();
-                textBodyPart.setText(content);
+                textBodyPart.setContent(content,"text/html");
 
                 emailContent.addBodyPart(textBodyPart);
 

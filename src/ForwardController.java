@@ -141,7 +141,7 @@ public class ForwardController {
                 Multipart emailContent = new MimeMultipart();
 
                 MimeBodyPart textBodyPart = new MimeBodyPart();
-                textBodyPart.setText(emailCont);
+                textBodyPart.setContent(emailCont,"text/html");
 
                 emailContent.addBodyPart(textBodyPart);
 

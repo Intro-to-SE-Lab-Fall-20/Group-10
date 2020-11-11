@@ -18,10 +18,14 @@ public class EmailPreview {
     }
 
     public String getFrom() {
+        if (this.From == null)
+            return "[No from found]";
         return this.From.replace("[","").replace("]","").replace("<","").replace(">","");
     }
 
     public String getFullFrom() {
+        if (this.From == null)
+            return "[No from found]";
         return this.From;
     }
 
@@ -30,10 +34,14 @@ public class EmailPreview {
     }
 
     public String getDate() {
+        if (this.Date == null)
+            return "[No send date found]";
         return Date.substring(0,16);
     }
 
     public String getFullDate() {
+        if (this.Date == null)
+            return "[No send date found]";
         return Date;
     }
 
@@ -42,10 +50,14 @@ public class EmailPreview {
     }
 
     public String getSubject() {
+        if (this.Subject == null)
+            return "[No subject]";
         return this.Subject.substring(0,Math.min(Subject.length(), maxSubjectLength));
     }
 
     public String getFullSubject() {
+        if (this.Subject == null)
+            return "[No subject]";
         return this.Subject;
     }
 
