@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane fx:id="parent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" styleClass="parent" stylesheets="@DefaultStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NoteMainController">
+   <children>
+      <HBox fx:id="dragLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="400.0" styleClass="drag-label">
+         <children>
+            <Label fx:id="CloseButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#close_app" prefHeight="20.0" prefWidth="20.0" styleClass="close-btn" stylesheets="@DefaultStyle.css" text="X" textFill="WHITE" translateX="380.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" styleClass="window-label" text="Noted" textFill="WHITE" translateX="-15.0" />
+            <Label fx:id="CloseButton1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#minimize_stage" prefHeight="20.0" prefWidth="20.0" styleClass="min-btn" stylesheets="@DefaultStyle.css" text="—" textFill="WHITE" translateX="300.0" />
+         </children>
+      </HBox>
+      <Button layoutX="106.0" layoutY="410.0" mnemonicParsing="false" onAction="#addNoteAction" prefHeight="26.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Add Note" />
+      <Button layoutX="14.0" layoutY="410.0" mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Back" />
+      <Button layoutX="302.0" layoutY="410.0" mnemonicParsing="false" onAction="#deleteNoteAction" prefHeight="26.0" prefWidth="82.0" style="-fx-background-radius: 20;" styleClass="button-discard" text="Delete" />
+      <Button layoutX="204.0" layoutY="410.0" mnemonicParsing="false" onAction="#openNoteAction" prefHeight="26.0" prefWidth="90.0" style="-fx-background-radius: 20;" styleClass="button-login" text="Open Note" />
+      <TableView fx:id="table" layoutX="25.0" layoutY="27.0" prefHeight="371.0" prefWidth="343.0" style="-fx-background-color: transparent;">
+        <columns>
+            <TableColumn fx:id="noteCol" prefWidth="342.0" text="My Notes" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
