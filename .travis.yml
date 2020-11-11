@@ -1,13 +1,6 @@
 language: java
-jdk: openjdk11
-before_install:
-  - sudo apt install openjfx
-  - sudo apt-get install ant
-  - sudo apt-get install ant-optional
-dist: xenial
-addons:
-  apt:
-    packages:
-      - ant
-install: true
+jdk:
+  oraclejdk11
+  openjdk11
+install: ant deps
 script: ant test
