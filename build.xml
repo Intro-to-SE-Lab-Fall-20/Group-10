@@ -23,6 +23,8 @@
   <property name="compiler.generate.no.warnings" value="off"/>
   <property name="compiler.args" value=""/>
   <property name="compiler.max.memory" value="700m"/>
+  <property name="test.dir" value="src/test"/>
+  <property name="src.dir" value="src"/>
   <patternset id="ignored.files">
     <exclude name="**/*.hprof/**"/>
     <exclude name="**/*.pyc/**"/>
@@ -194,6 +196,13 @@
     <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-core/4.0.15-alpha/testfx-core-4.0.15-alpha.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-junit/4.0.15-alpha/testfx-junit-4.0.15-alpha.jar"/>
   </path>
+
+  <path id="classpath.test">
+    <pathelement location="lib/junit-4.10.jar" />
+    <pathelement location="lib/hamcrest-core-1.3.jar" />
+    <pathelement location="build/main"/>
+  </path>
+
   <!-- Register Custom Compiler Taskdefs -->
   <property name="javac2.home" value="${idea.home}/lib"/>
   <path id="javac2.classpath">
@@ -222,25 +231,37 @@
     <mkdir dir="build/test/classes"/>
     <mkdir dir="build/test/xml"/>
   </target>
+
+  <target name="compile">
+    <mkdir dir="build/main"/>
+    <javac srcdir="src" destdir="build/main" includeantruntime="false"/>
+  </target>
+
+  <target name="build" depends="compile">
+    <mkdir dir="build/test"/>
+    <javac srcdir="src/test" destdir="build/test" includeantruntime="false">
+      <classpath refid="classpath.test"/>
+    </javac>
+    <echo message="Build done" />
+  </target>
   
   <target name="clean" depends="clean.module.group-10" description="cleanup all"/>
   
   <target name="build.modules" depends="init, clean, compile.module.group-10" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
+
   <target name="test" description="test">
     <junit printsummary="yes"
            haltonfailure="no">
       <classpath>
-        <path refid="classpath"/>
+        <path refid="classpath.test"/>
+        <pathelement location="build/test"/>
       </classpath>
       <formatter type="xml"/>
       <formatter type="plain" usefile="false"/>
-      <batchtest fork="yes"
-                 todir="build/test/xml">
-        <fileset dir="src/test">
-          <include name="**/*Test.java"/>
-        </fileset>
+      <batchtest fork="yes" todir="build/test/xml">
+        <fileset dir="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\src\test" includes="**/*Test*.java"/>
       </batchtest>
     </junit>
     <junitreport todir="build/test/xml">
