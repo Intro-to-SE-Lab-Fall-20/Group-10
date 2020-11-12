@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" name="ComposeControllerTest" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T00:55:51">
+<testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" name="ComposeControllerTest" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:39">
   <properties>
     <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
     <property name="ant.library.dir" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib" />
@@ -10,7 +10,7 @@
     <property name="ant.project.name" value="group-10" />
     <property name="sun.cpu.isalist" value="amd64" />
     <property name="sun.jnu.encoding" value="Cp1252" />
-    <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\ant.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+    <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\ant-junit.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\ant.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
     <property name="java.vm.vendor" value="Oracle Corporation" />
     <property name="sun.arch.data.model" value="64" />
     <property name="user.variant" value="" />
@@ -24,7 +24,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD" />
     <property name="user.country" value="US" />
     <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ComposeControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ComposeControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher14110922469596310806.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit2822665167631783416.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ComposeControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ComposeControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher18245496744261920892.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit4696173057001415321.properties" />
     <property name="jdk.debug" value="release" />
     <property name="module.jdk.bin.group-10" value="C:/Users/mallo/.jdks/openjdk-15.0.1/bin" />
     <property name="javac2.instrumentation.includeJavaRuntime" value="false" />
@@ -48,11 +48,11 @@
     <property name="module.group-10.basedir" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10" />
     <property name="user.script" value="" />
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
-    <property name="ant.file.group-10" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\group-10.xml" />
+    <property name="ant.file.group-10" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build.xml" />
     <property name="java.runtime.version" value="15.0.1+9-18" />
     <property name="user.name" value="mallo" />
     <property name="ant.file.module_group-10" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\module_group-10.xml" />
-    <property name="ant.file" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\group-10.xml" />
+    <property name="ant.file" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build.xml" />
     <property name="path.separator" value=";" />
     <property name="group-10.output.dir" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10/out/production/Group-10" />
     <property name="os.version" value="10.0" />

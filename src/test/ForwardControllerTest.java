@@ -46,8 +46,6 @@ public class ForwardControllerTest extends ApplicationTest {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("StraightShot");
         primaryStage.setScene(new Scene(root));
-        primaryStage.getIcons().add(new Image(
-                Main.class.getResourceAsStream("IO/Logo.png")));
         primaryStage.show();
     }
     @Test

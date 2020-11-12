@@ -47,9 +47,6 @@ public class MainTest extends ApplicationTest {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("StraightShot");
         primaryStage.setScene(new Scene(root));
-        primaryStage.getIcons().add(new Image(
-                Main.class.getResourceAsStream("IO/Logo.png")));
-
         //allow the primary stage to be movable
         root.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
