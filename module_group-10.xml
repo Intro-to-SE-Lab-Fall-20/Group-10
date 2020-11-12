@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_group-10" default="compile.module.group-10">
+  <dirname property="module.group-10.basedir" file="${ant.file.module_group-10}"/>
+  
+  <property name="module.jdk.home.group-10" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.group-10" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.group-10" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.group-10" value="-encoding UTF-8 -source 15 -target 15 ${compiler.args}"/>
+  
+  <property name="group-10.output.dir" value="${module.group-10.basedir}/out/production/Group-10"/>
+  <property name="group-10.testoutput.dir" value="${module.group-10.basedir}/out/test/Group-10"/>
+  
+  <path id="group-10.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="group-10.module.production.classpath">
+    <path refid="${module.jdk.classpath.group-10}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.junit:junit:4.11.classpath"/>
+    <path refid="library.org.hamcrest:hamcrest-junit:2.0.0.0.classpath"/>
+    <path refid="library.com.google.guava:guava:18.0.classpath"/>
+    <path refid="library.org.loadui:testfx:3.1.2.classpath"/>
+    <path refid="library.org.testfx:testfx-core:4.0.16-alpha.classpath"/>
+    <path refid="library.org.testfx:testfx-junit:4.0.15-alpha.classpath"/>
+  </path>
+  
+  <path id="group-10.runtime.production.module.classpath">
+    <pathelement location="${group-10.output.dir}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.junit:junit:4.11.classpath"/>
+    <path refid="library.org.hamcrest:hamcrest-junit:2.0.0.0.classpath"/>
+    <path refid="library.com.google.guava:guava:18.0.classpath"/>
+    <path refid="library.org.loadui:testfx:3.1.2.classpath"/>
+    <path refid="library.org.testfx:testfx-core:4.0.16-alpha.classpath"/>
+    <path refid="library.org.testfx:testfx-junit:4.0.15-alpha.classpath"/>
+  </path>
+  
+  <path id="group-10.module.classpath">
+    <path refid="${module.jdk.classpath.group-10}"/>
+    <pathelement location="${group-10.output.dir}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.junit:junit:4.11.classpath"/>
+    <path refid="library.org.hamcrest:hamcrest-junit:2.0.0.0.classpath"/>
+    <path refid="library.com.google.guava:guava:18.0.classpath"/>
+    <path refid="library.org.loadui:testfx:3.1.2.classpath"/>
+    <path refid="library.org.testfx:testfx-core:4.0.16-alpha.classpath"/>
+    <path refid="library.org.testfx:testfx-junit:4.0.15-alpha.classpath"/>
+  </path>
+  
+  <path id="group-10.runtime.module.classpath">
+    <pathelement location="${group-10.testoutput.dir}"/>
+    <pathelement location="${group-10.output.dir}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.junit:junit:4.11.classpath"/>
+    <path refid="library.org.hamcrest:hamcrest-junit:2.0.0.0.classpath"/>
+    <path refid="library.com.google.guava:guava:18.0.classpath"/>
+    <path refid="library.org.loadui:testfx:3.1.2.classpath"/>
+    <path refid="library.org.testfx:testfx-core:4.0.16-alpha.classpath"/>
+    <path refid="library.org.testfx:testfx-junit:4.0.15-alpha.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.group-10">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.group-10">
+    <patternset refid="excluded.from.module.group-10"/>
+  </patternset>
+  
+  <path id="group-10.module.sourcepath">
+    <dirset dir="${module.group-10.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  <path id="group-10.module.test.sourcepath">
+    <dirset dir="${module.group-10.basedir}">
+      <include name="test"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.group-10" depends="compile.module.group-10.production,compile.module.group-10.tests" description="Compile module Group-10"/>
+  
+  <target name="compile.module.group-10.production" depends="register.custom.compilers" description="Compile module Group-10; production classes">
+    <mkdir dir="${group-10.output.dir}"/>
+    <javac2 destdir="${group-10.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.group-10}/javac">
+      <compilerarg line="${compiler.args.group-10}"/>
+      <bootclasspath refid="group-10.module.bootclasspath"/>
+      <classpath refid="group-10.module.production.classpath"/>
+      <src refid="group-10.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.group-10"/>
+    </javac2>
+    
+    <copy todir="${group-10.output.dir}">
+      <fileset dir="${module.group-10.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.group-10.tests" depends="register.custom.compilers,compile.module.group-10.production" description="compile module Group-10; test classes" unless="skip.tests">
+    <mkdir dir="${group-10.testoutput.dir}"/>
+    <javac2 destdir="${group-10.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.group-10}/javac">
+      <compilerarg line="${compiler.args.group-10}"/>
+      <bootclasspath refid="group-10.module.bootclasspath"/>
+      <classpath refid="group-10.module.classpath"/>
+      <src refid="group-10.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.group-10"/>
+    </javac2>
+    
+    <copy todir="${group-10.testoutput.dir}">
+      <fileset dir="${module.group-10.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.group-10" description="cleanup module">
+    <delete dir="${group-10.output.dir}"/>
+    <delete dir="${group-10.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="group-10" default="all">
+  <path id="classpath">
+    <pathelement location="build/classes"/>
+    <pathelement location="build/test/classes"/>
+    <fileset dir="lib">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir=".">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+  
+  <property file="group-10.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.egg"/>
+    <include name="*.zip"/>
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.ear"/>
+    <include name="*.jar"/>
+    <include name="*.klib"/>
+    <include name="*.ane"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.15" value="${jdk.home.15}/bin"/>
+  <path id="jdk.classpath.15">
+    <fileset dir="${jdk.home.15}">
+      <include name="../openjdk-15.0.1!/java.base"/>
+      <include name="../openjdk-15.0.1!/java.compiler"/>
+      <include name="../openjdk-15.0.1!/java.datatransfer"/>
+      <include name="../openjdk-15.0.1!/java.desktop"/>
+      <include name="../openjdk-15.0.1!/java.instrument"/>
+      <include name="../openjdk-15.0.1!/java.logging"/>
+      <include name="../openjdk-15.0.1!/java.management"/>
+      <include name="../openjdk-15.0.1!/java.management.rmi"/>
+      <include name="../openjdk-15.0.1!/java.naming"/>
+      <include name="../openjdk-15.0.1!/java.net.http"/>
+      <include name="../openjdk-15.0.1!/java.prefs"/>
+      <include name="../openjdk-15.0.1!/java.rmi"/>
+      <include name="../openjdk-15.0.1!/java.scripting"/>
+      <include name="../openjdk-15.0.1!/java.se"/>
+      <include name="../openjdk-15.0.1!/java.security.jgss"/>
+      <include name="../openjdk-15.0.1!/java.security.sasl"/>
+      <include name="../openjdk-15.0.1!/java.smartcardio"/>
+      <include name="../openjdk-15.0.1!/java.sql"/>
+      <include name="../openjdk-15.0.1!/java.sql.rowset"/>
+      <include name="../openjdk-15.0.1!/java.transaction.xa"/>
+      <include name="../openjdk-15.0.1!/java.xml"/>
+      <include name="../openjdk-15.0.1!/java.xml.crypto"/>
+      <include name="../openjdk-15.0.1!/jdk.accessibility"/>
+      <include name="../openjdk-15.0.1!/jdk.aot"/>
+      <include name="../openjdk-15.0.1!/jdk.attach"/>
+      <include name="../openjdk-15.0.1!/jdk.charsets"/>
+      <include name="../openjdk-15.0.1!/jdk.compiler"/>
+      <include name="../openjdk-15.0.1!/jdk.crypto.cryptoki"/>
+      <include name="../openjdk-15.0.1!/jdk.crypto.ec"/>
+      <include name="../openjdk-15.0.1!/jdk.crypto.mscapi"/>
+      <include name="../openjdk-15.0.1!/jdk.dynalink"/>
+      <include name="../openjdk-15.0.1!/jdk.editpad"/>
+      <include name="../openjdk-15.0.1!/jdk.hotspot.agent"/>
+      <include name="../openjdk-15.0.1!/jdk.httpserver"/>
+      <include name="../openjdk-15.0.1!/jdk.incubator.foreign"/>
+      <include name="../openjdk-15.0.1!/jdk.incubator.jpackage"/>
+      <include name="../openjdk-15.0.1!/jdk.internal.ed"/>
+      <include name="../openjdk-15.0.1!/jdk.internal.jvmstat"/>
+      <include name="../openjdk-15.0.1!/jdk.internal.le"/>
+      <include name="../openjdk-15.0.1!/jdk.internal.opt"/>
+      <include name="../openjdk-15.0.1!/jdk.internal.vm.ci"/>
+      <include name="../openjdk-15.0.1!/jdk.internal.vm.compiler"/>
+      <include name="../openjdk-15.0.1!/jdk.internal.vm.compiler.management"/>
+      <include name="../openjdk-15.0.1!/jdk.jartool"/>
+      <include name="../openjdk-15.0.1!/jdk.javadoc"/>
+      <include name="../openjdk-15.0.1!/jdk.jcmd"/>
+      <include name="../openjdk-15.0.1!/jdk.jconsole"/>
+      <include name="../openjdk-15.0.1!/jdk.jdeps"/>
+      <include name="../openjdk-15.0.1!/jdk.jdi"/>
+      <include name="../openjdk-15.0.1!/jdk.jdwp.agent"/>
+      <include name="../openjdk-15.0.1!/jdk.jfr"/>
+      <include name="../openjdk-15.0.1!/jdk.jlink"/>
+      <include name="../openjdk-15.0.1!/jdk.jshell"/>
+      <include name="../openjdk-15.0.1!/jdk.jsobject"/>
+      <include name="../openjdk-15.0.1!/jdk.jstatd"/>
+      <include name="../openjdk-15.0.1!/jdk.localedata"/>
+      <include name="../openjdk-15.0.1!/jdk.management"/>
+      <include name="../openjdk-15.0.1!/jdk.management.agent"/>
+      <include name="../openjdk-15.0.1!/jdk.management.jfr"/>
+      <include name="../openjdk-15.0.1!/jdk.naming.dns"/>
+      <include name="../openjdk-15.0.1!/jdk.naming.rmi"/>
+      <include name="../openjdk-15.0.1!/jdk.net"/>
+      <include name="../openjdk-15.0.1!/jdk.nio.mapmode"/>
+      <include name="../openjdk-15.0.1!/jdk.sctp"/>
+      <include name="../openjdk-15.0.1!/jdk.security.auth"/>
+      <include name="../openjdk-15.0.1!/jdk.security.jgss"/>
+      <include name="../openjdk-15.0.1!/jdk.unsupported"/>
+      <include name="../openjdk-15.0.1!/jdk.unsupported.desktop"/>
+      <include name="../openjdk-15.0.1!/jdk.xml.dom"/>
+      <include name="../openjdk-15.0.1!/jdk.zipfs"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.15}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.15}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.15"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.com.google.guava:guava:18.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/guava/guava/18.0/guava-18.0.jar"/>
+  </path>
+  
+  <path id="library.jars.classpath">
+    <fileset dir="${path.variable.path_to_fx}/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <pathelement location="${basedir}/src/Jars/activation.jar"/>
+    <pathelement location="${basedir}/src/Jars/ant-junit.jar"/>
+    <pathelement location="${basedir}/src/Jars/ant-junit4.jar"/>
+    <pathelement location="${basedir}/src/Jars/javax.mail.jar"/>
+    <pathelement location="${basedir}/src/Jars/json-simple-1.1.1.jar"/>
+  </path>
+  
+  <path id="library.junit:junit:4.11.classpath">
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.11/junit-4.11.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+  </path>
+  
+  <path id="library.org.hamcrest:hamcrest-junit:2.0.0.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-junit/2.0.0.0/hamcrest-junit-2.0.0.0.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/java-hamcrest/2.0.0.0/java-hamcrest-2.0.0.0.jar"/>
+  </path>
+  
+  <path id="library.org.loadui:testfx:3.1.2.classpath">
+    <pathelement location="${path.variable.maven_repository}/com/google/guava/guava/14.0.1/guava-14.0.1.jar"/>
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.10/junit-4.10.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/loadui/testFx/3.1.2/testFx-3.1.2.jar"/>
+  </path>
+  
+  <path id="library.org.testfx:testfx-core:4.0.16-alpha.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/assertj/assertj-core/3.13.2/assertj-core-3.13.2.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-core/4.0.16-alpha/testfx-core-4.0.16-alpha.jar"/>
+  </path>
+  
+  <path id="library.org.testfx:testfx-junit:4.0.15-alpha.classpath">
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/assertj/assertj-core/3.11.1/assertj-core-3.11.1.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-core/4.0.15-alpha/testfx-core-4.0.15-alpha.jar"/>
+    <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-junit/4.0.15-alpha/testfx-junit-4.0.15-alpha.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="javac2.jar"/>
+      <include name="jdom.jar"/>
+      <include name="asm-all*.jar"/>
+      <include name="forms-*.jar"/>
+    </fileset>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  <import file="${basedir}/module_group-10.xml"/>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+    <mkdir dir="build"/>
+    <mkdir dir="build/lib"/>
+    <mkdir dir="build/classes"/>
+    <mkdir dir="build/test"/>
+    <mkdir dir="build/test/classes"/>
+    <mkdir dir="build/test/xml"/>
+  </target>
+  
+  <target name="clean" depends="clean.module.group-10" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.group-10" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+  <target name="test" description="test">
+    <junit printsummary="yes"
+           haltonfailure="no">
+      <classpath>
+        <path refid="classpath"/>
+      </classpath>
+      <formatter type="xml"/>
+      <formatter type="plain" usefile="false"/>
+      <batchtest fork="yes"
+                 todir="build/test/xml">
+        <fileset dir="test">
+          <include name="**/*Test.java"/>
+        </fileset>
+      </batchtest>
+    </junit>
+    <junitreport todir="build/test/xml">
+      <fileset dir="build/test/xml">
+        <include name="TEST-*.xml"/>
+      </fileset>
+    </junitreport>
+  </target>
+
+  <target name="test-report"
+          description="Convert ANT junit XML reports into HTML">
+    <mkdir dir="build/test/html"/>
+    <junitreport todir="build/test/xml">
+      <fileset dir="build/test/xml">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report todir="build/test/html"/>
+    </junitreport>
+  </target>
+</project>

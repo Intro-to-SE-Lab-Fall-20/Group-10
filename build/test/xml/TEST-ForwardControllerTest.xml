@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" name="ForwardControllerTest" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T00:55:53">
+  <properties>
+    <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
+    <property name="ant.library.dir" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib" />
+    <property name="ant.file.type.module_group-10" value="file" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.specification.version" value="15" />
+    <property name="jdk.home.15" value="C:/Users/mallo/.jdks/openjdk-15.0.1" />
+    <property name="ant.project.name" value="group-10" />
+    <property name="sun.cpu.isalist" value="amd64" />
+    <property name="sun.jnu.encoding" value="Cp1252" />
+    <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\ant.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="user.variant" value="" />
+    <property name="project.jdk.classpath" value="jdk.classpath.15" />
+    <property name="compiler.args" value="" />
+    <property name="java.vendor.url" value="https://java.oracle.com/" />
+    <property name="compiler.debug" value="on" />
+    <property name="project.jdk.bin" value="C:/Users/mallo/.jdks/openjdk-15.0.1/bin" />
+    <property name="java.vm.specification.version" value="15" />
+    <property name="os.name" value="Windows 10" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="user.country" value="US" />
+    <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ForwardControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ForwardControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher14964884913386299846.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit15018919797510176907.properties" />
+    <property name="jdk.debug" value="release" />
+    <property name="module.jdk.bin.group-10" value="C:/Users/mallo/.jdks/openjdk-15.0.1/bin" />
+    <property name="javac2.instrumentation.includeJavaRuntime" value="false" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="user.home" value="C:\Users\mallo" />
+    <property name="ant.file.type.group-10" value="file" />
+    <property name="user.language" value="en" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="javac2.home" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3/lib" />
+    <property name="java.version.date" value="2020-10-20" />
+    <property name="java.home" value="C:\Users\mallo\.jdks\openjdk-15.0.1" />
+    <property name="file.separator" value="\" />
+    <property name="basedir" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10" />
+    <property name="path.variable.java_home" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
+    <property name="java.vm.compressedOopsMode" value="Zero based" />
+    <property name="line.separator" value="&#xd;&#xa;" />
+    <property name="ant.java.version" value="15" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="module.jdk.classpath.group-10" value="jdk.classpath.15" />
+    <property name="module.group-10.basedir" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10" />
+    <property name="user.script" value="" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="ant.file.group-10" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\group-10.xml" />
+    <property name="java.runtime.version" value="15.0.1+9-18" />
+    <property name="user.name" value="mallo" />
+    <property name="ant.file.module_group-10" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\module_group-10.xml" />
+    <property name="ant.file" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\group-10.xml" />
+    <property name="path.separator" value=";" />
+    <property name="group-10.output.dir" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10/out/production/Group-10" />
+    <property name="os.version" value="10.0" />
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
+    <property name="compiler.generate.no.warnings" value="off" />
+    <property name="file.encoding" value="Cp1252" />
+    <property name="ant.project.invoked-targets" value="test" />
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM" />
+    <property name="compiler.max.memory" value="700m" />
+    <property name="compiler.args.group-10" value="-encoding UTF-8 -source 15 -target 15 " />
+    <property name="jdk.bin.15" value="C:/Users/mallo/.jdks/openjdk-15.0.1/bin" />
+    <property name="ant.core.lib" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar" />
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/" />
+    <property name="java.io.tmpdir" value="C:\Users\mallo\AppData\Local\Temp\" />
+    <property name="java.version" value="15.0.1" />
+    <property name="user.dir" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10" />
+    <property name="module.jdk.home.group-10" value="C:/Users/mallo/.jdks/openjdk-15.0.1" />
+    <property name="os.arch" value="amd64" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.home" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant" />
+    <property name="idea.home" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3" />
+    <property name="sun.os.patch.level" value="" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
+    <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="java.vm.info" value="mixed mode, sharing" />
+    <property name="java.vm.version" value="15.0.1+9-18" />
+    <property name="path.variable.maven_repository" value="C:/Users/mallo/.m2/repository" />
+    <property name="group-10.testoutput.dir" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10/out/test/Group-10" />
+    <property name="project.jdk.home" value="C:/Users/mallo/.jdks/openjdk-15.0.1" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="path.variable.kotlin_bundled" value="C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2020.2.3/plugins/Kotlin/kotlinc" />
+    <property name="java.class.version" value="59.0" />
+    <property name="ant.project.default-target" value="all" />
+  </properties>
+  <error message="ForwardControllerTest" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: ForwardControllerTest
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:606)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:168)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:468)
+</error>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
