@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="0" name="ComposeControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:39">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="0" name="ComposeControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:28">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -48,7 +48,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ComposeControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ComposeControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher18245496744261920892.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit4696173057001415321.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ComposeControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ComposeControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher10945451915551456938.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit2878602358330856104.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -189,7 +189,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="1" name="EmailControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:40">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="1" name="EmailControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:29">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -237,7 +237,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher13575938122188845990.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit6720051989054050992.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher16712798029510053395.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit13807097153508283751.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -378,7 +378,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="2" name="EmailPreviewTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:40">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="2" name="EmailPreviewTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:30">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -426,7 +426,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailPreviewTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailPreviewTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher8774420028189120965.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit666518402279625157.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailPreviewTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailPreviewTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher1695074944456424154.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit10886310978665426426.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -567,7 +567,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="3" name="ForwardControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:41">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="3" name="ForwardControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:30">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -615,7 +615,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ForwardControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ForwardControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher12962101955403138451.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit9621590174966083841.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ForwardControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ForwardControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher10442358898301690772.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit9971735290584010017.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -756,7 +756,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="4" name="MainTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:42">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="4" name="MainTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:31">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -804,7 +804,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MainTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher16248905621965985200.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit16776708096401098288.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MainTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher9334130524456661983.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit2958138101192088313.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -945,7 +945,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="5" name="MasterMainControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:43">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="5" name="MasterMainControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:32">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -993,7 +993,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MasterMainControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MasterMainControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher2324792607289432931.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit7622218747863462158.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MasterMainControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MasterMainControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher15173957433372996046.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit712093978531930504.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -1134,7 +1134,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="6" name="ReplyControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:43">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="6" name="ReplyControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:32">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -1182,7 +1182,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ReplyControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ReplyControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher6236139671283853611.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit4495473816773967309.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ReplyControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ReplyControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher1496606084896131863.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit1449434220665878656.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -1323,7 +1323,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="7" name="ViewControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T03:54:44">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="7" name="ViewControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-12T04:00:33">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -1371,7 +1371,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ViewControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ViewControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher8404238182523020421.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit18057954100233378639.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ViewControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ViewControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher7761803782882058858.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit16369523806465037935.properties" />
 
           <property name="jdk.debug" value="release" />
 
