@@ -261,7 +261,7 @@
       <formatter type="xml"/>
       <formatter type="plain" usefile="false"/>
       <batchtest fork="yes" todir="build/test/xml">
-        <fileset dir="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\src\test" includes="**/*Test*.java"/>
+        <fileset dir="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test" includes="**/*Test*.java"/>
       </batchtest>
     </junit>
     <junitreport todir="build/test/xml">
