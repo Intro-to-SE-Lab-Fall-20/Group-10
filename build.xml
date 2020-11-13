@@ -10,21 +10,19 @@
       <include name="*.jar"/>
     </fileset>
   </path>
-  
+
   <property file="group-10.properties"/>
   <!-- Uncomment the following property if no tests compilation is needed -->
-  <!-- 
+  <!--
   <property name="skip.tests" value="true"/>
    -->
-  
+
   <!-- Compiler options -->
-  
+
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
   <property name="compiler.args" value=""/>
   <property name="compiler.max.memory" value="700m"/>
-  <property name="test.dir" value="src/test"/>
-  <property name="src.dir" value="src"/>
   <patternset id="ignored.files">
     <exclude name="**/*.hprof/**"/>
     <exclude name="**/*.pyc/**"/>
@@ -63,9 +61,9 @@
     <exclude name="**/?*.clj"/>
     <exclude name="**/?*.aj"/>
   </patternset>
-  
+
   <!-- JDK definitions -->
-  
+
   <property name="jdk.bin.15" value="${jdk.home.15}/bin"/>
   <path id="jdk.classpath.15">
     <fileset dir="${jdk.home.15}">
@@ -141,18 +139,18 @@
       <include name="../openjdk-15.0.1!/jdk.zipfs"/>
     </fileset>
   </path>
-  
+
   <property name="project.jdk.home" value="${jdk.home.15}"/>
   <property name="project.jdk.bin" value="${jdk.bin.15}"/>
   <property name="project.jdk.classpath" value="jdk.classpath.15"/>
-  
-  
+
+
   <!-- Project Libraries -->
-  
+
   <path id="library.com.google.guava:guava:18.0.classpath">
     <pathelement location="${path.variable.maven_repository}/com/google/guava/guava/18.0/guava-18.0.jar"/>
   </path>
-  
+
   <path id="library.jars.classpath">
     <fileset dir="${path.variable.path_to_fx}/lib">
       <patternset refid="library.patterns"/>
@@ -163,32 +161,32 @@
     <pathelement location="${basedir}/src/Jars/javax.mail.jar"/>
     <pathelement location="${basedir}/src/Jars/json-simple-1.1.1.jar"/>
   </path>
-  
+
   <path id="library.junit:junit:4.11.classpath">
     <pathelement location="${path.variable.maven_repository}/junit/junit/4.11/junit-4.11.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
   </path>
-  
+
   <path id="library.org.hamcrest:hamcrest-junit:2.0.0.0.classpath">
     <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-junit/2.0.0.0/hamcrest-junit-2.0.0.0.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/hamcrest/java-hamcrest/2.0.0.0/java-hamcrest-2.0.0.0.jar"/>
   </path>
-  
+
   <path id="library.org.loadui:testfx:3.1.2.classpath">
     <pathelement location="${path.variable.maven_repository}/com/google/guava/guava/14.0.1/guava-14.0.1.jar"/>
     <pathelement location="${path.variable.maven_repository}/junit/junit/4.10/junit-4.10.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/loadui/testFx/3.1.2/testFx-3.1.2.jar"/>
   </path>
-  
+
   <path id="library.org.testfx:testfx-core:4.0.16-alpha.classpath">
     <pathelement location="${path.variable.maven_repository}/org/assertj/assertj-core/3.13.2/assertj-core-3.13.2.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-core/4.0.16-alpha/testfx-core-4.0.16-alpha.jar"/>
   </path>
-  
+
   <path id="library.org.testfx:testfx-junit:4.0.15-alpha.classpath">
     <pathelement location="${path.variable.maven_repository}/junit/junit/4.12/junit-4.12.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/assertj/assertj-core/3.11.1/assertj-core-3.11.1.jar"/>
@@ -196,13 +194,6 @@
     <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-core/4.0.15-alpha/testfx-core-4.0.15-alpha.jar"/>
     <pathelement location="${path.variable.maven_repository}/org/testfx/testfx-junit/4.0.15-alpha/testfx-junit-4.0.15-alpha.jar"/>
   </path>
-
-  <path id="classpath.test">
-    <pathelement location="lib/junit-4.10.jar" />
-    <pathelement location="lib/hamcrest-core-1.3.jar" />
-    <pathelement location="build/main"/>
-  </path>
-
   <!-- Register Custom Compiler Taskdefs -->
   <property name="javac2.home" value="${idea.home}/lib"/>
   <path id="javac2.classpath">
@@ -217,11 +208,11 @@
     <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
     <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
   </target>
-  
+
   <!-- Modules -->
-  
+
   <import file="${basedir}/module_group-10.xml"/>
-  
+
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
     <mkdir dir="build"/>
@@ -232,36 +223,24 @@
     <mkdir dir="build/test/xml"/>
   </target>
 
-  <target name="compile">
-    <mkdir dir="build/main"/>
-    <javac srcdir="src" destdir="build/main" includeantruntime="false"/>
-  </target>
-
-  <target name="build" depends="compile">
-    <mkdir dir="build/test"/>
-    <javac srcdir="src/test" destdir="build/test" includeantruntime="false">
-      <classpath refid="classpath.test"/>
-    </javac>
-    <echo message="Build done" />
-  </target>
-  
   <target name="clean" depends="clean.module.group-10" description="cleanup all"/>
-  
-  <target name="build.modules" depends="init, clean, compile.module.group-10" description="build all modules"/>
-  
-  <target name="all" depends="build.modules" description="build all"/>
 
+  <target name="build.modules" depends="init, clean, compile.module.group-10" description="build all modules"/>
+
+  <target name="all" depends="build.modules" description="build all"/>
   <target name="test" description="test">
     <junit printsummary="yes"
            haltonfailure="no">
       <classpath>
-        <path refid="classpath.test"/>
-        <pathelement location="build/test"/>
+        <path refid="classpath"/>
       </classpath>
       <formatter type="xml"/>
       <formatter type="plain" usefile="false"/>
-      <batchtest fork="yes" todir="build/test/xml">
-        <fileset dir="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test" includes="**/*Test*.java"/>
+      <batchtest fork="yes"
+                 todir="build/test/xml">
+        <fileset dir="test">
+          <include name="**/*Test.java"/>
+        </fileset>
       </batchtest>
     </junit>
     <junitreport todir="build/test/xml">
