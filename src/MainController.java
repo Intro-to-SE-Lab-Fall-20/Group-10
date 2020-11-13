@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import javax.mail.Session;
 import javax.mail.Store;
 import java.awt.*;
+import java.io.*;
 import java.math.BigInteger;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -33,9 +34,36 @@ public class MainController {
 
     public static String emailAddress;
     public static char[] password ;
-    public static String theme;
 
     public static Parent root;
+
+    @FXML
+    private void initialize() {
+        try {
+            File ddosFile = new File("users/" + MasterMainController.currentUser + "/d.dos");
+
+            if (ddosFile.exists()) {
+                BufferedReader br = new BufferedReader(new FileReader(ddosFile));
+                String[] parts = br.readLine().split(",");
+                br.close();
+
+                if (parts[0].equalsIgnoreCase("LOCKED")) {
+                    emailField.setEditable(false);
+                    passField.setEditable(false);
+                    Main.startWorking("Lock out for 5 minutes",0);
+                }
+
+                long negTime = System.currentTimeMillis() - Long.parseLong(parts[1]);
+
+                if (negTime > 0)
+                    ddosFile.delete();
+            }
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void minimize_stage(MouseEvent e) {
@@ -152,23 +180,92 @@ public class MainController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
 
             showPopupMessage("Sorry, " + System.getProperty("user.name") + ", but I couldn't validate\nthe email: " +
                     emailAddress, Main.primaryStage);
 
+            ddosProtect(emailAddress);
+
             emailField.setText("");
             passField.setText("");
-
-
         }
 
         return false;
     }
 
+    private void ddosProtect(String email) {
+        try {
+            File currentUserFolder = new File("users/" + MasterMainController.currentUser);
+            File ddosFile = new File(currentUserFolder + "/d.dos");
+            if (!ddosFile.exists()) {
+                ddosFile.createNewFile();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(ddosFile,false));
+                bw.write(System.currentTimeMillis() + "," + System.currentTimeMillis() + ",1");
+                bw.flush();
+                bw.close();
+            }
+
+            else {
+                BufferedReader br = new BufferedReader(new FileReader(ddosFile));
+                String[] parts = br.readLine().split(",");
+                br.close();
+
+                if (parts[0].equalsIgnoreCase("LOCKED")) {
+                    emailField.setEditable(false);
+                    emailField.setText("LOCKED OUT");
+                    return;
+                }
+
+                long firstTime = Long.parseLong(parts[0]);
+                long lastTime = Long.parseLong(parts[1]);
+                int attempts = Integer.parseInt(parts[2]);
+
+                attempts++;
+                lastTime = System.currentTimeMillis();
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(ddosFile,false));
+                bw.write(firstTime + "," + lastTime + "," + attempts);
+                bw.newLine();
+                bw.flush();
+                bw.close();
+
+                long totalMilis = lastTime - firstTime;
+                long minuteDif = (totalMilis / 1000 / 60);
+
+                if (minuteDif <= 5 && attempts >= 10) {
+                    bw = new BufferedWriter(new FileWriter(ddosFile,false));
+                    bw.write("LOCKED," + (System.currentTimeMillis() + (300000)));
+                    bw.newLine();
+                    bw.flush();
+                    bw.close();
+
+                    emailField.setEditable(false);
+                    passField.setEditable(false);
+                    Main.startWorking("Lock out for 5 minutes",0);
+                }
+
+                else if (minuteDif >= 10) {
+                    bw = new BufferedWriter(new FileWriter(ddosFile,false));
+                    bw.write(lastTime + "," + lastTime + "," + 0);
+                    bw.newLine();
+                    bw.flush();
+                    bw.close();
+                }
+            }
+        }
+
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void gotoNotes(ActionEvent e) {
         try {
+            Main.startWorking("",1);
             Parent root = FXMLLoader.load(getClass().getResource("notemain.fxml"));
             // possible place to change style to user's chosen style
             Scene currentScene = emailField.getScene();
@@ -193,6 +290,7 @@ public class MainController {
     @FXML
     private void goBack(ActionEvent e) {
         try {
+            Main.startWorking("",1);
             //load new parent and scene
             Parent root = FXMLLoader.load(getClass().getResource("MasterMain.fxml"));
             Scene currentScene = emailField.getScene();
@@ -234,6 +332,8 @@ public class MainController {
             showPopupMessage("Sorry, " + System.getProperty("user.name") + ", but I couldn't validate\nthe email: " +
                     emailAddress, Main.primaryStage);
 
+            ddosProtect(emailAddress);
+
             emailField.setText("");
             passField.setText("");
         }
@@ -274,6 +374,7 @@ public class MainController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -301,6 +402,7 @@ public class MainController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -345,6 +447,7 @@ public class MainController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
 

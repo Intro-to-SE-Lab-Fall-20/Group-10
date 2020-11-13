@@ -86,6 +86,7 @@ public class ReplyController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -159,6 +160,7 @@ public class ReplyController {
             }
 
             catch (Exception e) {
+                System.out.println("Exception: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -187,6 +189,7 @@ public class ReplyController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -282,6 +285,7 @@ public class ReplyController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
