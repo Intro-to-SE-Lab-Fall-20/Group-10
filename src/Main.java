@@ -21,9 +21,6 @@ public class Main extends Application {
     //used for popups
     private static JFrame informFrame;
 
-    //used for autolog in for developers
-    public static boolean autoLoggedIn = false;
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -105,6 +102,7 @@ public class Main extends Application {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }

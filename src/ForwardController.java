@@ -87,6 +87,7 @@ public class ForwardController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -160,6 +161,7 @@ public class ForwardController {
             }
 
             catch (Exception e) {
+                System.out.println("Exception: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -188,6 +190,7 @@ public class ForwardController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -282,6 +285,7 @@ public class ForwardController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }

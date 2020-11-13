@@ -73,9 +73,6 @@ public class EmailController {
     private Store store;
     private Folder emailFolder;
 
-    //todo add spam protection for someone guessing passwords
-    //todo let table columns be extended in width
-
     @FXML
     public void initialize() {
         try {
@@ -197,6 +194,7 @@ public class EmailController {
                     }
 
                     catch (Exception e) {
+                        System.out.println("Exception: " + e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -206,6 +204,7 @@ public class EmailController {
                         gotoViewer(messages[messages.length - table.getSelectionModel().getSelectedIndex() - 1]);
 
                     } catch (Exception e) {
+                        System.out.println("Exception: " + e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -255,6 +254,7 @@ public class EmailController {
                 }
 
                 catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
                     e.printStackTrace();
                 }
             });
@@ -274,6 +274,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -342,6 +343,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -400,6 +402,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -421,6 +424,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -451,6 +455,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -506,6 +511,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -532,6 +538,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -568,6 +575,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -604,6 +612,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -640,6 +649,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -672,6 +682,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -737,6 +748,7 @@ public class EmailController {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }

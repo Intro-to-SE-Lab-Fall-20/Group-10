@@ -148,6 +148,7 @@ public class ViewController  {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -182,12 +183,14 @@ public class ViewController  {
                 }
 
                 catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
                     e.printStackTrace();
                 }
             })).start();
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -222,12 +225,14 @@ public class ViewController  {
                 }
 
                 catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
                     e.printStackTrace();
                 }
             })).start();
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -277,6 +282,7 @@ public class ViewController  {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -309,6 +315,7 @@ public class ViewController  {
         }
 
         catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             e.printStackTrace();
         }
     }

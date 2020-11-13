@@ -75,6 +75,7 @@ public class NoteMainController {
                 }
 
                 catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -91,6 +92,7 @@ public class NoteMainController {
                     }
 
                 } catch (Exception e) {
+                    System.out.println("Exception: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -130,6 +132,7 @@ public class NoteMainController {
             }
 
             catch (Exception e) {
+                System.out.println("Exception: " + e.getMessage());
                 e.printStackTrace();
             }
         }
