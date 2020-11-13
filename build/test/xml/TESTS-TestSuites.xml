@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="0" name="ComposeControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:01">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="0" name="ComposeControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:10">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -20,7 +20,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -48,7 +48,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ComposeControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ComposeControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher3758447476584781872.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit1090345211796128334.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ComposeControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ComposeControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher16710404744916775459.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit941733449859497017.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -152,7 +152,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -189,7 +189,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="1" name="EmailControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:01">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="1" name="EmailControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:11">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -209,7 +209,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -237,7 +237,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher18353409345614844830.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit5243880920446756453.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher13612227857477923799.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit14175360458271442317.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -341,7 +341,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -378,7 +378,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="2" name="EmailPreviewTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:01">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="2" name="EmailPreviewTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:12">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -398,7 +398,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -426,7 +426,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailPreviewTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailPreviewTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher16513432379545265259.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit2579685023166710024.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner EmailPreviewTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-EmailPreviewTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher15960756733012369907.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit16451656864915303686.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -530,7 +530,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -567,7 +567,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="3" name="ForwardControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:02">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="3" name="ForwardControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:13">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -587,7 +587,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -615,7 +615,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ForwardControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ForwardControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher15995675464024234651.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit9211304708227293704.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ForwardControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ForwardControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher15746108447548030889.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit5513316602336459261.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -719,7 +719,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -756,7 +756,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="4" name="MainTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:02">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="4" name="MainTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:14">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -776,7 +776,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -804,7 +804,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MainTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher13909068896157660367.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit12147548821799131641.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MainTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MainTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher15875488370150539279.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit4049775657412167459.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -908,7 +908,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -945,7 +945,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="5" name="MasterMainControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:02">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="5" name="MasterMainControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:15">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -965,7 +965,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -993,7 +993,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MasterMainControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MasterMainControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher2552162816968539213.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit7981513831140766397.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner MasterMainControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-MasterMainControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher2471555516899639067.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit3136601057742149088.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -1097,7 +1097,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -1134,7 +1134,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="6" name="ReplyControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:03">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="6" name="ReplyControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:16">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -1154,7 +1154,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -1182,7 +1182,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ReplyControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ReplyControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher16248643580707858419.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit9370862765063176511.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ReplyControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ReplyControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher16818867052973620326.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit16136811695232232242.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -1286,7 +1286,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 
@@ -1323,7 +1323,7 @@
       <system-err><![CDATA[]]></system-err>
 
   </testsuite>
-  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="7" name="ViewControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T02:39:03">
+  <testsuite errors="1" failures="0" hostname="LAPTOP-2UKM2LHR" id="7" name="ViewControllerTest" package="" skipped="0" tests="1" time="0.0" timestamp="2020-11-13T20:06:16">
       <properties>
           <property name="path.variable.path_to_fx" value="C:/Program Files/JavaFX/javafx-sdk-11.0.2" />
 
@@ -1343,7 +1343,7 @@
 
           <property name="sun.jnu.encoding" value="Cp1252" />
 
-          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
+          <property name="java.class.path" value="C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\classes;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\test;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\hamcrest-core-1.3.jar;C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\lib\junit-4.10.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-launcher.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\lib\ant\lib\ant-junit4.jar" />
 
           <property name="java.vm.vendor" value="Oracle Corporation" />
 
@@ -1371,7 +1371,7 @@
 
           <property name="sun.boot.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin" />
 
-          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ViewControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ViewControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher5340556701357603709.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit10137079864631687047.properties" />
+          <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner ViewControllerTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false formatter=org.apache.tools.ant.taskdefs.optional.junit.SummaryJUnitResultFormatter showoutput=false outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=false formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\build\test\xml\TEST-ViewControllerTest.xml formatter=org.apache.tools.ant.taskdefs.optional.junit.PlainJUnitResultFormatter crashfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junitvmwatcher14991236293326633307.properties propsfile=C:\Users\mallo\OneDrive\Fall2020\introToSE\Group-10\junit17191909236600063977.properties" />
 
           <property name="jdk.debug" value="release" />
 
@@ -1475,7 +1475,7 @@
 
           <property name="ant.version" value="Apache Ant(TM) version 1.10.5 compiled on July 10 2018" />
 
-          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;;." />
+          <property name="java.library.path" value="C:\Users\mallo\.jdks\openjdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Users\mallo\AppData\Local\Microsoft\WindowsApps;C:\Program Files\apache-ant-1.10.9\bin;;." />
 
           <property name="java.vendor" value="Oracle Corporation" />
 

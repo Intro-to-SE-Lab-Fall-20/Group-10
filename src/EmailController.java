@@ -73,9 +73,6 @@ public class EmailController {
     private Store store;
     private Folder emailFolder;
 
-    //todo add spam protection for someone guessing passwords
-    //todo let table columns be extended in width
-
     @FXML
     public void initialize() {
         try {

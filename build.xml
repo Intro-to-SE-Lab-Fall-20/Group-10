@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="group-10" default="all">
+<project name="group-10" default="all" basedir=".">
   <path id="classpath">
     <pathelement location="build/classes"/>
     <pathelement location="build/test/classes"/>
+    <pathelement location="test"/>
     <fileset dir="lib">
       <include name="*.jar"/>
     </fileset>
@@ -216,8 +217,6 @@
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
     <mkdir dir="build"/>
-    <mkdir dir="build/lib"/>
-    <mkdir dir="build/classes"/>
     <mkdir dir="build/test"/>
     <mkdir dir="build/test/classes"/>
     <mkdir dir="build/test/xml"/>
@@ -228,6 +227,17 @@
   <target name="build.modules" depends="init, clean, compile.module.group-10" description="build all modules"/>
 
   <target name="all" depends="build.modules" description="build all"/>
+  <target name="compile-tests" description="Compile tests">
+    <javac srcdir="test"
+           destdir="build/test/classes"
+           includeantruntime="false">
+      <include name="**Test.java"/>
+      <classpath>
+        <path refid="classpath"/>
+      </classpath>
+    </javac>
+  </target>
+
   <target name="test" description="test">
     <junit printsummary="yes"
            haltonfailure="no">
@@ -238,8 +248,8 @@
       <formatter type="plain" usefile="false"/>
       <batchtest fork="yes"
                  todir="build/test/xml">
-        <fileset dir="test">
-          <include name="**/*Test.java"/>
+        <fileset dir="${basedir}/test">
+          <include name="**Test.*"/>
         </fileset>
       </batchtest>
     </junit>
