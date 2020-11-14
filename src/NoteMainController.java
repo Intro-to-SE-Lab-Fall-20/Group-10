@@ -30,6 +30,10 @@ public class NoteMainController {
     public static File currentFile;
     public static String currentName;
     public static String currentContents;
+    public Button addNote ;
+    public Button backButton;
+    public Button deleteNote;
+    public Button openNote;
 
     @FXML
     private void initialize() {
